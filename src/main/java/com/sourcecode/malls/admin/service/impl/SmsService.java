@@ -1,0 +1,59 @@
+package com.sourcecode.malls.admin.service.impl;
+
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.aliyuncs.CommonRequest;
+import com.aliyuncs.CommonResponse;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.IAcsClient;
+import com.aliyuncs.http.MethodType;
+import com.aliyuncs.profile.DefaultProfile;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sourcecode.malls.admin.properties.AliyunProperties;
+import com.sourcecode.malls.admin.properties.SmsProperties;
+
+@Service
+public class SmsService {
+	@Autowired
+	private AliyunProperties aliyunConfig;
+	@Autowired
+	private SmsProperties smsConfig;
+
+	private IAcsClient client;
+
+	@PostConstruct
+	public void init() {
+		DefaultProfile profile = DefaultProfile.getProfile(aliyunConfig.getRegionId(), aliyunConfig.getAccesskey(), aliyunConfig.getSecret());
+		client = new DefaultAcsClient(profile);
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	public void send(String template, String mobile, Object payload) {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			CommonRequest request = new CommonRequest();
+			// request.setProtocol(ProtocolType.HTTPS);
+			request.setMethod(MethodType.POST);
+			request.setDomain("dysmsapi.aliyuncs.com");
+			request.setVersion("2017-05-25");
+			request.setAction("SendSms");
+			request.putQueryParameter("SignName", smsConfig.getSignName());
+			request.putQueryParameter("PhoneNumbers", mobile);
+			request.putQueryParameter("TemplateCode", template);
+			request.putQueryParameter("TemplateParam", mapper.writeValueAsString(payload));
+			CommonResponse response = client.getCommonResponse(request);
+			String json = response.getData();
+			Map<String, Object> result = mapper.readValue(json, Map.class);
+			if (!result.get("Code").equals("OK")) {
+				throw new RuntimeException(result.get("message").toString());
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
+}

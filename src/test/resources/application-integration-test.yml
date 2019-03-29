@@ -1,0 +1,37 @@
+spring:
+  liquibase:
+    enabled: false
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    table:
+      prefix: 
+    druid:
+      driver-class-name: org.h2.Driver
+      url: jdbc:h2:mem:master;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      username: sa
+      password: 
+
+access.control.allow.origin: http://localhost:8080
+
+super-admin:
+  username: admin
+  password: 111111
+  email: tt@test.com
+
+session:
+  redis:
+    host: localhost
+    password: 
+    port: 6379  
+
+host:
+  database: localhost
+  
+aliyun:
+  oss:
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    privateBucket: malls-admin-private-local
+    publicBucket: malls-admin-public-local  
