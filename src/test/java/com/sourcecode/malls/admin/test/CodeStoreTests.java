@@ -31,7 +31,7 @@ public class CodeStoreTests {
 		Assert.assertTrue(op.get().getValue().equals("haha"));
 	}
 	
-	@Test
+//	@Test
 	public void test2() throws Exception {
 		CodeStore data = new CodeStore();
 		data.setCategory("test");

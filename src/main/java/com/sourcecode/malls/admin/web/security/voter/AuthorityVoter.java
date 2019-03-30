@@ -33,13 +33,16 @@ public class AuthorityVoter implements AccessDecisionVoter<FilterInvocation> {
 	@Transactional(readOnly = true)
 	@Override
 	public int vote(Authentication authentication, FilterInvocation fi, Collection<ConfigAttribute> attributes) {
-		boolean isGranted = false;
 		User user = UserContext.get();
 		if (user == User.SystemUser) {
 			return ACCESS_DENIED;
 		}
 		user = userService.findById(user.getId()).orElse(null);
-		if (user == null || !userService.isSuperAdmin(user)) {
+		if (user == null) {
+			return ACCESS_DENIED;
+		}
+		boolean isGranted = userService.isSuperAdmin(user);
+		if (!isGranted) {
 			for (ConfigAttribute configAttr : attributes) {
 				if (AuthorityConfigAttribute.class.isAssignableFrom(configAttr.getClass())) {
 					AuthorityConfigAttribute attr = (AuthorityConfigAttribute) configAttr;

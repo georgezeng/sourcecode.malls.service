@@ -24,6 +24,7 @@ import com.sourcecode.malls.admin.domain.User;
 import com.sourcecode.malls.admin.dto.RoleDTO;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.properties.SuperAdminProperties;
+import com.sourcecode.malls.admin.properties.UserProperties;
 import com.sourcecode.malls.admin.repository.jpa.impl.RoleRepository;
 import com.sourcecode.malls.admin.repository.jpa.impl.UserRepository;
 import com.sourcecode.malls.admin.service.base.JpaService;
@@ -40,6 +41,9 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 
 	@Autowired
 	private SuperAdminProperties superAdminProperties;
+	
+	@Autowired
+	private UserProperties userProperties;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -64,7 +68,7 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 		} else {
 			user.setPassword(passwordEncoder.encode(superAdminProperties.getPassword()));
 		}
-		user.setHeader(superAdminProperties.getHeader());
+		user.setHeader(userProperties.getAvatar());
 		user.setEmail(superAdminProperties.getEmail());
 		user.setEnabled(true);
 		userRepository.save(user);

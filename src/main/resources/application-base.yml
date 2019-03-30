@@ -30,7 +30,9 @@ spring:
 super-admin:
   code: SUPER_ADMIN
   authority: AUTH_SUPER_ADMIN
-  header: /common/header.png
+
+user:
+  avatar: common/header.png
 
 session:
   attributes:

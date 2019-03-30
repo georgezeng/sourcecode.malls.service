@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.druid.util.StringUtils;
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
@@ -14,6 +15,7 @@ import com.aliyuncs.IAcsClient;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sourcecode.malls.admin.exception.BusinessException;
 import com.sourcecode.malls.admin.properties.AliyunProperties;
 import com.sourcecode.malls.admin.properties.SmsProperties;
 
@@ -48,10 +50,17 @@ public class SmsService {
 			request.putQueryParameter("TemplateParam", mapper.writeValueAsString(payload));
 			CommonResponse response = client.getCommonResponse(request);
 			String json = response.getData();
-			Map<String, Object> result = mapper.readValue(json, Map.class);
+			Map<String, String> result = mapper.readValue(json, Map.class);
 			if (!result.get("Code").equals("OK")) {
-				throw new RuntimeException(result.get("message").toString());
+				String msg = result.get("message");
+				if (!StringUtils.isEmpty(msg)) {
+					throw new BusinessException(msg);
+				} else {
+					throw new BusinessException("发送失败, code: " + result.get("Code"));
+				}
 			}
+		} catch (BusinessException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}

@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,8 +28,7 @@ import com.sourcecode.malls.admin.web.security.strategy.LoginFailureStrategy;
 import com.sourcecode.malls.admin.web.security.strategy.LoginSuccessfulStrategy;
 import com.sourcecode.malls.admin.web.security.voter.AuthorityVoter;
 
-@Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private SuperAdminProperties adminProperties;
 	@Autowired
@@ -70,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		before(http);
 		successHandler.setRedirectStrategy(loginSuccessfulStrategy);
 		SimpleUrlAuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
 		failureHandler.setRedirectStrategy(loginFailureStrategy);
@@ -103,11 +102,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/fonts/**").permitAll();
 		http.authorizeRequests().antMatchers("/img/**").permitAll();
 		http.authorizeRequests().antMatchers("/favicon.ico").permitAll();
+		http.authorizeRequests().antMatchers("/user/current").authenticated();
+		http.authorizeRequests().antMatchers("/message/count").authenticated();
 		http.authorizeRequests().anyRequest().hasAuthority(adminProperties.getAuthority());
 		http.addFilterBefore(errorHandlerFilter, ChannelProcessingFilter.class);
 		http.addFilterAfter(loggingFilter, ChannelProcessingFilter.class);
 		http.addFilterBefore(userSessionFilter, FilterSecurityInterceptor.class);
 		// http.addFilterAfter(openEntityManagerInViewFilter, ErrorHandlerFilter.class);
+		after(http);
 	}
+	
+	protected abstract void before(HttpSecurity http) throws Exception;
+	protected abstract void after(HttpSecurity http) throws Exception;
 
 }

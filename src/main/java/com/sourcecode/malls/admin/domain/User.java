@@ -49,17 +49,6 @@ public class User extends BaseUser implements UserDetails {
 		this.confirmPassword = confirmPassword;
 	}
 
-	@Transient
-	private String verifyCode;
-
-	public String getVerifyCode() {
-		return verifyCode;
-	}
-
-	public void setVerifyCode(String verifyCode) {
-		this.verifyCode = verifyCode;
-	}
-
 	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private Set<Role> roles;
 
