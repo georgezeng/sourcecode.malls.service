@@ -55,7 +55,7 @@ public class AuthorityController {
 		return new ResultBean<>();
 	}
 
-	@RequestMapping(value = "/one/p/{id}")
+	@RequestMapping(value = "/one/params/{id}")
 	public ResultBean<AuthorityDTO> findOne(@PathVariable Long id) {
 		Optional<Authority> dataOp = authorityService.findById(id);
 		AssertUtil.assertTrue(dataOp.isPresent(), "查找不到相应的记录");

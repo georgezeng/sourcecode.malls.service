@@ -55,7 +55,7 @@ public class RoleController {
 		return new ResultBean<>();
 	}
 
-	@RequestMapping(value = "/one/p/{id}")
+	@RequestMapping(value = "/one/params/{id}")
 	public ResultBean<RoleDTO> findOne(@PathVariable("id") Long id) {
 		Optional<Role> dataOp = roleService.findById(id);
 		AssertUtil.assertTrue(dataOp.isPresent(), "查找不到相应的记录");

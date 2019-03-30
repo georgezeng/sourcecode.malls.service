@@ -80,7 +80,7 @@ public class UserController {
 		return new ResultBean<>();
 	}
 
-	@RequestMapping(value = "/one/p/{id}")
+	@RequestMapping(value = "/one/params/{id}")
 	public ResultBean<UserDTO> findOne(@PathVariable Long id) {
 		Optional<User> dataOp = userService.findById(id);
 		AssertUtil.assertTrue(dataOp.isPresent(), "查找不到相应的记录");
@@ -108,7 +108,7 @@ public class UserController {
 		return new ResultBean<>(dataOp.get().asDTO(true));
 	}
 
-	@RequestMapping(value = "/upload/header/p/{id}")
+	@RequestMapping(value = "/upload/header/params/{id}")
 	public ResultBean<String> uploadHeader(@RequestParam("file") MultipartFile file, @PathVariable Long id) throws IOException {
 		String filePath = "temp/header/" + System.nanoTime() + ".png";
 		fileService.upload(true, filePath, file.getInputStream());
