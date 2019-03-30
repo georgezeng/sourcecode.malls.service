@@ -28,11 +28,11 @@ public class Role extends BaseRole {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "${spring.datasource.table.user_role}", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> users;
 
-	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<Authority> authorities;
 
 	public Set<GrantedAuthority> getGrantedAuthorities() {

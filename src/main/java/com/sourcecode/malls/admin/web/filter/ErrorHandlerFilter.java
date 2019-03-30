@@ -6,6 +6,9 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +40,27 @@ public class ErrorHandlerFilter extends GenericFilterBean {
 				if (BusinessException.class.isAssignableFrom(e.getClass())) {
 					BusinessException ex = (BusinessException) e;
 					msg = ex.getMessage();
+				} else if (ValidationException.class.isAssignableFrom(e.getClass())) {
+					if (ConstraintViolationException.class.isAssignableFrom(e.getClass())) {
+						ConstraintViolationException cve = (ConstraintViolationException) e;
+						for (ConstraintViolation<?> cv : cve.getConstraintViolations()) {
+							msg = cv.getMessage();
+							break;
+						}
+					}
 				} else if (NestedServletException.class.isAssignableFrom(e.getClass())) {
 					Throwable cause = ((NestedServletException) e).getRootCause();
 					if (BusinessException.class.isAssignableFrom(cause.getClass())) {
 						BusinessException ex = (BusinessException) cause;
 						msg = ex.getMessage();
+					} else if (ValidationException.class.isAssignableFrom(cause.getClass())) {
+						if (ConstraintViolationException.class.isAssignableFrom(cause.getClass())) {
+							ConstraintViolationException cve = (ConstraintViolationException) cause;
+							for (ConstraintViolation<?> cv : cve.getConstraintViolations()) {
+								msg = cv.getMessage();
+								break;
+							}
+						}
 					}
 				}
 				if (msg == null) {

@@ -1,6 +1,12 @@
 package com.sourcecode.malls.admin.domain.base;
 
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import com.sourcecode.malls.admin.constants.RegexpConstant;
 
 @MappedSuperclass
 public abstract class BaseUser extends LongKeyEntity {
@@ -9,11 +15,21 @@ public abstract class BaseUser extends LongKeyEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
+	@NotBlank(message = "用户名不能为空")
+	@Size(min = 5, max = 50, message = "用户名长度必须在5-50之间")
 	private String username;
+	@NotBlank(message = "密码不能为空")
+	@Size(min = 8, max = 50, message = "密码长度必须在8-50之间")
+	@Pattern(regexp = RegexpConstant.PASSWORD_PATTERN, message = "密码必须包含大小写字母以及数字且长度不小于8位")
 	private String password;
+	@NotBlank(message = "邮箱不能为空")
+	@Size(min = 5, max = 50, message = "邮箱长度必须在5-50之间")
+	@Email
 	private String email;
+	@Pattern(regexp = RegexpConstant.MOBILE_PATTERN, message = "手机必须是11位数字")
 	private String mobile;
+	@NotBlank(message = "头像不能为空")
 	private String header;
 	private boolean enabled;
 
