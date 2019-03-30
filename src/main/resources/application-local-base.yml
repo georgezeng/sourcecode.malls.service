@@ -9,7 +9,7 @@ spring:
        
 super-admin:
   username: admin
-  password: 111111
+  password: 11111111
   email: tt@test.com
         
 session:
