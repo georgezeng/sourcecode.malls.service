@@ -20,8 +20,7 @@ public abstract class BaseUser extends LongKeyEntity {
 	@Size(min = 5, max = 50, message = "用户名长度必须在5-50之间")
 	private String username;
 	@NotBlank(message = "密码不能为空")
-	@Size(min = 8, max = 50, message = "密码长度必须在8-50之间")
-	@Pattern(regexp = RegexpConstant.PASSWORD_PATTERN, message = "密码必须包含大小写字母以及数字且长度不小于8位")
+	@Size(max = 255, message = "密码长度小于255位")
 	private String password;
 	@NotBlank(message = "邮箱不能为空")
 	@Size(min = 5, max = 50, message = "邮箱长度必须在5-50之间")
