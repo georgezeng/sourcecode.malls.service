@@ -19,7 +19,6 @@ public abstract class BaseAuthority extends LongKeyEntity {
 	@NotBlank(message = "链接不能为空")
 	@Size(min = 2, max = 255, message = "链接长度必须在2-255之间")
 	private String link;
-	@NotBlank(message = "请求方法不能为空")
 	private String method;
 	@Size(min = 0, max = 255, message = "描述长度必须在2-255之间")
 	private String description;
