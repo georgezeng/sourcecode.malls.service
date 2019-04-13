@@ -33,7 +33,7 @@ public class AuthorityFilterSecurityMetadataSource implements FilterInvocationSe
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		List<ConfigAttribute> attrs = new ArrayList<ConfigAttribute>(originSource.getAttributes(object));
 		HttpServletRequest request = ((FilterInvocation) object).getRequest();
-		String link = request.getRequestURI().split("\\/p\\/")[0];
+		String link = request.getRequestURI().split("\\/params\\/")[0];
 		Optional<Authority> authOp = authorityService.findByLink(link);
 		attrs.add(new AuthorityConfigAttribute(authOp.orElse(null)));
 		return attrs;
