@@ -1,11 +1,11 @@
-package com.sourcecode.malls.admin.dto;
+package com.sourcecode.malls.admin.dto.system.setting;
 
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
-import com.sourcecode.malls.admin.domain.User;
 import com.sourcecode.malls.admin.domain.base.BaseUser;
+import com.sourcecode.malls.admin.domain.system.setting.User;
 
 public class UserDTO extends BaseUser {
 	/**

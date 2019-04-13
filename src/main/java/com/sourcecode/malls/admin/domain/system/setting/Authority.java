@@ -1,4 +1,4 @@
-package com.sourcecode.malls.admin.domain;
+package com.sourcecode.malls.admin.domain.system.setting;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.admin.domain.base.BaseAuthority;
-import com.sourcecode.malls.admin.dto.AuthorityDTO;
+import com.sourcecode.malls.admin.dto.system.setting.AuthorityDTO;
 
 @Table(name = "${spring.datasource.table.authority}")
 @Entity

@@ -1,7 +1,7 @@
 package com.sourcecode.malls.admin.domain.base;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;

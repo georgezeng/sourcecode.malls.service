@@ -19,10 +19,10 @@ import org.springframework.util.CollectionUtils;
 
 import com.alibaba.druid.util.StringUtils;
 import com.sourcecode.malls.admin.constants.EnvConstant;
-import com.sourcecode.malls.admin.domain.Role;
-import com.sourcecode.malls.admin.domain.User;
-import com.sourcecode.malls.admin.dto.RoleDTO;
+import com.sourcecode.malls.admin.domain.system.setting.Role;
+import com.sourcecode.malls.admin.domain.system.setting.User;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
+import com.sourcecode.malls.admin.dto.system.setting.RoleDTO;
 import com.sourcecode.malls.admin.properties.SuperAdminProperties;
 import com.sourcecode.malls.admin.properties.UserProperties;
 import com.sourcecode.malls.admin.repository.jpa.impl.RoleRepository;
@@ -106,10 +106,10 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 
 	@Transactional(readOnly = true)
 	public Page<User> findAll(QueryInfo<String> queryInfo) {
-		String nameOrCode = queryInfo.getData();
+		String searchText = queryInfo.getData();
 		Page<User> pageReulst = null;
-		if (!StringUtils.isEmpty(nameOrCode)) {
-			String like = "%" + nameOrCode + "%";
+		if (!StringUtils.isEmpty(searchText)) {
+			String like = "%" + searchText + "%";
 			pageReulst = userRepository.findAllByUsernameLike(like, queryInfo.getPage().pageable());
 		} else {
 			pageReulst = userRepository.findAll(queryInfo.getPage().pageable());

@@ -1,11 +1,11 @@
-package com.sourcecode.malls.admin.dto;
+package com.sourcecode.malls.admin.dto.system.setting;
 
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
-import com.sourcecode.malls.admin.domain.Role;
 import com.sourcecode.malls.admin.domain.base.BaseRole;
+import com.sourcecode.malls.admin.domain.system.setting.Role;
 
 public class RoleDTO extends BaseRole {
 	/**

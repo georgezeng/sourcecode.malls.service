@@ -1,6 +1,6 @@
 package com.sourcecode.malls.admin.context;
 
-import com.sourcecode.malls.admin.domain.User;
+import com.sourcecode.malls.admin.domain.system.setting.User;
 
 public final class UserContext {
 	private static final ThreadLocal<User> value = new ThreadLocal<>();

@@ -1,9 +1,9 @@
-package com.sourcecode.malls.admin.dto;
+package com.sourcecode.malls.admin.dto.system.setting;
 
 import org.springframework.beans.BeanUtils;
 
-import com.sourcecode.malls.admin.domain.Authority;
 import com.sourcecode.malls.admin.domain.base.BaseAuthority;
+import com.sourcecode.malls.admin.domain.system.setting.Authority;
 
 public class AuthorityDTO extends BaseAuthority {
 	/**

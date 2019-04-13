@@ -13,7 +13,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
 
-import com.sourcecode.malls.admin.domain.Authority;
+import com.sourcecode.malls.admin.domain.system.setting.Authority;
 import com.sourcecode.malls.admin.service.impl.AuthorityService;
 import com.sourcecode.malls.admin.web.security.config.attribute.AuthorityConfigAttribute;
 

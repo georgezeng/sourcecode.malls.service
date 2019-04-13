@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sourcecode.malls.admin.context.UserContext;
-import com.sourcecode.malls.admin.domain.User;
-import com.sourcecode.malls.admin.dto.UserDTO;
+import com.sourcecode.malls.admin.domain.system.setting.User;
 import com.sourcecode.malls.admin.dto.base.KeyDTO;
 import com.sourcecode.malls.admin.dto.base.ResultBean;
 import com.sourcecode.malls.admin.dto.query.PageResult;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
+import com.sourcecode.malls.admin.dto.system.setting.UserDTO;
 import com.sourcecode.malls.admin.service.FileOnlineSystemService;
 import com.sourcecode.malls.admin.service.impl.RoleService;
 import com.sourcecode.malls.admin.service.impl.UserService;

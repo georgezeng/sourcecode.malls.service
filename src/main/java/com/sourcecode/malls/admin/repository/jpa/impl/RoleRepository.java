@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.sourcecode.malls.admin.domain.Role;
+import com.sourcecode.malls.admin.domain.system.setting.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
 	Optional<Role> findByCode(String code);

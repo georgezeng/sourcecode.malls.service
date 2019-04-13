@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 import com.sourcecode.malls.admin.context.UserContext;
-import com.sourcecode.malls.admin.domain.User;
+import com.sourcecode.malls.admin.domain.system.setting.User;
 import com.sourcecode.malls.admin.exception.BusinessException;
 import com.sourcecode.malls.admin.properties.SessionAttributesProperties;
 import com.sourcecode.malls.admin.service.impl.UserService;

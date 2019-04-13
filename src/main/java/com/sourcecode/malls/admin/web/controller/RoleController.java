@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sourcecode.malls.admin.domain.Role;
-import com.sourcecode.malls.admin.dto.RoleDTO;
+import com.sourcecode.malls.admin.domain.system.setting.Role;
 import com.sourcecode.malls.admin.dto.base.KeyDTO;
 import com.sourcecode.malls.admin.dto.base.ResultBean;
 import com.sourcecode.malls.admin.dto.query.PageResult;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
+import com.sourcecode.malls.admin.dto.system.setting.RoleDTO;
 import com.sourcecode.malls.admin.service.impl.RoleService;
 import com.sourcecode.malls.admin.util.AssertUtil;
 

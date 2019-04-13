@@ -1,13 +1,14 @@
 package com.sourcecode.malls.admin.domain.listener;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 import com.sourcecode.malls.admin.context.UserContext;
-import com.sourcecode.malls.admin.domain.User;
 import com.sourcecode.malls.admin.domain.base.BaseEntity;
+import com.sourcecode.malls.admin.domain.system.setting.User;
 import com.sourcecode.malls.admin.util.DateUtil;
 
 public class CommonUpdateListener {

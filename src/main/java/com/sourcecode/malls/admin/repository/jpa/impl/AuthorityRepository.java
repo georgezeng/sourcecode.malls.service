@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.sourcecode.malls.admin.domain.Authority;
+import com.sourcecode.malls.admin.domain.system.setting.Authority;
 
 public interface AuthorityRepository extends JpaRepository<Authority, Long> {
 	Optional<Authority> findByCode(String code);

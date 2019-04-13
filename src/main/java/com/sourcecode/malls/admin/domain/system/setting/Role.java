@@ -1,4 +1,4 @@
-package com.sourcecode.malls.admin.domain;
+package com.sourcecode.malls.admin.domain.system.setting;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.sourcecode.malls.admin.domain.base.BaseRole;
-import com.sourcecode.malls.admin.dto.RoleDTO;
+import com.sourcecode.malls.admin.dto.system.setting.RoleDTO;
 
 @Table(name = "${spring.datasource.table.role}")
 @Entity

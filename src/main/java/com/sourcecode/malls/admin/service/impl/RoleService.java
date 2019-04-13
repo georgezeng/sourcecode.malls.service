@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.alibaba.druid.util.StringUtils;
-import com.sourcecode.malls.admin.domain.Authority;
-import com.sourcecode.malls.admin.domain.Role;
-import com.sourcecode.malls.admin.domain.User;
-import com.sourcecode.malls.admin.dto.AuthorityDTO;
-import com.sourcecode.malls.admin.dto.RoleDTO;
-import com.sourcecode.malls.admin.dto.UserDTO;
+import com.sourcecode.malls.admin.domain.system.setting.Authority;
+import com.sourcecode.malls.admin.domain.system.setting.Role;
+import com.sourcecode.malls.admin.domain.system.setting.User;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
+import com.sourcecode.malls.admin.dto.system.setting.AuthorityDTO;
+import com.sourcecode.malls.admin.dto.system.setting.RoleDTO;
+import com.sourcecode.malls.admin.dto.system.setting.UserDTO;
 import com.sourcecode.malls.admin.properties.SuperAdminProperties;
 import com.sourcecode.malls.admin.repository.jpa.impl.RoleRepository;
 import com.sourcecode.malls.admin.repository.jpa.impl.UserRepository;
@@ -57,10 +57,10 @@ public class RoleService implements JpaService<Role, Long> {
 
 	@Transactional(readOnly = true)
 	public Page<Role> findAll(QueryInfo<String> queryInfo) {
-		String nameOrCode = queryInfo.getData();
+		String searchText = queryInfo.getData();
 		Page<Role> pageReulst = null;
-		if (!StringUtils.isEmpty(nameOrCode)) {
-			String like = "%" + nameOrCode + "%";
+		if (!StringUtils.isEmpty(searchText)) {
+			String like = "%" + searchText + "%";
 			pageReulst = roleRepository.findAllByCodeLikeOrNameLike(like, like, queryInfo.getPage().pageable());
 		} else {
 			pageReulst = roleRepository.findAll(queryInfo.getPage().pageable());

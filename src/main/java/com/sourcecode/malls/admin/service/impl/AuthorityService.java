@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.druid.util.StringUtils;
-import com.sourcecode.malls.admin.domain.Authority;
-import com.sourcecode.malls.admin.domain.Role;
+import com.sourcecode.malls.admin.domain.system.setting.Authority;
+import com.sourcecode.malls.admin.domain.system.setting.Role;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.properties.SuperAdminProperties;
 import com.sourcecode.malls.admin.repository.jpa.impl.AuthorityRepository;
@@ -39,10 +39,10 @@ public class AuthorityService implements JpaService<Authority, Long> {
 
 	@Transactional(readOnly = true)
 	public Page<Authority> findAll(QueryInfo<String> queryInfo) {
-		String nameOrCode = queryInfo.getData();
+		String searchText = queryInfo.getData();
 		Page<Authority> pageReulst = null;
-		if (!StringUtils.isEmpty(nameOrCode)) {
-			String like = "%" + nameOrCode + "%";
+		if (!StringUtils.isEmpty(searchText)) {
+			String like = "%" + searchText + "%";
 			pageReulst = authorityRepository.findAllByCodeLikeOrNameLike(like, like, queryInfo.getPage().pageable());
 		} else {
 			pageReulst = authorityRepository.findAll(queryInfo.getPage().pageable());
