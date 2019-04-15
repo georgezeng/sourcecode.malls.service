@@ -14,8 +14,18 @@ public class UserDTO extends BaseUser {
 	private static final long serialVersionUID = 1L;
 
 	private List<RoleDTO> roles;
-	
+
 	private List<String> authorities;
+
+	private String accountText;
+
+	public String getAccountText() {
+		return accountText;
+	}
+
+	public void setAccountText(String accountText) {
+		this.accountText = accountText;
+	}
 
 	public List<String> getAuthorities() {
 		return authorities;

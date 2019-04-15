@@ -61,9 +61,9 @@ public class RoleService implements JpaService<Role, Long> {
 		Page<Role> pageReulst = null;
 		if (!StringUtils.isEmpty(searchText)) {
 			String like = "%" + searchText + "%";
-			pageReulst = roleRepository.findAllByCodeLikeOrNameLike(like, like, queryInfo.getPage().pageable());
+			pageReulst = roleRepository.findAllByHiddenAndCodeLikeOrNameLike(false, like, like, queryInfo.getPage().pageable());
 		} else {
-			pageReulst = roleRepository.findAll(queryInfo.getPage().pageable());
+			pageReulst = roleRepository.findAllByHidden(false, queryInfo.getPage().pageable());
 		}
 		return pageReulst;
 	}

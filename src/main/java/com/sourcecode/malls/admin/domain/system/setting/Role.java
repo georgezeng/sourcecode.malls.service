@@ -34,6 +34,8 @@ public class Role extends BaseRole {
 
 	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<Authority> authorities;
+	
+	private boolean hidden;
 
 	public Set<GrantedAuthority> getGrantedAuthorities() {
 		Set<GrantedAuthority> set = new HashSet<>();
@@ -43,6 +45,14 @@ public class Role extends BaseRole {
 			}
 		}
 		return set;
+	}
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
 	}
 
 	public void addAuthority(Authority auth) {

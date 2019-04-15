@@ -102,6 +102,8 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/fonts/**").permitAll();
 		http.authorizeRequests().antMatchers("/img/**").permitAll();
 		http.authorizeRequests().antMatchers("/favicon.ico").permitAll();
+		http.authorizeRequests().antMatchers("/**/register/**").permitAll();
+		http.authorizeRequests().antMatchers("/**/forgetPassword/**").permitAll();
 		http.authorizeRequests().antMatchers("/user/current").authenticated();
 		http.authorizeRequests().antMatchers("/message/count").authenticated();
 		http.authorizeRequests().anyRequest().hasAuthority(adminProperties.getAuthority());

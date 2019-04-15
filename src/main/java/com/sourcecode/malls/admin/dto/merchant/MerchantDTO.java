@@ -1,9 +1,13 @@
 package com.sourcecode.malls.admin.dto.merchant;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.admin.domain.base.BaseUser;
 import com.sourcecode.malls.admin.domain.merchant.Merchant;
+import com.sourcecode.malls.admin.dto.system.setting.AuthorityDTO;
 
 public class MerchantDTO extends BaseUser {
 	/**
@@ -14,6 +18,20 @@ public class MerchantDTO extends BaseUser {
 	private String status;
 
 	private String searchText;
+	
+	private List<AuthorityDTO> authorities = new ArrayList<>();
+	
+	public void addAuthority(AuthorityDTO authority) {
+		authorities.add(authority);
+	}
+
+	public List<AuthorityDTO> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(List<AuthorityDTO> authorities) {
+		this.authorities = authorities;
+	}
 
 	public String getStatus() {
 		return status;

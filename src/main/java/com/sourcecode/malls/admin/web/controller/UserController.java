@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.druid.util.StringUtils;
 import com.sourcecode.malls.admin.context.UserContext;
 import com.sourcecode.malls.admin.domain.system.setting.User;
 import com.sourcecode.malls.admin.dto.base.KeyDTO;
@@ -28,6 +29,7 @@ import com.sourcecode.malls.admin.service.FileOnlineSystemService;
 import com.sourcecode.malls.admin.service.impl.RoleService;
 import com.sourcecode.malls.admin.service.impl.UserService;
 import com.sourcecode.malls.admin.util.AssertUtil;
+import com.sourcecode.malls.admin.util.RegexpUtil;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -67,7 +69,11 @@ public class UserController {
 			BeanUtils.copyProperties(dto, data, "id", "username", "password", "roles");
 		} else {
 			data = dto.asEntity();
-			data.setPassword(pwdEncoder.encode(data.getPassword()));
+		}
+		if (!StringUtils.isEmpty(dto.getPassword())) {
+			AssertUtil.assertTrue(RegexpUtil.matchPassword(dto.getPassword()), "密码必须数字+字母（区分大小写）并且不少于8位");
+			AssertUtil.assertTrue(dto.getPassword().equals(dto.getConfirmPassword()), "确认密码与密码不一致");
+			data.setPassword(pwdEncoder.encode(dto.getPassword()));
 		}
 		if (userService.isSuperAdmin(data)) {
 			AssertUtil.assertTrue(data.isEnabled(), "不能禁用超级管理员");

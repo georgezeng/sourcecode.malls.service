@@ -10,9 +10,10 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,20 +39,21 @@ public class User extends BaseUser implements UserDetails {
 	private User(String username) {
 		super(username);
 	}
-	
-	@Transient
-	private String confirmPassword;
-
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
 
 	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<Role> roles;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "parent_id")
+	private User parent;
+
+	public User getParent() {
+		return parent;
+	}
+
+	public void setParent(User parent) {
+		this.parent = parent;
+	}
 
 	public Set<Role> getRoles() {
 		return roles;
@@ -101,6 +103,7 @@ public class User extends BaseUser implements UserDetails {
 	public UserDTO asDTO(boolean withRoles) {
 		UserDTO dto = new UserDTO();
 		BeanUtils.copyProperties(this, dto, "password", "roles");
+		dto.setAccountText(parent != null ? "副账号" : "主账号");
 		if (withRoles) {
 			if (roles != null) {
 				dto.setRoles(roles.stream().map(role -> role.asDTO()).collect(Collectors.toList()));

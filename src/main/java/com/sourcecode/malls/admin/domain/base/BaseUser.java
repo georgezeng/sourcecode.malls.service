@@ -1,6 +1,7 @@
 package com.sourcecode.malls.admin.domain.base;
 
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -31,6 +32,17 @@ public abstract class BaseUser extends LongKeyEntity {
 	@NotBlank(message = "头像不能为空")
 	private String header;
 	private boolean enabled;
+
+	@Transient
+	private String confirmPassword;
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 
 	public BaseUser() {
 

@@ -1,9 +1,10 @@
 package com.sourcecode.malls.admin.dto.query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PageResult<T> {
-	private List<T> list;
+	private List<T> list = new ArrayList<>();
 	private long total;
 
 	public PageResult() {

@@ -18,6 +18,7 @@ import com.sourcecode.malls.admin.dto.base.ResultBean;
 import com.sourcecode.malls.admin.dto.query.PageResult;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.dto.system.setting.AuthorityDTO;
+import com.sourcecode.malls.admin.repository.jpa.impl.AuthorityRepository;
 import com.sourcecode.malls.admin.service.impl.AuthorityService;
 import com.sourcecode.malls.admin.util.AssertUtil;
 
@@ -27,6 +28,9 @@ public class AuthorityController {
 
 	@Autowired
 	private AuthorityService authorityService;
+	
+	@Autowired
+	private AuthorityRepository authorityRepository;
 
 	@RequestMapping(value = "/list")
 	public ResultBean<PageResult<AuthorityDTO>> list(@RequestBody QueryInfo<String> queryInfo) {
@@ -49,6 +53,8 @@ public class AuthorityController {
 			AssertUtil.assertTrue(!authorityService.isSuperAdmin(data), "不能修改超级管理员权限");
 			BeanUtils.copyProperties(dto, data, "id");
 		} else {
+			Optional<Authority> oldDataOp = authorityRepository.findByCode(dto.getCode());
+			AssertUtil.assertTrue(!oldDataOp.isPresent(), "编号已存在");
 			data = dto.asEntity();
 		}
 		authorityService.save(data);
