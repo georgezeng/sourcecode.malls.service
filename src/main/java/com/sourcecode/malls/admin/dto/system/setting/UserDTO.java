@@ -18,6 +18,16 @@ public class UserDTO extends BaseUser {
 	private List<String> authorities;
 
 	private String accountText;
+	
+	private String oldPassword;
+
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
 
 	public String getAccountText() {
 		return accountText;

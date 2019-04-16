@@ -107,6 +107,20 @@ public class UserController {
 		return new ResultBean<>();
 	}
 
+	@RequestMapping(value = "/modifyPassword")
+	public ResultBean<Void> modifyPassword(@RequestBody UserDTO dto) {
+		AssertUtil.assertTrue(!StringUtils.isEmpty(dto.getOldPassword()), "旧密码不能为空");
+		AssertUtil.assertTrue(!StringUtils.isEmpty(dto.getPassword()), "新密码不能为空");
+		AssertUtil.assertTrue(!StringUtils.isEmpty(dto.getConfirmPassword()), "确认密码不能为空");
+		AssertUtil.assertTrue(RegexpUtil.matchPassword(dto.getPassword()), "密码必须数字+字母（区分大小写）并且不少于8位");
+		AssertUtil.assertTrue(dto.getPassword().equals(dto.getConfirmPassword()), "确认密码与密码不一致");
+		User user = UserContext.get();
+		AssertUtil.assertTrue(pwdEncoder.matches(dto.getOldPassword(), user.getPassword()), "旧密码有误");
+		user.setPassword(pwdEncoder.encode(dto.getPassword()));
+		userService.save(user);
+		return new ResultBean<>();
+	}
+
 	@RequestMapping(value = "/current/authorities")
 	public ResultBean<UserDTO> getCurrentUserAuthorities() {
 		Optional<User> dataOp = userService.findById(UserContext.get().getId());

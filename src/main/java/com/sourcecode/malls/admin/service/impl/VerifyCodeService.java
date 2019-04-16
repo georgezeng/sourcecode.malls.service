@@ -25,15 +25,15 @@ public class VerifyCodeService {
 	@Autowired
 	private CodeStoreRepository codeStoreRepository;
 
-	public void sendRegisterCode(String mobile, HttpSession session, String attr, String key) {
-		sendCode(mobile, session, attr, key, "SMS_162450479");
+	public void sendRegisterCode(String mobile, HttpSession session, String attr, String category) {
+		sendCode(mobile, session, attr, category, "SMS_162450479");
 	}
 
-	public void sendForgetPasswordCode(String mobile, HttpSession session, String attr, String key) {
-		sendCode(mobile, session, attr, key, "SMS_162450478");
+	public void sendForgetPasswordCode(String mobile, HttpSession session, String attr, String category) {
+		sendCode(mobile, session, attr, category, "SMS_162450478");
 	}
 
-	private void sendCode(String mobile, HttpSession session, String attr, String key, String codeId) {
+	private void sendCode(String mobile, HttpSession session, String attr, String category, String codeId) {
 		Date sendTime = (Date) session.getAttribute(attr);
 		if (sendTime != null) {
 			Calendar c = Calendar.getInstance();
@@ -41,8 +41,8 @@ public class VerifyCodeService {
 			c.add(Calendar.SECOND, 30);
 			AssertUtil.assertTrue(new Date().after(c.getTime()), "操作太频繁，请稍后重试");
 		}
-		Optional<CodeStore> codeStoreOp = codeStoreRepository.findByCategoryAndKey(key, mobile);
-		CodeStore codeStore = codeStoreOp.orElse(new CodeStore(key, mobile, CodeUtil.generateRandomNumbers(6)));
+		Optional<CodeStore> codeStoreOp = codeStoreRepository.findByCategoryAndKey(category, mobile);
+		CodeStore codeStore = codeStoreOp.orElse(new CodeStore(category, mobile, CodeUtil.generateRandomNumbers(6)));
 		if (codeStore.getId() != null) {
 			codeStore.setValue(CodeUtil.generateRandomNumbers(6));
 		}

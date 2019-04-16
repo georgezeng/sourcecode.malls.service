@@ -1,5 +1,6 @@
 package com.sourcecode.malls.admin.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +57,8 @@ public class AuthorityService implements JpaService<Authority, Long> {
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<Authority> findByLink(String link) {
-		return authorityRepository.findByLink(link);
+	public List<Authority> findAllByLink(String link) {
+		return authorityRepository.findAllByLink(link);
 	}
 
 	@Override
