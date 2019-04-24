@@ -26,6 +26,10 @@ spring:
       test-on-borrow: true
       test-while-idle: true
       validation-query: SELECT 1
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
        
 super-admin:
   code: SUPER_ADMIN
@@ -34,9 +38,12 @@ super-admin:
 user:
   avatar: common/header.png
 
+application:
+  img: common/img.png
+
 session:
   attributes:
     userId: userId
 
 aliyun:
-  region-id: cn-shenzhen    
+  region-id: cn-shenzhen   

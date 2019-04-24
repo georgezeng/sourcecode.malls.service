@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.CollectionUtils;
@@ -43,6 +46,12 @@ public class UserController {
 	@Autowired
 	private FileOnlineSystemService fileService;
 
+	@Value("${user.avatar}")
+	private String avatar;
+
+	@Value("${user.type.name}")
+	private String userDir;
+
 	@RequestMapping(value = "/current")
 	public ResultBean<UserDTO> currentUser() {
 		return new ResultBean<>(UserContext.get().asDTO());
@@ -51,11 +60,8 @@ public class UserController {
 	@RequestMapping(value = "/list")
 	public ResultBean<PageResult<UserDTO>> list(@RequestBody QueryInfo<String> queryInfo) {
 		Page<User> pageResult = userService.findAll(queryInfo);
-		PageResult<UserDTO> dtoResult = new PageResult<>();
-		if (pageResult.hasContent()) {
-			dtoResult = new PageResult<>(pageResult.getContent().stream().map(data -> data.asDTO()).collect(Collectors.toList()),
-					pageResult.getTotalElements());
-		}
+		PageResult<UserDTO> dtoResult = new PageResult<>(pageResult.getContent().stream().map(data -> data.asDTO()).collect(Collectors.toList()),
+				pageResult.getTotalElements());
 		return new ResultBean<>(dtoResult);
 	}
 
@@ -80,14 +86,22 @@ public class UserController {
 		} else if (dto.getRoles() != null) {
 			AssertUtil.assertTrue(!dto.getRoles().stream().anyMatch(role -> roleService.isSuperAdmin(role)), "不能设置超级管理员");
 		}
+		String newPath = null;
+		String tempPath = data.getHeader();
+		if (tempPath != null && tempPath.startsWith("temp")) {
+			newPath = userDir + "/" + data.getId() + "/header.png";
+			data.setHeader(newPath);
+		}
 		userService.relateToRoles(data, dto.getRoles());
-		byte[] buf = fileService.load(true, data.getHeader());
-		fileService.upload(true, "user/" + data.getId() + "/header.png", new ByteArrayInputStream(buf));
+		if (newPath != null) {
+			byte[] buf = fileService.load(false, tempPath);
+			fileService.upload(false, newPath, new ByteArrayInputStream(buf));
+		}
 		return new ResultBean<>();
 	}
 
 	@RequestMapping(value = "/one/params/{id}")
-	public ResultBean<UserDTO> findOne(@PathVariable Long id) {
+	public ResultBean<UserDTO> load(@PathVariable Long id) {
 		Optional<User> dataOp = userService.findById(id);
 		AssertUtil.assertTrue(dataOp.isPresent(), "查找不到相应的记录");
 		return new ResultBean<>(dataOp.get().asDTO(true));
@@ -128,10 +142,34 @@ public class UserController {
 		return new ResultBean<>(dataOp.get().asDTO(true));
 	}
 
-	@RequestMapping(value = "/upload/header/params/{id}")
-	public ResultBean<String> uploadHeader(@RequestParam("file") MultipartFile file, @PathVariable Long id) throws IOException {
-		String filePath = "temp/header/" + System.nanoTime() + ".png";
-		fileService.upload(true, filePath, file.getInputStream());
+	@RequestMapping(value = "/header/upload")
+	public ResultBean<String> uploadHeader(@RequestParam("file") MultipartFile file) throws IOException {
+		String filePath = "temp/header/" + userDir + "/" + UserContext.get().getId() + "/" + System.nanoTime() + ".png";
+		fileService.upload(false, filePath, file.getInputStream());
 		return new ResultBean<>(filePath);
+	}
+
+	@RequestMapping(value = "/header/load/current")
+	public Resource loadHeader() {
+		return loadHeader(UserContext.get().getId());
+	}
+
+	@RequestMapping(value = "/header/load/params/{id}")
+	public Resource loadHeader(@PathVariable Long id) {
+		Optional<User> userOp = userService.findById(id);
+		AssertUtil.assertTrue(userOp.isPresent(), "找不到用户");
+		String header = userOp.get().getHeader();
+		if (!StringUtils.isEmpty(header) && !header.equals(avatar)) {
+			return new ByteArrayResource(fileService.load(false, header));
+		} else {
+			return new ByteArrayResource(fileService.load(true, avatar));
+		}
+	}
+
+	@RequestMapping(value = "/header/preview/params/{id}")
+	public Resource previewHeader(@RequestParam String filePath, @PathVariable Long id) {
+		AssertUtil.assertTrue(filePath.startsWith("temp/header/" + userDir + "/" + id + "/") || filePath.equals(userDir + "/" + id + "/header.png"),
+				"图片路径不合法");
+		return new ByteArrayResource(fileService.load(false, filePath));
 	}
 }

@@ -31,11 +31,8 @@ public class RoleController {
 	@RequestMapping(value = "/list")
 	public ResultBean<PageResult<RoleDTO>> list(@RequestBody QueryInfo<String> queryInfo) {
 		Page<Role> pageResult = roleService.findAll(queryInfo);
-		PageResult<RoleDTO> dtoResult = new PageResult<>();
-		if (pageResult.hasContent()) {
-			dtoResult = new PageResult<>(pageResult.getContent().stream().map(data -> data.asDTO()).collect(Collectors.toList()),
-					pageResult.getTotalElements());
-		}
+		PageResult<RoleDTO> dtoResult = new PageResult<>(pageResult.getContent().stream().map(data -> data.asDTO()).collect(Collectors.toList()),
+				pageResult.getTotalElements());
 		return new ResultBean<>(dtoResult);
 	}
 
@@ -56,7 +53,7 @@ public class RoleController {
 	}
 
 	@RequestMapping(value = "/one/params/{id}")
-	public ResultBean<RoleDTO> findOne(@PathVariable("id") Long id) {
+	public ResultBean<RoleDTO> load(@PathVariable("id") Long id) {
 		Optional<Role> dataOp = roleService.findById(id);
 		AssertUtil.assertTrue(dataOp.isPresent(), "查找不到相应的记录");
 		return new ResultBean<>(dataOp.get().asDTO(true));

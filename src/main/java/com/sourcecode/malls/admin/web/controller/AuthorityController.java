@@ -35,11 +35,8 @@ public class AuthorityController {
 	@RequestMapping(value = "/list")
 	public ResultBean<PageResult<AuthorityDTO>> list(@RequestBody QueryInfo<String> queryInfo) {
 		Page<Authority> pageResult = authorityService.findAll(queryInfo);
-		PageResult<AuthorityDTO> dtoResult = new PageResult<>();
-		if (pageResult.hasContent()) {
-			dtoResult = new PageResult<>(pageResult.getContent().stream().map(data -> data.asDTO()).collect(Collectors.toList()),
-					pageResult.getTotalElements());
-		}
+		PageResult<AuthorityDTO> dtoResult = new PageResult<>(pageResult.getContent().stream().map(data -> data.asDTO()).collect(Collectors.toList()),
+				pageResult.getTotalElements());
 		return new ResultBean<>(dtoResult);
 	}
 
@@ -62,7 +59,7 @@ public class AuthorityController {
 	}
 
 	@RequestMapping(value = "/one/params/{id}")
-	public ResultBean<AuthorityDTO> findOne(@PathVariable Long id) {
+	public ResultBean<AuthorityDTO> load(@PathVariable Long id) {
 		Optional<Authority> dataOp = authorityService.findById(id);
 		AssertUtil.assertTrue(dataOp.isPresent(), "查找不到相应的记录");
 		return new ResultBean<>(dataOp.get().asDTO());
