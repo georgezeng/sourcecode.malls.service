@@ -17,10 +17,10 @@ public abstract class BaseAuthority extends LongKeyEntity {
 	@Size(min = 2, max = 50, message = "名称长度必须在2-50之间")
 	private String name;
 	@NotBlank(message = "链接不能为空")
-	@Size(min = 2, max = 255, message = "链接长度必须在2-255之间")
+	@Size(min = 10, max = 255, message = "链接长度必须在10-255之间")
 	private String link;
 	private String method;
-	@Size(min = 0, max = 255, message = "描述长度必须在2-255之间")
+	@Size(max = 255, message = "描述长度必须小于等于255")
 	private String description;
 
 	public String getLink() {

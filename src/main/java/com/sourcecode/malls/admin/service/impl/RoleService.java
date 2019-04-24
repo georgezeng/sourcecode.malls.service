@@ -90,7 +90,7 @@ public class RoleService implements JpaService<Role, Long> {
 			}
 		}
 		if (isSuperAdmin(role)) {
-			AssertUtil.assertTrue(role.getUsers().size() == 1, "超级管理员不能没有用户");
+			AssertUtil.assertTrue(role.getUsers().size() == 1, "不能修改超级管理员");
 			boolean isSpecificUser = role.getUsers().stream().anyMatch(user -> superAdminProperties.getUsername().equals(user.getUsername()));
 			AssertUtil.assertTrue(isSpecificUser, "不能修改超级管理员的所属用户");
 		}
