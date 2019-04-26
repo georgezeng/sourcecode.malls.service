@@ -3,13 +3,11 @@ package com.sourcecode.malls.admin.domain.goods;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -25,8 +23,7 @@ public class GoodsSpecificationDefinition extends BaseGoodsAttribute {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-	@JoinTable(name = "goods_specification_definition_value", joinColumns = @JoinColumn(name = "definition_id"), inverseJoinColumns = @JoinColumn(name = "value_id"))
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "definition")
 	private List<GoodsSpecificationValue> values;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -61,7 +58,7 @@ public class GoodsSpecificationDefinition extends BaseGoodsAttribute {
 			dto.setAttrs(attrs);
 		}
 		if (group != null) {
-			dto.setParent(group.asDTO(false));
+			dto.setParent(group.asDTO());
 		}
 		return dto;
 	}

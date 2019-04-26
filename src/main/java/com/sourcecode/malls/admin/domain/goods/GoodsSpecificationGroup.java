@@ -47,6 +47,9 @@ public class GoodsSpecificationGroup extends BaseGoodsAttribute {
 
 	public GoodsAttributeDTO asDTO(boolean withAttrs) {
 		GoodsAttributeDTO dto = super.asDTO();
+		if (category != null) {
+			dto.setParent(category.asDTO());
+		}
 		if (withAttrs && definitions != null) {
 			List<GoodsAttributeDTO> attrs = new ArrayList<>();
 			for (GoodsSpecificationDefinition definition : definitions) {
