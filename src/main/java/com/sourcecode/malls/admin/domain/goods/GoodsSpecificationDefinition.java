@@ -3,6 +3,7 @@ package com.sourcecode.malls.admin.domain.goods;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -23,7 +24,7 @@ public class GoodsSpecificationDefinition extends BaseGoodsAttribute {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "definition")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "definition", cascade = { CascadeType.REMOVE })
 	private List<GoodsSpecificationValue> values;
 
 	@ManyToOne(fetch = FetchType.LAZY)
