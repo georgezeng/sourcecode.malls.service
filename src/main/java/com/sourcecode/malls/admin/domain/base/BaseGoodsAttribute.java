@@ -1,10 +1,12 @@
 package com.sourcecode.malls.admin.domain.base;
 
+import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.BeanUtils;
@@ -24,9 +26,21 @@ public abstract class BaseGoodsAttribute extends LongKeyEntity {
 	@JoinColumn(name = "merchant_id")
 	private Merchant merchant;
 
+	@Column(name = "order_num")
+	@NotNull
+	private Integer order;
+
 	@NotBlank(message = "名称不能为空")
 	@Size(max = 50, min = 1, message = "名称长度应该在1-50之间")
 	private String name;
+
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
+	}
 
 	public String getName() {
 		return name;

@@ -11,8 +11,12 @@ public class GoodsAttributeDTO {
 	private Long id;
 
 	private String name;
+	
+	private int order;
 
 	private List<GoodsAttributeDTO> attrs;
+
+	private GoodsAttributeDTO parent;
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
@@ -20,6 +24,22 @@ public class GoodsAttributeDTO {
 	private String searchText;
 
 	private Merchant merchant;
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public GoodsAttributeDTO getParent() {
+		return parent;
+	}
+
+	public void setParent(GoodsAttributeDTO parent) {
+		this.parent = parent;
+	}
 
 	public Date getUpdateTime() {
 		return updateTime;

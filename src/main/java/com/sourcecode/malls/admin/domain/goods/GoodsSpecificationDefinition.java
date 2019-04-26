@@ -9,7 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.sourcecode.malls.admin.domain.base.BaseGoodsAttribute;
 import com.sourcecode.malls.admin.dto.merchant.GoodsAttributeDTO;
@@ -26,6 +28,19 @@ public class GoodsSpecificationDefinition extends BaseGoodsAttribute {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	@JoinTable(name = "goods_specification_definition_value", joinColumns = @JoinColumn(name = "definition_id"), inverseJoinColumns = @JoinColumn(name = "value_id"))
 	private List<GoodsSpecificationValue> values;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "group_id")
+	@NotNull
+	private GoodsSpecificationGroup group;
+
+	public GoodsSpecificationGroup getGroup() {
+		return group;
+	}
+
+	public void setGroup(GoodsSpecificationGroup group) {
+		this.group = group;
+	}
 
 	public List<GoodsSpecificationValue> getValues() {
 		return values;
@@ -44,6 +59,9 @@ public class GoodsSpecificationDefinition extends BaseGoodsAttribute {
 				attrs.add(value.asDTO());
 			}
 			dto.setAttrs(attrs);
+		}
+		if (group != null) {
+			dto.setParent(group.asDTO(false));
 		}
 		return dto;
 	}
