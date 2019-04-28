@@ -4,15 +4,20 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sourcecode.malls.admin.domain.merchant.Merchant;
 
 public class GoodsAttributeDTO {
 
 	private Long id;
 
 	private String name;
-	
+
 	private int order;
+	
+	private int level;
+	
+	private int leafLevel;
+	
+	private Long pid;
 
 	private List<GoodsAttributeDTO> attrs;
 
@@ -23,7 +28,31 @@ public class GoodsAttributeDTO {
 
 	private String searchText;
 
-	private Merchant merchant;
+	private Long merchantId;
+
+	public int getLeafLevel() {
+		return leafLevel;
+	}
+
+	public void setLeafLevel(int leafLevel) {
+		this.leafLevel = leafLevel;
+	}
+
+	public Long getPid() {
+		return pid;
+	}
+
+	public void setPid(Long pid) {
+		this.pid = pid;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
 
 	public int getOrder() {
 		return order;
@@ -57,12 +86,12 @@ public class GoodsAttributeDTO {
 		this.searchText = searchText;
 	}
 
-	public Merchant getMerchant() {
-		return merchant;
+	public Long getMerchantId() {
+		return merchantId;
 	}
 
-	public void setMerchant(Merchant merchant) {
-		this.merchant = merchant;
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
 	}
 
 	public List<GoodsAttributeDTO> getAttrs() {
