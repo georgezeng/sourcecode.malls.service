@@ -1,10 +1,17 @@
 package com.sourcecode.malls.admin.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.druid.util.StringUtils;
 import com.sourcecode.malls.admin.domain.system.setting.Authority;
 import com.sourcecode.malls.admin.domain.system.setting.Role;
+import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.properties.SuperAdminProperties;
 import com.sourcecode.malls.admin.repository.jpa.impl.AuthorityRepository;
@@ -39,15 +47,30 @@ public class AuthorityService implements JpaService<Authority, Long> {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Authority> findAll(QueryInfo<String> queryInfo) {
-		String searchText = queryInfo.getData();
+	public Page<Authority> findAll(QueryInfo<SimpleQueryDTO> queryInfo) {
+		SimpleQueryDTO data = queryInfo.getData();
 		Page<Authority> pageReulst = null;
-		if (!StringUtils.isEmpty(searchText)) {
-			String like = "%" + searchText + "%";
-			pageReulst = authorityRepository.findAllByCodeLikeOrNameLike(like, like, queryInfo.getPage().pageable());
-		} else {
-			pageReulst = authorityRepository.findAll(queryInfo.getPage().pageable());
-		}
+		Specification<Authority> spec = new Specification<Authority>() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Predicate toPredicate(Root<Authority> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+				List<Predicate> predicate = new ArrayList<>();
+				if (data != null) {
+					if (!StringUtils.isEmpty(data.getSearchText())) {
+						String like = "%" + data.getSearchText() + "%";
+						predicate.add(criteriaBuilder.or(criteriaBuilder.like(root.get("code").as(String.class), like),
+								criteriaBuilder.like(root.get("name").as(String.class), like)));
+					}
+				}
+				return query.where(predicate.toArray(new Predicate[] {})).getRestriction();
+			}
+		};
+		pageReulst = authorityRepository.findAll(spec, queryInfo.getPage().pageable());
 		return pageReulst;
 	}
 

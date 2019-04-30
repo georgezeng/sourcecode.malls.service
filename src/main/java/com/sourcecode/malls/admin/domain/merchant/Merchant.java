@@ -1,9 +1,13 @@
 package com.sourcecode.malls.admin.domain.merchant;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.beans.BeanUtils;
@@ -23,6 +27,17 @@ public class Merchant extends BaseUser {
 	@JoinColumn(name = "parent_id")
 	private Merchant parent;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private List<Merchant> subList;
+
+	public List<Merchant> getSubList() {
+		return subList;
+	}
+
+	public void setSubList(List<Merchant> subList) {
+		this.subList = subList;
+	}
+
 	public Merchant getParent() {
 		return parent;
 	}
@@ -36,5 +51,5 @@ public class Merchant extends BaseUser {
 		BeanUtils.copyProperties(this, dto, "password", "parent");
 		return dto;
 	}
-	
+
 }

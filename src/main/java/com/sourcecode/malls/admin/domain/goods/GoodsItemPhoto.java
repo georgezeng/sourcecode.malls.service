@@ -1,4 +1,4 @@
-package com.sourcecode.malls.admin.domain.merchant;
+package com.sourcecode.malls.admin.domain.goods;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,29 +7,31 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.sourcecode.malls.admin.domain.base.LongKeyEntity;
 
 @Entity
-@Table(name = "merchant_shop_application_instruction")
-public class MerchantShopApplicationInstruction extends LongKeyEntity {
+@Table(name = "goods_item_photo")
+public class GoodsItemPhoto extends LongKeyEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@NotBlank(message = "店铺引导图不能为空")
-	@Size(max = 50, min = 2, message = "店铺引导图长度不能大于255")
+	@NotBlank(message = "商品图片不能为空")
+	@Size(max = 255, message = "商品图片长度不能大于255")
 	private String path;
 
-	@Column(name="order_num")
+	@Column(name = "order_num")
 	private int order;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "application_id")
-	private MerchantShopApplication shopApplication;
+	@JoinColumn(name = "item_id")
+	@NotNull(message = "商品不能为空")
+	private GoodsItem item;
 
 	public String getPath() {
 		return path;
@@ -47,12 +49,11 @@ public class MerchantShopApplicationInstruction extends LongKeyEntity {
 		this.order = order;
 	}
 
-	public MerchantShopApplication getShopApplication() {
-		return shopApplication;
+	public GoodsItem getItem() {
+		return item;
 	}
 
-	public void setShopApplication(MerchantShopApplication shopApplication) {
-		this.shopApplication = shopApplication;
+	public void setItem(GoodsItem item) {
+		this.item = item;
 	}
-
 }

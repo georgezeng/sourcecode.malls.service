@@ -25,6 +25,7 @@ import com.sourcecode.malls.admin.context.UserContext;
 import com.sourcecode.malls.admin.domain.system.setting.User;
 import com.sourcecode.malls.admin.dto.base.KeyDTO;
 import com.sourcecode.malls.admin.dto.base.ResultBean;
+import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.PageResult;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.dto.system.setting.UserDTO;
@@ -58,7 +59,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/list")
-	public ResultBean<PageResult<UserDTO>> list(@RequestBody QueryInfo<String> queryInfo) {
+	public ResultBean<PageResult<UserDTO>> list(@RequestBody QueryInfo<SimpleQueryDTO> queryInfo) {
 		Page<User> pageResult = userService.findAll(queryInfo);
 		PageResult<UserDTO> dtoResult = new PageResult<>(pageResult.getContent().stream().map(data -> data.asDTO()).collect(Collectors.toList()),
 				pageResult.getTotalElements());
@@ -96,6 +97,20 @@ public class UserController {
 		if (newPath != null) {
 			byte[] buf = fileService.load(false, tempPath);
 			fileService.upload(false, newPath, new ByteArrayInputStream(buf));
+		}
+		return new ResultBean<>();
+	}
+
+	@RequestMapping(value = "/updateStatus/params/{enabled}")
+	public ResultBean<Void> updateStatus(@RequestBody KeyDTO<Long> keys, @PathVariable Boolean enabled) {
+		AssertUtil.assertTrue(!CollectionUtils.isEmpty(keys.getIds()), "必须选择至少一条记录进行状态更新");
+		for (Long id : keys.getIds()) {
+			Optional<User> userOp = userService.findById(id);
+			if (userOp.isPresent()) {
+				User user = userOp.get();
+				user.setEnabled(enabled);
+				userService.save(user);
+			}
 		}
 		return new ResultBean<>();
 	}

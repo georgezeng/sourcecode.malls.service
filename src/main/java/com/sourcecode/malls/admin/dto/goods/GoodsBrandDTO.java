@@ -1,4 +1,4 @@
-package com.sourcecode.malls.admin.dto.merchant;
+package com.sourcecode.malls.admin.dto.goods;
 
 public class GoodsBrandDTO {
 

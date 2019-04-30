@@ -13,7 +13,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.admin.domain.base.LongKeyEntity;
 import com.sourcecode.malls.admin.domain.merchant.Merchant;
-import com.sourcecode.malls.admin.dto.merchant.GoodsBrandDTO;
+import com.sourcecode.malls.admin.dto.goods.GoodsBrandDTO;
 
 @Entity
 @Table(name = "goods_brand")
@@ -25,7 +25,7 @@ public class GoodsBrand extends LongKeyEntity {
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank(message = "品牌名称不能为空")
-	@Size(max = 50, message = "品牌logo长度不能大于50")
+	@Size(max = 50, message = "品牌名称长度不能大于50")
 	private String name;
 	@NotBlank(message = "品牌logo不能为空")
 	@Size(max = 255, message = "品牌logo长度不能大于255")

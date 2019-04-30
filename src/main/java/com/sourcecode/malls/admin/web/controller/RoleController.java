@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sourcecode.malls.admin.domain.system.setting.Role;
 import com.sourcecode.malls.admin.dto.base.KeyDTO;
 import com.sourcecode.malls.admin.dto.base.ResultBean;
+import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.PageResult;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.dto.system.setting.RoleDTO;
@@ -29,7 +30,7 @@ public class RoleController {
 	private RoleService roleService;
 
 	@RequestMapping(value = "/list")
-	public ResultBean<PageResult<RoleDTO>> list(@RequestBody QueryInfo<String> queryInfo) {
+	public ResultBean<PageResult<RoleDTO>> list(@RequestBody QueryInfo<SimpleQueryDTO> queryInfo) {
 		Page<Role> pageResult = roleService.findAll(queryInfo);
 		PageResult<RoleDTO> dtoResult = new PageResult<>(pageResult.getContent().stream().map(data -> data.asDTO()).collect(Collectors.toList()),
 				pageResult.getTotalElements());

@@ -15,12 +15,12 @@ public class MerchantDTO extends BaseUser {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String status;
+	private String statusText;
 
 	private String searchText;
-	
+
 	private List<AuthorityDTO> authorities = new ArrayList<>();
-	
+
 	public void addAuthority(AuthorityDTO authority) {
 		authorities.add(authority);
 	}
@@ -33,12 +33,12 @@ public class MerchantDTO extends BaseUser {
 		this.authorities = authorities;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getStatusText() {
+		return statusText;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
 	}
 
 	public String getSearchText() {

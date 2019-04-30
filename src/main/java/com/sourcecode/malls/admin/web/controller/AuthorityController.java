@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sourcecode.malls.admin.domain.system.setting.Authority;
 import com.sourcecode.malls.admin.dto.base.KeyDTO;
 import com.sourcecode.malls.admin.dto.base.ResultBean;
+import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.PageResult;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.dto.system.setting.AuthorityDTO;
@@ -28,12 +29,12 @@ public class AuthorityController {
 
 	@Autowired
 	private AuthorityService authorityService;
-	
+
 	@Autowired
 	private AuthorityRepository authorityRepository;
 
 	@RequestMapping(value = "/list")
-	public ResultBean<PageResult<AuthorityDTO>> list(@RequestBody QueryInfo<String> queryInfo) {
+	public ResultBean<PageResult<AuthorityDTO>> list(@RequestBody QueryInfo<SimpleQueryDTO> queryInfo) {
 		Page<Authority> pageResult = authorityService.findAll(queryInfo);
 		PageResult<AuthorityDTO> dtoResult = new PageResult<>(pageResult.getContent().stream().map(data -> data.asDTO()).collect(Collectors.toList()),
 				pageResult.getTotalElements());

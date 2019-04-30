@@ -1,11 +1,18 @@
 package com.sourcecode.malls.admin.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +22,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.sourcecode.malls.admin.domain.system.setting.Authority;
 import com.sourcecode.malls.admin.domain.system.setting.Role;
 import com.sourcecode.malls.admin.domain.system.setting.User;
+import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.dto.system.setting.AuthorityDTO;
 import com.sourcecode.malls.admin.dto.system.setting.RoleDTO;
@@ -56,15 +64,31 @@ public class RoleService implements JpaService<Role, Long> {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Role> findAll(QueryInfo<String> queryInfo) {
-		String searchText = queryInfo.getData();
+	public Page<Role> findAll(QueryInfo<SimpleQueryDTO> queryInfo) {
+		SimpleQueryDTO data = queryInfo.getData();
 		Page<Role> pageReulst = null;
-		if (!StringUtils.isEmpty(searchText)) {
-			String like = "%" + searchText + "%";
-			pageReulst = roleRepository.findAllByHiddenAndCodeLikeOrNameLike(false, like, like, queryInfo.getPage().pageable());
-		} else {
-			pageReulst = roleRepository.findAllByHidden(false, queryInfo.getPage().pageable());
-		}
+		Specification<Role> spec = new Specification<Role>() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Predicate toPredicate(Root<Role> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+				List<Predicate> predicate = new ArrayList<>();
+				predicate.add(criteriaBuilder.equal(root.get("hidden").as(boolean.class), false));
+				if (data != null) {
+					if (!StringUtils.isEmpty(data.getSearchText())) {
+						String like = "%" + data.getSearchText() + "%";
+						predicate.add(criteriaBuilder.or(criteriaBuilder.like(root.get("code").as(String.class), like),
+								criteriaBuilder.like(root.get("name").as(String.class), like)));
+					}
+				}
+				return query.where(predicate.toArray(new Predicate[] {})).getRestriction();
+			}
+		};
+		pageReulst = roleRepository.findAll(spec, queryInfo.getPage().pageable());
 		return pageReulst;
 	}
 

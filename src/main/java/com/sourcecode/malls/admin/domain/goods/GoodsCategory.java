@@ -8,10 +8,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.sourcecode.malls.admin.domain.base.BaseGoodsAttribute;
-import com.sourcecode.malls.admin.dto.merchant.GoodsAttributeDTO;
+import com.sourcecode.malls.admin.dto.goods.GoodsAttributeDTO;
 
 @Entity
 @Table(name = "goods_category")
@@ -30,6 +31,7 @@ public class GoodsCategory extends BaseGoodsAttribute {
 	private GoodsCategory parent;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+	@OrderBy("order ASC")
 	private List<GoodsCategory> subList;
 
 	private int level;

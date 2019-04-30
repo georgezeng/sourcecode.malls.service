@@ -1,13 +1,20 @@
 package com.sourcecode.malls.admin.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +28,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.sourcecode.malls.admin.constants.EnvConstant;
 import com.sourcecode.malls.admin.domain.system.setting.Role;
 import com.sourcecode.malls.admin.domain.system.setting.User;
+import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.dto.system.setting.RoleDTO;
 import com.sourcecode.malls.admin.properties.SuperAdminProperties;
@@ -41,7 +49,7 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 
 	@Autowired
 	private SuperAdminProperties superAdminProperties;
-	
+
 	@Autowired
 	private UserProperties userProperties;
 
@@ -105,15 +113,33 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<User> findAll(QueryInfo<String> queryInfo) {
-		String searchText = queryInfo.getData();
+	public Page<User> findAll(QueryInfo<SimpleQueryDTO> queryInfo) {
+		SimpleQueryDTO data = queryInfo.getData();
 		Page<User> pageReulst = null;
-		if (!StringUtils.isEmpty(searchText)) {
-			String like = "%" + searchText + "%";
-			pageReulst = userRepository.findAllByUsernameLike(like, queryInfo.getPage().pageable());
-		} else {
-			pageReulst = userRepository.findAll(queryInfo.getPage().pageable());
-		}
+		Specification<User> spec = new Specification<User>() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+				List<Predicate> predicate = new ArrayList<>();
+				if (data != null) {
+					if (!StringUtils.isEmpty(data.getSearchText())) {
+						String like = "%" + data.getSearchText() + "%";
+						predicate.add(criteriaBuilder.or(criteriaBuilder.like(root.get("username").as(String.class), like),
+								criteriaBuilder.like(root.get("email").as(String.class), like)));
+					}
+					if (!"all".equals(data.getStatusText())) {
+						predicate.add(criteriaBuilder.equal(root.get("enabled").as(boolean.class), Boolean.valueOf(data.getStatusText())));
+					}
+				}
+				return query.where(predicate.toArray(new Predicate[] {})).getRestriction();
+			}
+		};
+		pageReulst = userRepository.findAll(spec, queryInfo.getPage().pageable());
 		return pageReulst;
 	}
 

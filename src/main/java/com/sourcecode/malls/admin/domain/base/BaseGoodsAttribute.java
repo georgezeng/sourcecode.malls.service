@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.admin.domain.merchant.Merchant;
-import com.sourcecode.malls.admin.dto.merchant.GoodsAttributeDTO;
+import com.sourcecode.malls.admin.dto.goods.GoodsAttributeDTO;
 
 @MappedSuperclass
 public abstract class BaseGoodsAttribute extends LongKeyEntity {

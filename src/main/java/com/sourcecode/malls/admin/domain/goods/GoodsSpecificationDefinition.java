@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.sourcecode.malls.admin.domain.base.BaseGoodsAttribute;
-import com.sourcecode.malls.admin.dto.merchant.GoodsAttributeDTO;
+import com.sourcecode.malls.admin.dto.goods.GoodsAttributeDTO;
 
 @Entity
 @Table(name = "goods_specification_definition")
