@@ -24,12 +24,12 @@ import com.sourcecode.malls.admin.domain.system.setting.Role;
 import com.sourcecode.malls.admin.domain.system.setting.User;
 import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
-import com.sourcecode.malls.admin.dto.system.setting.AuthorityDTO;
-import com.sourcecode.malls.admin.dto.system.setting.RoleDTO;
-import com.sourcecode.malls.admin.dto.system.setting.UserDTO;
+import com.sourcecode.malls.admin.dto.system.AuthorityDTO;
+import com.sourcecode.malls.admin.dto.system.RoleDTO;
+import com.sourcecode.malls.admin.dto.system.UserDTO;
 import com.sourcecode.malls.admin.properties.SuperAdminProperties;
-import com.sourcecode.malls.admin.repository.jpa.impl.RoleRepository;
-import com.sourcecode.malls.admin.repository.jpa.impl.UserRepository;
+import com.sourcecode.malls.admin.repository.jpa.impl.system.RoleRepository;
+import com.sourcecode.malls.admin.repository.jpa.impl.system.UserRepository;
 import com.sourcecode.malls.admin.service.base.JpaService;
 import com.sourcecode.malls.admin.util.AssertUtil;
 

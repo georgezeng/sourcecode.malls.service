@@ -17,7 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.sourcecode.malls.admin.domain.base.BaseRole;
-import com.sourcecode.malls.admin.dto.system.setting.RoleDTO;
+import com.sourcecode.malls.admin.dto.system.RoleDTO;
 
 @Table(name = "${spring.datasource.table.role}")
 @Entity

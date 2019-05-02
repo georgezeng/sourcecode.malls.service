@@ -20,7 +20,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.sourcecode.malls.admin.domain.base.BaseUser;
-import com.sourcecode.malls.admin.dto.system.setting.UserDTO;
+import com.sourcecode.malls.admin.dto.system.UserDTO;
 
 @Table(name = "${spring.datasource.table.user}")
 @Entity

@@ -31,7 +31,7 @@ public abstract class BaseGoodsAttribute extends LongKeyEntity {
 	private Integer order;
 
 	@NotBlank(message = "名称不能为空")
-	@Size(max = 50, min = 1, message = "名称长度应该在1-50之间")
+	@Size(max = 50, message = "名称长度不能大于50")
 	private String name;
 
 	public Integer getOrder() {

@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sourcecode.malls.admin.constants.ExceptionMessageConstant;
 import com.sourcecode.malls.admin.domain.system.setting.Role;
 import com.sourcecode.malls.admin.dto.base.KeyDTO;
 import com.sourcecode.malls.admin.dto.base.ResultBean;
 import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.PageResult;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
-import com.sourcecode.malls.admin.dto.system.setting.RoleDTO;
+import com.sourcecode.malls.admin.dto.system.RoleDTO;
 import com.sourcecode.malls.admin.service.impl.RoleService;
 import com.sourcecode.malls.admin.util.AssertUtil;
 
@@ -43,7 +44,7 @@ public class RoleController {
 		Role data = null;
 		if (dto.getId() != null) {
 			Optional<Role> dataOp = roleService.findById(dto.getId());
-			AssertUtil.assertTrue(dataOp.isPresent(), "记录不存在");
+			AssertUtil.assertTrue(dataOp.isPresent(), ExceptionMessageConstant.NO_SUCH_RECORD);
 			data = dataOp.get();
 			BeanUtils.copyProperties(dto, data, "id");
 		} else {
@@ -53,16 +54,16 @@ public class RoleController {
 		return new ResultBean<>();
 	}
 
-	@RequestMapping(value = "/one/params/{id}")
+	@RequestMapping(value = "/load/params/{id}")
 	public ResultBean<RoleDTO> load(@PathVariable("id") Long id) {
 		Optional<Role> dataOp = roleService.findById(id);
-		AssertUtil.assertTrue(dataOp.isPresent(), "查找不到相应的记录");
+		AssertUtil.assertTrue(dataOp.isPresent(), ExceptionMessageConstant.NO_SUCH_RECORD);
 		return new ResultBean<>(dataOp.get().asDTO(true));
 	}
 
 	@RequestMapping(value = "/delete")
 	public ResultBean<Void> delete(@RequestBody KeyDTO<Long> keys) {
-		AssertUtil.assertTrue(!CollectionUtils.isEmpty(keys.getIds()), "必须选择至少一条记录进行删除");
+		AssertUtil.assertTrue(!CollectionUtils.isEmpty(keys.getIds()), ExceptionMessageConstant.SELECT_AT_LEAST_ONE_TO_DELETE);
 		for (Long id : keys.getIds()) {
 			Optional<Role> roleOp = roleService.findById(id);
 			if (roleOp.isPresent()) {

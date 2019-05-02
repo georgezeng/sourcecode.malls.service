@@ -22,7 +22,7 @@ import com.sourcecode.malls.admin.domain.system.setting.Role;
 import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.properties.SuperAdminProperties;
-import com.sourcecode.malls.admin.repository.jpa.impl.AuthorityRepository;
+import com.sourcecode.malls.admin.repository.jpa.impl.system.AuthorityRepository;
 import com.sourcecode.malls.admin.service.base.JpaService;
 
 @Service

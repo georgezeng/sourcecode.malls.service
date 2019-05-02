@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.admin.domain.base.BaseAuthority;
-import com.sourcecode.malls.admin.dto.system.setting.AuthorityDTO;
+import com.sourcecode.malls.admin.dto.system.AuthorityDTO;
 
 @Table(name = "${spring.datasource.table.authority}")
 @Entity

@@ -18,19 +18,18 @@ public abstract class BaseUser extends LongKeyEntity {
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank(message = "用户名不能为空")
-	@Size(min = 5, max = 50, message = "用户名长度必须在5-50之间")
+	@Size(max = 50, message = "用户名长度不能大于50")
 	private String username;
 	@NotBlank(message = "密码不能为空")
-	@Size(max = 255, message = "密码长度小于255位")
+	@Size(max = 255, message = "密码长度不能大于255")
 	private String password;
 	@NotBlank(message = "邮箱不能为空")
-	@Size(min = 5, max = 50, message = "邮箱长度必须在5-50之间")
+	@Size(max = 50, message = "邮箱长度不能大于50")
 	@Email
 	private String email;
 	@Pattern(regexp = RegexpConstant.MOBILE_PATTERN, message = "手机必须是11位数字")
 	private String mobile;
-	@NotBlank(message = "头像不能为空")
-	private String header;
+	private String avatar;
 	private boolean enabled;
 
 	@Transient
@@ -84,12 +83,12 @@ public abstract class BaseUser extends LongKeyEntity {
 		this.mobile = mobile;
 	}
 
-	public String getHeader() {
-		return header;
+	public String getAvatar() {
+		return avatar;
 	}
 
-	public void setHeader(String header) {
-		this.header = header;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public boolean isEnabled() {

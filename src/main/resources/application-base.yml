@@ -36,10 +36,8 @@ super-admin:
   code: SUPER_ADMIN
   authority: AUTH_SUPER_ADMIN
 
-user:
-  avatar: common/header.png
-
-application:
+default:
+  avatar: common/avatar.png
   img: common/img.png
 
 session:

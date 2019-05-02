@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -22,9 +21,10 @@ import com.sourcecode.malls.admin.properties.SuperAdminProperties;
 import com.sourcecode.malls.admin.web.filter.ErrorHandlerFilter;
 import com.sourcecode.malls.admin.web.filter.LoggingFilter;
 import com.sourcecode.malls.admin.web.filter.UserSessionFilter;
+import com.sourcecode.malls.admin.web.security.entrypoint.AppEntryPoint;
+import com.sourcecode.malls.admin.web.security.handler.AppAuthenticationFailureHandler;
 import com.sourcecode.malls.admin.web.security.handler.AppAuthenticationSuccessHandler;
 import com.sourcecode.malls.admin.web.security.metadatasource.AuthorityFilterSecurityMetadataSource;
-import com.sourcecode.malls.admin.web.security.strategy.LoginFailureStrategy;
 import com.sourcecode.malls.admin.web.security.strategy.LoginSuccessfulStrategy;
 import com.sourcecode.malls.admin.web.security.voter.AuthorityVoter;
 
@@ -44,13 +44,15 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private LoginSuccessfulStrategy loginSuccessfulStrategy;
 	@Autowired
-	private LoginFailureStrategy loginFailureStrategy;
-	@Autowired
 	private AuthorityFilterSecurityMetadataSource filterSecurityMetadataSource;
 	@Autowired
 	private AuthorityVoter authorityVoter;
 	@Autowired
 	private AppAuthenticationSuccessHandler successHandler;
+	@Autowired
+	private AppAuthenticationFailureHandler failureHandler;
+	@Autowired
+	private AppEntryPoint entryPoint;
 
 	@Value("${access.control.allow.origin}")
 	private String origin;
@@ -70,13 +72,11 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		before(http);
 		successHandler.setRedirectStrategy(loginSuccessfulStrategy);
-		SimpleUrlAuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
-		failureHandler.setRedirectStrategy(loginFailureStrategy);
-		failureHandler.setDefaultFailureUrl("/");
 		http.cors().configurationSource(corsConfigurationSource());
 		http.formLogin().permitAll().successHandler(successHandler).failureHandler(failureHandler);
 		http.csrf().disable();
 		http.httpBasic().disable();
+		http.exceptionHandling().authenticationEntryPoint(entryPoint);
 		http.logout().addLogoutHandler((request, response, authentication) -> {
 			try {
 				response.getWriter().close();
@@ -104,7 +104,7 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/favicon.ico").permitAll();
 		http.authorizeRequests().antMatchers("/**/register/**").permitAll();
 		http.authorizeRequests().antMatchers("/**/forgetPassword/**").permitAll();
-		http.authorizeRequests().antMatchers("/user/current").authenticated();
+		http.authorizeRequests().antMatchers("/user/current/**").authenticated();
 		http.authorizeRequests().antMatchers("/message/count").authenticated();
 		http.authorizeRequests().anyRequest().hasAuthority(adminProperties.getAuthority());
 		http.addFilterBefore(errorHandlerFilter, ChannelProcessingFilter.class);

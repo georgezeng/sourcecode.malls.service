@@ -29,13 +29,13 @@ public class MerchantVerification extends LongKeyEntity {
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank(message = "商家名称不能为空")
-	@Size(min = 1, max = 50, message = "商家名称长度必须在1-50之间")
+	@Size(max = 50, message = "商家名称长度不能大于50")
 	private String name;
 	@NotNull(message = "证件类型不能为空")
 	@Enumerated(EnumType.STRING)
 	private MerchantVerificationType type;
 	@NotBlank(message = "证件号不能为空")
-	@Size(min = 1, max = 50, message = "证件号长度必须在1-50之间")
+	@Size(max = 50, message = "证件号长度不能大于50")
 	private String number;
 	@NotBlank(message = "证件照片不能为空")
 	private String photo;

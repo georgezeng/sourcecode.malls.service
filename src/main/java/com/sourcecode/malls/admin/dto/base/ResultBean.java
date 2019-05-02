@@ -4,8 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ResultBean<T> {
-	private static final int CODE_SUCCESS = 0;
-	private static final int CODE_FAILED = 1;
+	public static final int CODE_SUCCESS = 0;
+	public static final int CODE_FAILED = 1;
+	public static final int CODE_UNLOGIN = -1;
 
 	private List<String> msgs;
 
@@ -38,6 +39,12 @@ public class ResultBean<T> {
 		this.msgs = Arrays.asList(msg);
 		this.traceId = traceId;
 		this.code = CODE_FAILED;
+	}
+	
+	public ResultBean(int code, String traceId, String msg) {
+		this.msgs = Arrays.asList(msg);
+		this.traceId = traceId;
+		this.code = code;
 	}
 
 	public List<T> getDatas() {

@@ -21,7 +21,7 @@ public class MerchantShopApplicationInstruction extends LongKeyEntity {
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank(message = "店铺引导图不能为空")
-	@Size(max = 50, min = 2, message = "店铺引导图长度不能大于255")
+	@Size(max = 50, message = "店铺引导图长度不能大于255")
 	private String path;
 
 	@Column(name="order_num")

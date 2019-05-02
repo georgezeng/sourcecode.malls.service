@@ -1,4 +1,4 @@
-package com.sourcecode.malls.admin.repository.jpa.impl;
+package com.sourcecode.malls.admin.repository.jpa.impl.goods;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -32,6 +32,15 @@ public class MerchantShopApplicationDTO {
 	private String androidUrl;
 	private String iosUrl;
 	private boolean deployed;
+	private boolean noPermit;
+
+	public boolean isNoPermit() {
+		return noPermit;
+	}
+
+	public void setNoPermit(boolean noPermit) {
+		this.noPermit = noPermit;
+	}
 
 	public boolean isDeployed() {
 		return deployed;

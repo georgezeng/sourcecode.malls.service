@@ -1,4 +1,4 @@
-package com.sourcecode.malls.admin.dto.system.setting;
+package com.sourcecode.malls.admin.dto.system;
 
 import org.springframework.beans.BeanUtils;
 

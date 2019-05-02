@@ -63,7 +63,7 @@ public class GoodsItem extends LongKeyEntity {
 	@NotNull(message = "品牌不能为空")
 	private GoodsBrand brand;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = { CascadeType.ALL })
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = { CascadeType.ALL }, orphanRemoval=true)
 	@OrderBy("order ASC")
 	private List<GoodsItemPhoto> photos;
 

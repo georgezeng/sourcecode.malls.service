@@ -30,11 +30,10 @@ import com.sourcecode.malls.admin.domain.system.setting.Role;
 import com.sourcecode.malls.admin.domain.system.setting.User;
 import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
-import com.sourcecode.malls.admin.dto.system.setting.RoleDTO;
+import com.sourcecode.malls.admin.dto.system.RoleDTO;
 import com.sourcecode.malls.admin.properties.SuperAdminProperties;
-import com.sourcecode.malls.admin.properties.UserProperties;
-import com.sourcecode.malls.admin.repository.jpa.impl.RoleRepository;
-import com.sourcecode.malls.admin.repository.jpa.impl.UserRepository;
+import com.sourcecode.malls.admin.repository.jpa.impl.system.RoleRepository;
+import com.sourcecode.malls.admin.repository.jpa.impl.system.UserRepository;
 import com.sourcecode.malls.admin.service.base.JpaService;
 import com.sourcecode.malls.admin.util.AssertUtil;
 
@@ -49,9 +48,6 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 
 	@Autowired
 	private SuperAdminProperties superAdminProperties;
-
-	@Autowired
-	private UserProperties userProperties;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -76,7 +72,6 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 		} else {
 			user.setPassword(passwordEncoder.encode(superAdminProperties.getPassword()));
 		}
-		user.setHeader(userProperties.getAvatar());
 		user.setEmail(superAdminProperties.getEmail());
 		user.setEnabled(true);
 		userRepository.save(user);

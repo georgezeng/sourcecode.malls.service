@@ -18,6 +18,8 @@ public class GoodsAttributeDTO {
 	private int leafLevel;
 	
 	private Long pid;
+	
+	private String icon;
 
 	private List<GoodsAttributeDTO> attrs;
 
@@ -29,6 +31,14 @@ public class GoodsAttributeDTO {
 	private String searchText;
 
 	private Long merchantId;
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 
 	public int getLeafLevel() {
 		return leafLevel;

@@ -11,16 +11,16 @@ public abstract class BaseAuthority extends LongKeyEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 	@NotBlank(message = "编码不能为空")
-	@Size(min = 5, max = 255, message = "编码长度必须在5-255之间")
+	@Size(max = 255, message = "编码长度不能大于255")
 	private String code;
 	@NotBlank(message = "名称不能为空")
-	@Size(min = 2, max = 50, message = "名称长度必须在2-50之间")
+	@Size(max = 50, message = "名称长度不能大于50")
 	private String name;
 	@NotBlank(message = "链接不能为空")
-	@Size(min = 10, max = 255, message = "链接长度必须在10-255之间")
+	@Size(max = 255, message = "链接长度不能大于255")
 	private String link;
 	private String method;
-	@Size(max = 255, message = "描述长度必须小于等于255")
+	@Size(max = 255, message = "描述长度不能大于255")
 	private String description;
 
 	public String getLink() {

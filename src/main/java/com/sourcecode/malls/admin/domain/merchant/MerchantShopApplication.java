@@ -33,10 +33,10 @@ public class MerchantShopApplication extends LongKeyEntity {
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank(message = "店铺名称不能为空")
-	@Size(max = 50, min = 2, message = "店铺名称长度应该在2-50之间")
+	@Size(max = 50, message = "店铺名称长度不能大于50")
 	private String name;
 	@NotBlank(message = "店铺域名不能为空")
-	@Size(max = 50, min = 2, message = "店铺域名长度应该在2-50之间")
+	@Size(max = 50, message = "店铺域名长度不能大于50")
 	private String domain;
 	@NotBlank(message = "logo不能为空")
 	private String logo;
@@ -49,7 +49,7 @@ public class MerchantShopApplication extends LongKeyEntity {
 	@NotBlank(message = "登录背景图不能为空")
 	private String loginBgImg;
 	@NotBlank(message = "店铺说明不能为空")
-	@Size(max = 255, min = 2, message = "店铺说明长度应该在2-255之间")
+	@Size(max = 255, message = "店铺说明长度不能大于255")
 	private String description;
 	@Enumerated(EnumType.STRING)
 	@NotNull
@@ -63,7 +63,7 @@ public class MerchantShopApplication extends LongKeyEntity {
 	@JoinColumn(name = "merchant_id")
 	private Merchant merchant;
 
-	@OneToMany(mappedBy = "shopApplication", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "shopApplication", fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval=true)
 	@OrderBy("order ASC")
 	private List<MerchantShopApplicationInstruction> instructions;
 

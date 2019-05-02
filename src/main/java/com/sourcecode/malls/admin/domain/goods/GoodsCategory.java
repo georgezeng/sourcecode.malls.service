@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.sourcecode.malls.admin.domain.base.BaseGoodsAttribute;
 import com.sourcecode.malls.admin.dto.goods.GoodsAttributeDTO;
@@ -23,6 +25,10 @@ public class GoodsCategory extends BaseGoodsAttribute {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@NotBlank(message = "图标不能为空")
+	@Size(max = 255, message = "图标长度不能大于255")
+	private String icon;
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
 	private List<GoodsSpecificationGroup> groups;
 
@@ -35,6 +41,22 @@ public class GoodsCategory extends BaseGoodsAttribute {
 	private List<GoodsCategory> subList;
 
 	private int level;
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public List<GoodsCategory> getSubList() {
+		return subList;
+	}
+
+	public void setSubList(List<GoodsCategory> subList) {
+		this.subList = subList;
+	}
 
 	public GoodsCategory getParent() {
 		return parent;

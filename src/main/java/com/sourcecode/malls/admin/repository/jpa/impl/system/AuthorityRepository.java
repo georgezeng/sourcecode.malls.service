@@ -1,4 +1,4 @@
-package com.sourcecode.malls.admin.repository.jpa.impl;
+package com.sourcecode.malls.admin.repository.jpa.impl.system;
 
 import java.util.List;
 import java.util.Optional;

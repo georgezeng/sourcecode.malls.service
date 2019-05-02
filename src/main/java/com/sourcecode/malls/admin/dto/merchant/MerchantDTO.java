@@ -7,7 +7,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.admin.domain.base.BaseUser;
 import com.sourcecode.malls.admin.domain.merchant.Merchant;
-import com.sourcecode.malls.admin.dto.system.setting.AuthorityDTO;
+import com.sourcecode.malls.admin.dto.system.AuthorityDTO;
 
 public class MerchantDTO extends BaseUser {
 	/**
