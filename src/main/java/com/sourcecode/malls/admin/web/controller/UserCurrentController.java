@@ -20,21 +20,18 @@ import com.sourcecode.malls.admin.context.UserContext;
 import com.sourcecode.malls.admin.domain.system.setting.User;
 import com.sourcecode.malls.admin.dto.base.ResultBean;
 import com.sourcecode.malls.admin.dto.system.UserDTO;
-import com.sourcecode.malls.admin.service.FileOnlineSystemService;
 import com.sourcecode.malls.admin.service.impl.UserService;
 import com.sourcecode.malls.admin.util.AssertUtil;
 import com.sourcecode.malls.admin.util.RegexpUtil;
-import com.sourcecode.malls.admin.web.controller.base.BaseFileOperationController;
+import com.sourcecode.malls.admin.web.controller.base.BaseController;
 
 @RestController
 @RequestMapping(value = "/user/current")
-public class UserCurrentController implements BaseFileOperationController {
+public class UserCurrentController extends BaseController {
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private PasswordEncoder pwdEncoder;
-	@Autowired
-	private FileOnlineSystemService fileService;
 
 	@Value("${default.avatar}")
 	private String avatar;
@@ -89,18 +86,18 @@ public class UserCurrentController implements BaseFileOperationController {
 			data.setAvatar(newPath);
 		}
 		userService.save(data);
-		transfer(fileService, false, tmpPaths, newPaths);
+		transfer(false, tmpPaths, newPaths);
 		return new ResultBean<>();
 	}
 
 	@RequestMapping(value = "/file/upload")
 	public ResultBean<String> upload(@RequestParam("file") MultipartFile file) throws IOException {
-		return upload(fileService, file, userDir, null, UserContext.get().getId(), false);
+		return upload(file, userDir, null, UserContext.get().getId(), false);
 	}
 
 	@RequestMapping(value = "/file/load")
 	public Resource load(@RequestParam String filePath) {
-		return load(fileService, UserContext.get().getId(), filePath, userDir, false);
+		return load(UserContext.get().getId(), filePath, userDir, false);
 	}
 
 }

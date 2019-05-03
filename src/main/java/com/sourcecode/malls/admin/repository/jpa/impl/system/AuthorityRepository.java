@@ -18,9 +18,6 @@ public interface AuthorityRepository extends JpaRepository<Authority, Long>, Jpa
 
 	List<Authority> findAllByLink(String link);
 
-	@Query(value = "from Authority a where a.code like 'AUTH_SUB_%'")
-	Page<Authority> findAllForSubAccount(Pageable pageable);
-	
-	@Query(value = "from Authority a where a.code like 'AUTH_SUB_%'")
-	List<Authority> findAllForSubAccount();
+	@Query(value = "from Authority a where a.code<>'AUTH_SUPER_ADMIN'")
+	List<Authority> findAllWithoutSuperAdmin();
 }

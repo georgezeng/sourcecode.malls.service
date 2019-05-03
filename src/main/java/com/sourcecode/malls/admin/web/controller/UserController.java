@@ -29,24 +29,21 @@ import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.PageResult;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.dto.system.UserDTO;
-import com.sourcecode.malls.admin.service.FileOnlineSystemService;
 import com.sourcecode.malls.admin.service.impl.RoleService;
 import com.sourcecode.malls.admin.service.impl.UserService;
 import com.sourcecode.malls.admin.util.AssertUtil;
 import com.sourcecode.malls.admin.util.RegexpUtil;
-import com.sourcecode.malls.admin.web.controller.base.BaseFileOperationController;
+import com.sourcecode.malls.admin.web.controller.base.BaseController;
 
 @RestController
 @RequestMapping(value = "/user")
-public class UserController implements BaseFileOperationController {
+public class UserController extends BaseController {
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private RoleService roleService;
 	@Autowired
 	private PasswordEncoder pwdEncoder;
-	@Autowired
-	private FileOnlineSystemService fileService;
 
 	@Value("${user.type.name}")
 	private String userDir;
@@ -90,7 +87,7 @@ public class UserController implements BaseFileOperationController {
 			data.setAvatar(newPath);
 		}
 		userService.relateToRoles(data, dto.getRoles());
-		transfer(fileService, false, tmpPaths, newPaths);
+		transfer(false, tmpPaths, newPaths);
 		return new ResultBean<>();
 	}
 
@@ -131,14 +128,12 @@ public class UserController implements BaseFileOperationController {
 
 	@RequestMapping(value = "/file/upload/params/{id}")
 	public ResultBean<String> upload(@RequestParam("file") MultipartFile file, @PathVariable Long id) throws IOException {
-		Optional<User> data = userService.findById(id);
-		AssertUtil.assertTrue(data.isPresent(), ExceptionMessageConstant.NO_SUCH_RECORD);
-		return upload(fileService, file, userDir, null, id, false);
+		return upload(file, userDir, null, id, false);
 	}
 
 	@RequestMapping(value = "/file/load/params/{id}")
 	public Resource load(@RequestParam String filePath, @PathVariable Long id) {
-		return load(fileService, id, filePath, userDir, false);
+		return load(id, filePath, userDir, false);
 	}
 
 }
