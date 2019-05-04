@@ -17,14 +17,14 @@ public class GoodsItemDTO {
 	private Long brandId;
 	private Long merchantId;
 	private String searchText;
-	private String status;
+	private String statusText;
 
-	public String getStatus() {
-		return status;
+	public String getStatusText() {
+		return statusText;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
 	}
 
 	public boolean isEnabled() {
