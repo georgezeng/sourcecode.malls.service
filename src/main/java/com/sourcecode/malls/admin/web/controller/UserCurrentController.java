@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,7 +59,7 @@ public class UserCurrentController extends BaseController {
 		return new ResultBean<>();
 	}
 
-	@RequestMapping(value = "/avatar")
+	@RequestMapping(value = "/avatar", produces = { MediaType.IMAGE_PNG_VALUE })
 	public Resource loadAvatar() {
 		String header = UserContext.get().getAvatar();
 		if (!StringUtils.isEmpty(header) && !header.equals(avatar)) {
