@@ -1,9 +1,10 @@
 package com.sourcecode.malls.admin.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -93,23 +94,71 @@ public class RoleService implements JpaService<Role, Long> {
 	}
 
 	public void relateToUsersAndAuthorities(Role role, List<UserDTO> users, List<AuthorityDTO> authorities) {
-		role.setUsers(new HashSet<>());
+		Set<User> oldUsers = role.getUsers();
 		if (!CollectionUtils.isEmpty(users)) {
 			for (UserDTO user : users) {
 				Optional<User> userOp = userRepository.findById(user.getId());
 				if (userOp.isPresent()) {
-					role.addUser(userOp.get());
-					userOp.get().addRole(role);
+					boolean found = false;
+					if (oldUsers != null) {
+						for (User oldUserInRole : oldUsers) {
+							if (oldUserInRole.getId().equals(userOp.get().getId())) {
+								found = true;
+								break;
+							}
+						}
+					}
+					if (!found) {
+						role.addUser(userOp.get());
+						userOp.get().addRole(role);
+					}
+				}
+			}
+			for (Iterator<User> it = oldUsers.iterator(); it.hasNext();) {
+				User oldUserInRole = it.next();
+				boolean remove = true;
+				for (UserDTO user : users) {
+					if (user.getId().equals(oldUserInRole.getId())) {
+						remove = false;
+						break;
+					}
+				}
+				if (remove) {
+					it.remove();
 				}
 			}
 		}
-		role.setAuthorities(new HashSet<>());
+		Set<Authority> oldAuthorities = role.getAuthorities();
 		if (!CollectionUtils.isEmpty(authorities)) {
 			for (AuthorityDTO authority : authorities) {
 				Optional<Authority> authOp = authorityService.findById(authority.getId());
 				if (authOp.isPresent()) {
-					role.addAuthority(authOp.get());
-					authOp.get().addRole(role);
+					boolean found = false;
+					if (oldAuthorities != null) {
+						for (Authority oldAuthInRole : oldAuthorities) {
+							if (oldAuthInRole.getId().equals(authOp.get().getId())) {
+								found = true;
+								break;
+							}
+						}
+					}
+					if (!found) {
+						role.addAuthority(authOp.get());
+						authOp.get().addRole(role);
+					}
+				}
+			}
+			for (Iterator<Authority> it = oldAuthorities.iterator(); it.hasNext();) {
+				Authority oldAuthInRole = it.next();
+				boolean remove = true;
+				for (AuthorityDTO auth : authorities) {
+					if (auth.getId().equals(oldAuthInRole.getId())) {
+						remove = false;
+						break;
+					}
+				}
+				if (remove) {
+					it.remove();
 				}
 			}
 		}

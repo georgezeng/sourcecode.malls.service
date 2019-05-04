@@ -1,15 +1,16 @@
 package com.sourcecode.malls.admin.domain.system.setting;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.springframework.beans.BeanUtils;
@@ -28,13 +29,16 @@ public class Role extends BaseRole {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "${spring.datasource.table.user_role}", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@OrderBy("username ASC")
 	private Set<User> users;
 
-	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "${spring.datasource.table.role_authority}", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
+	@OrderBy("name ASC")
 	private Set<Authority> authorities;
-	
+
 	private boolean hidden;
 
 	public Set<GrantedAuthority> getGrantedAuthorities() {
@@ -57,7 +61,7 @@ public class Role extends BaseRole {
 
 	public void addAuthority(Authority auth) {
 		if (authorities == null) {
-			authorities = new HashSet<>();
+			authorities = new LinkedHashSet<>();
 		}
 		authorities.add(auth);
 	}
@@ -72,7 +76,7 @@ public class Role extends BaseRole {
 
 	public void addUser(User user) {
 		if (users == null) {
-			users = new HashSet<>();
+			users = new LinkedHashSet<>();
 		}
 		users.add(user);
 	}

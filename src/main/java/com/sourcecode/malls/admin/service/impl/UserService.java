@@ -1,7 +1,6 @@
 package com.sourcecode.malls.admin.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -146,7 +145,6 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 	public void relateToRoles(User user, List<RoleDTO> roles) {
 		save(user);
 		if (!CollectionUtils.isEmpty(roles)) {
-			user.setRoles(new HashSet<>());
 			for (RoleDTO roleDTO : roles) {
 				Optional<Role> roleOp = roleRepository.findById(roleDTO.getId());
 				if (roleOp.isPresent()) {
@@ -154,7 +152,7 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 					boolean found = false;
 					if (role.getUsers() != null) {
 						for (User data : role.getUsers()) {
-							if (data.getUsername().equals(user.getUsername())) {
+							if (data.getId().equals(user.getId())) {
 								found = true;
 								break;
 							}
@@ -163,7 +161,6 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 					if (!found) {
 						role.addUser(user);
 					}
-					user.addRole(role);
 				}
 			}
 			if (isSuperAdmin(user)) {

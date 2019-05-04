@@ -3,11 +3,11 @@ package com.sourcecode.malls.admin.domain.system.setting;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -40,7 +40,7 @@ public class User extends BaseUser implements UserDetails {
 		super(username);
 	}
 
-	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	private Set<Role> roles;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -65,7 +65,7 @@ public class User extends BaseUser implements UserDetails {
 
 	public void addRole(Role role) {
 		if (roles == null) {
-			roles = new HashSet<>();
+			roles = new LinkedHashSet<>();
 		}
 		roles.add(role);
 	}

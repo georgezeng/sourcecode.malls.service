@@ -1,13 +1,10 @@
 package com.sourcecode.malls.admin.domain.system.setting;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -24,13 +21,12 @@ public class Authority extends BaseAuthority {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "${spring.datasource.table.role_authority}", joinColumns = @JoinColumn(name = "authority_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
 	private Set<Role> roles;
 
 	public void addRole(Role role) {
 		if (roles == null) {
-			roles = new HashSet<>();
+			roles = new LinkedHashSet<>();
 		}
 		roles.add(role);
 	}

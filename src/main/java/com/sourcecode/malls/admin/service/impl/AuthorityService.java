@@ -23,6 +23,7 @@ import com.sourcecode.malls.admin.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.admin.dto.query.QueryInfo;
 import com.sourcecode.malls.admin.properties.SuperAdminProperties;
 import com.sourcecode.malls.admin.repository.jpa.impl.system.AuthorityRepository;
+import com.sourcecode.malls.admin.repository.jpa.impl.system.RoleRepository;
 import com.sourcecode.malls.admin.service.base.JpaService;
 
 @Service
@@ -30,6 +31,8 @@ import com.sourcecode.malls.admin.service.base.JpaService;
 public class AuthorityService implements JpaService<Authority, Long> {
 	@Autowired
 	private AuthorityRepository authorityRepository;
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Autowired
 	private SuperAdminProperties superAdminProperties;
@@ -42,7 +45,9 @@ public class AuthorityService implements JpaService<Authority, Long> {
 			auth.setName("超级管理员权限");
 			auth.setLink("/**");
 			auth.addRole(role);
+			role.addAuthority(auth);
 			authorityRepository.save(auth);
+			roleRepository.save(role);
 		}
 	}
 
