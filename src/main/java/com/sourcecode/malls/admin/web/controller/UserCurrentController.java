@@ -93,7 +93,7 @@ public class UserCurrentController extends BaseController {
 
 	@RequestMapping(value = "/file/upload")
 	public ResultBean<String> upload(@RequestParam("file") MultipartFile file) throws IOException {
-		return upload(file, userDir, null, UserContext.get().getId(), false);
+		return upload(file, userDir, null, getRelatedCurrentUser().getId(), false);
 	}
 
 	@RequestMapping(value = "/file/load")
