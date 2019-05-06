@@ -1,14 +1,18 @@
 package com.sourcecode.malls.admin.domain.goods;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -27,17 +31,25 @@ public class GoodsSpecificationDefinition extends BaseGoodsAttribute {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "definition", cascade = { CascadeType.REMOVE })
 	private List<GoodsSpecificationValue> values;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "group_id")
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "goods_definition_group", joinColumns = @JoinColumn(name = "definition_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+	@OrderBy("name ASC")
 	@NotNull
-	private GoodsSpecificationGroup group;
+	private Set<GoodsSpecificationGroup> groups;
 
-	public GoodsSpecificationGroup getGroup() {
-		return group;
+	public void addGroup(GoodsSpecificationGroup group) {
+		if (groups == null) {
+			groups = new LinkedHashSet<>();
+		}
+		groups.add(group);
 	}
 
-	public void setGroup(GoodsSpecificationGroup group) {
-		this.group = group;
+	public Set<GoodsSpecificationGroup> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(Set<GoodsSpecificationGroup> groups) {
+		this.groups = groups;
 	}
 
 	public List<GoodsSpecificationValue> getValues() {
@@ -58,8 +70,15 @@ public class GoodsSpecificationDefinition extends BaseGoodsAttribute {
 			}
 			dto.setAttrs(attrs);
 		}
-		if (group != null) {
-			dto.setParent(group.asDTO());
+		if (groups != null) {
+			List<Long> ids = new ArrayList<>();
+			for (GoodsSpecificationGroup group : groups) {
+				if (dto.getParent() == null) {
+					dto.setParent(group.getCategory().asDTO());
+				}
+				ids.add(group.getId());
+			}
+			dto.setParentIds(ids);
 		}
 		return dto;
 	}

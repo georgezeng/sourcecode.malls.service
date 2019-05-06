@@ -22,6 +22,8 @@ public class GoodsAttributeDTO {
 	private String icon;
 
 	private List<GoodsAttributeDTO> attrs;
+	
+	private List<Long> parentIds;
 
 	private GoodsAttributeDTO parent;
 
@@ -31,6 +33,14 @@ public class GoodsAttributeDTO {
 	private String searchText;
 
 	private Long merchantId;
+
+	public List<Long> getParentIds() {
+		return parentIds;
+	}
+
+	public void setParentIds(List<Long> parentIds) {
+		this.parentIds = parentIds;
+	}
 
 	public String getIcon() {
 		return icon;

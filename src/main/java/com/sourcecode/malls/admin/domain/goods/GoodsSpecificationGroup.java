@@ -6,8 +6,8 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.sourcecode.malls.admin.domain.base.BaseGoodsAttribute;
@@ -22,7 +22,7 @@ public class GoodsSpecificationGroup extends BaseGoodsAttribute {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
 	private List<GoodsSpecificationDefinition> definitions;
 
 	@ManyToOne(fetch = FetchType.LAZY)
