@@ -41,6 +41,9 @@ public class AuthorityVoter implements AccessDecisionVoter<FilterInvocation> {
 		if (user == null) {
 			return ACCESS_DENIED;
 		}
+		if (!user.isEnabled()) {
+			return ACCESS_DENIED;
+		}
 		boolean isGranted = userService.isSuperAdmin(user);
 		if (!isGranted) {
 			for (ConfigAttribute configAttr : attributes) {
