@@ -60,7 +60,7 @@ public abstract class BaseGoodsAttribute extends LongKeyEntity {
 
 	public GoodsAttributeDTO asDTO() {
 		GoodsAttributeDTO dto = new GoodsAttributeDTO();
-		BeanUtils.copyProperties(this, dto, "merchant");
+		BeanUtils.copyProperties(this, dto, "merchant", "parent");
 		return dto;
 	}
 

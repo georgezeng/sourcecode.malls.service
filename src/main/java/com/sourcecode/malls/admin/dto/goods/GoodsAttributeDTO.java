@@ -12,17 +12,17 @@ public class GoodsAttributeDTO {
 	private String name;
 
 	private int order;
-	
+
 	private int level;
-	
+
 	private int leafLevel;
-	
+
 	private Long pid;
-	
+
 	private String icon;
 
 	private List<GoodsAttributeDTO> attrs;
-	
+
 	private List<Long> parentIds;
 
 	private GoodsAttributeDTO parent;

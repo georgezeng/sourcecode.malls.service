@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -36,6 +37,18 @@ public class GoodsSpecificationDefinition extends BaseGoodsAttribute {
 	@OrderBy("name ASC")
 	@NotNull
 	private Set<GoodsSpecificationGroup> groups;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id")
+	private GoodsCategory category;
+
+	public GoodsCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(GoodsCategory category) {
+		this.category = category;
+	}
 
 	public void addGroup(GoodsSpecificationGroup group) {
 		if (groups == null) {
