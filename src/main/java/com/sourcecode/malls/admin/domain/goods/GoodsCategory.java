@@ -99,7 +99,7 @@ public class GoodsCategory extends BaseGoodsAttribute {
 			dto.setAttrs(attrs);
 		}
 		if (parent != null) {
-			dto.setParent(parent.asDTO());
+			dto.setParent(parent.asDTO(false, false));
 		}
 		return dto;
 	}
