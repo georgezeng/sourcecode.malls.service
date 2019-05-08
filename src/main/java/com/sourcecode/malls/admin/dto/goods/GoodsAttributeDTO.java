@@ -15,8 +15,6 @@ public class GoodsAttributeDTO {
 
 	private int level;
 
-	private int leafLevel;
-
 	private Long pid;
 
 	private String icon;
@@ -58,14 +56,6 @@ public class GoodsAttributeDTO {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
-	}
-
-	public int getLeafLevel() {
-		return leafLevel;
-	}
-
-	public void setLeafLevel(int leafLevel) {
-		this.leafLevel = leafLevel;
 	}
 
 	public Long getPid() {
