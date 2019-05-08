@@ -68,16 +68,6 @@ public class GoodsSpecificationDefinition extends BaseGoodsAttribute {
 			}
 			dto.setAttrs(attrs);
 		}
-		if (groups != null) {
-			List<Long> ids = new ArrayList<>();
-			for (GoodsSpecificationGroup group : groups) {
-				if (dto.getParent() == null) {
-					dto.setParent(group.getCategory().asDTO());
-				}
-				ids.add(group.getId());
-			}
-			dto.setParentIds(ids);
-		}
 		return dto;
 	}
 

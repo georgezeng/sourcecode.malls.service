@@ -23,8 +23,6 @@ public class GoodsAttributeDTO {
 
 	private List<GoodsAttributeDTO> attrs;
 
-	private List<Long> parentIds;
-
 	private GoodsAttributeDTO parent;
 
 	private boolean enabled;
@@ -52,14 +50,6 @@ public class GoodsAttributeDTO {
 
 	public void setStatusText(String statusText) {
 		this.statusText = statusText;
-	}
-
-	public List<Long> getParentIds() {
-		return parentIds;
-	}
-
-	public void setParentIds(List<Long> parentIds) {
-		this.parentIds = parentIds;
 	}
 
 	public String getIcon() {
