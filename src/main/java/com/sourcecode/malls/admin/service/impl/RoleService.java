@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -94,7 +93,7 @@ public class RoleService implements JpaService<Role, Long> {
 	}
 
 	public void relateToUsersAndAuthorities(Role role, List<UserDTO> users, List<AuthorityDTO> authorities) {
-		Set<User> oldUsers = role.getUsers();
+		List<User> oldUsers = role.getUsers();
 		if (!CollectionUtils.isEmpty(users)) {
 			for (UserDTO user : users) {
 				Optional<User> userOp = userRepository.findById(user.getId());
@@ -128,7 +127,7 @@ public class RoleService implements JpaService<Role, Long> {
 				}
 			}
 		}
-		Set<Authority> oldAuthorities = role.getAuthorities();
+		List<Authority> oldAuthorities = role.getAuthorities();
 		if (!CollectionUtils.isEmpty(authorities)) {
 			for (AuthorityDTO authority : authorities) {
 				Optional<Authority> authOp = authorityService.findById(authority.getId());

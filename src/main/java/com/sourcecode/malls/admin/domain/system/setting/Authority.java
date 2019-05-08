@@ -1,7 +1,7 @@
 package com.sourcecode.malls.admin.domain.system.setting;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,20 +22,20 @@ public class Authority extends BaseAuthority {
 	 */
 	private static final long serialVersionUID = 1L;
 	@ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
-	private Set<Role> roles;
+	private List<Role> roles;
 
 	public void addRole(Role role) {
 		if (roles == null) {
-			roles = new LinkedHashSet<>();
+			roles = new ArrayList<>();
 		}
 		roles.add(role);
 	}
 
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 

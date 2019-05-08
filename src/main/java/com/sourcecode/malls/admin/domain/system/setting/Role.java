@@ -1,7 +1,8 @@
 package com.sourcecode.malls.admin.domain.system.setting;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,12 +33,12 @@ public class Role extends BaseRole {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "${spring.datasource.table.user_role}", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	@OrderBy("username ASC")
-	private Set<User> users;
+	private List<User> users;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "${spring.datasource.table.role_authority}", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "authority_id"))
 	@OrderBy("name ASC")
-	private Set<Authority> authorities;
+	private List<Authority> authorities;
 
 	private boolean hidden;
 
@@ -61,31 +62,31 @@ public class Role extends BaseRole {
 
 	public void addAuthority(Authority auth) {
 		if (authorities == null) {
-			authorities = new LinkedHashSet<>();
+			authorities = new ArrayList<>();
 		}
 		authorities.add(auth);
 	}
 
-	public Set<Authority> getAuthorities() {
+	public List<Authority> getAuthorities() {
 		return authorities;
 	}
 
-	public void setAuthorities(Set<Authority> authorities) {
+	public void setAuthorities(List<Authority> authorities) {
 		this.authorities = authorities;
 	}
 
 	public void addUser(User user) {
 		if (users == null) {
-			users = new LinkedHashSet<>();
+			users = new ArrayList<>();
 		}
 		users.add(user);
 	}
 
-	public Set<User> getUsers() {
+	public List<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Set<User> users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 

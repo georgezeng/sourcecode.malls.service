@@ -12,7 +12,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import com.sourcecode.malls.admin.domain.base.BaseGoodsAttribute;
 import com.sourcecode.malls.admin.dto.goods.GoodsAttributeDTO;
@@ -32,7 +31,6 @@ public class GoodsSpecificationDefinition extends BaseGoodsAttribute {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "goods_definition_group", joinColumns = @JoinColumn(name = "definition_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
 	@OrderBy("name ASC")
-	@NotNull
 	private List<GoodsSpecificationGroup> groups;
 
 	public void addGroup(GoodsSpecificationGroup group) {
