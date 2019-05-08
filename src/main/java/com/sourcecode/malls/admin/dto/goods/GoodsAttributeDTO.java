@@ -27,12 +27,32 @@ public class GoodsAttributeDTO {
 
 	private GoodsAttributeDTO parent;
 
+	private boolean enabled;
+
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
 
 	private String searchText;
 
+	private String statusText;
+
 	private Long merchantId;
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getStatusText() {
+		return statusText;
+	}
+
+	public void setStatusText(String statusText) {
+		this.statusText = statusText;
+	}
 
 	public List<Long> getParentIds() {
 		return parentIds;

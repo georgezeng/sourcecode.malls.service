@@ -1,9 +1,7 @@
 package com.sourcecode.malls.admin.domain.goods;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -36,32 +33,20 @@ public class GoodsSpecificationDefinition extends BaseGoodsAttribute {
 	@JoinTable(name = "goods_definition_group", joinColumns = @JoinColumn(name = "definition_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
 	@OrderBy("name ASC")
 	@NotNull
-	private Set<GoodsSpecificationGroup> groups;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category_id")
-	private GoodsCategory category;
-
-	public GoodsCategory getCategory() {
-		return category;
-	}
-
-	public void setCategory(GoodsCategory category) {
-		this.category = category;
-	}
+	private List<GoodsSpecificationGroup> groups;
 
 	public void addGroup(GoodsSpecificationGroup group) {
 		if (groups == null) {
-			groups = new LinkedHashSet<>();
+			groups = new ArrayList<>();
 		}
 		groups.add(group);
 	}
 
-	public Set<GoodsSpecificationGroup> getGroups() {
+	public List<GoodsSpecificationGroup> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(Set<GoodsSpecificationGroup> groups) {
+	public void setGroups(List<GoodsSpecificationGroup> groups) {
 		this.groups = groups;
 	}
 
