@@ -9,6 +9,7 @@ public class GoodsItemDTO {
 	private String code;
 	private String thumbnail;
 	private BigDecimal marketPrice;
+	private BigDecimal realPrice;
 	private String sellingPoints;
 	private String content;
 	private boolean enabled;
@@ -19,6 +20,14 @@ public class GoodsItemDTO {
 	private String searchText;
 	private String statusText;
 	private List<GoodsItemPropertyDTO> properties;
+
+	public BigDecimal getRealPrice() {
+		return realPrice;
+	}
+
+	public void setRealPrice(BigDecimal realPrice) {
+		this.realPrice = realPrice;
+	}
 
 	public List<GoodsItemPropertyDTO> getProperties() {
 		return properties;

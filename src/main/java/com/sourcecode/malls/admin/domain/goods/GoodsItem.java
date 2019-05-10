@@ -38,8 +38,9 @@ public class GoodsItem extends LongKeyEntity {
 	private String name;
 	@Size(max = 50, message = "商品货号长度不能大于50")
 	private String code;
-	@NotNull(message = "市场售价不能为空")
 	private BigDecimal marketPrice;
+	@NotNull(message = "价格不能为空")
+	private BigDecimal realPrice;
 	@Size(max = 100, message = "商品卖点长度不能大于100")
 	private String sellingPoints;
 	@NotBlank(message = "商品描述不能为空")
@@ -70,6 +71,14 @@ public class GoodsItem extends LongKeyEntity {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
 	private List<GoodsItemProperty> properties;
+
+	public BigDecimal getRealPrice() {
+		return realPrice;
+	}
+
+	public void setRealPrice(BigDecimal realPrice) {
+		this.realPrice = realPrice;
+	}
 
 	public List<GoodsItemProperty> getProperties() {
 		return properties;
