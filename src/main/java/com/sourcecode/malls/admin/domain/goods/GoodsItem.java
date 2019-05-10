@@ -3,6 +3,7 @@ package com.sourcecode.malls.admin.domain.goods;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -63,9 +64,20 @@ public class GoodsItem extends LongKeyEntity {
 	@NotNull(message = "品牌不能为空")
 	private GoodsBrand brand;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = { CascadeType.ALL }, orphanRemoval=true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	@OrderBy("order ASC")
 	private List<GoodsItemPhoto> photos;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+	private List<GoodsItemProperty> properties;
+
+	public List<GoodsItemProperty> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(List<GoodsItemProperty> properties) {
+		this.properties = properties;
+	}
 
 	public boolean isEnabled() {
 		return enabled;
@@ -164,7 +176,7 @@ public class GoodsItem extends LongKeyEntity {
 
 	public GoodsItemDTO asDTO() {
 		GoodsItemDTO dto = new GoodsItemDTO();
-		BeanUtils.copyProperties(this, dto, "merchant", "category", "brand", "photos");
+		BeanUtils.copyProperties(this, dto, "merchant", "category", "brand", "photos", "properties");
 		if (category != null) {
 			dto.setCategoryId(category.getId());
 		}
@@ -177,6 +189,9 @@ public class GoodsItem extends LongKeyEntity {
 				list.add(photo.getPath());
 			}
 			dto.setPhotos(list);
+		}
+		if (properties != null) {
+			dto.setProperties(properties.stream().map(it -> it.asDTO()).collect(Collectors.toList()));
 		}
 		return dto;
 	}

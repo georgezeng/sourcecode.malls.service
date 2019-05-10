@@ -15,8 +15,6 @@ public class GoodsAttributeDTO {
 
 	private int level;
 
-	private Long pid;
-
 	private String icon;
 
 	private List<GoodsAttributeDTO> attrs;
@@ -56,14 +54,6 @@ public class GoodsAttributeDTO {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
-	}
-
-	public Long getPid() {
-		return pid;
-	}
-
-	public void setPid(Long pid) {
-		this.pid = pid;
 	}
 
 	public int getLevel() {

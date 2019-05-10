@@ -61,6 +61,7 @@ public class MerchantShopApplication extends LongKeyEntity {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "merchant_id")
+	@NotNull
 	private Merchant merchant;
 
 	@OneToMany(mappedBy = "shopApplication", fetch = FetchType.LAZY, cascade = { CascadeType.ALL }, orphanRemoval=true)

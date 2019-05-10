@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.sourcecode.malls.admin.domain.base.BaseGoodsAttribute;
+import com.sourcecode.malls.admin.dto.goods.GoodsAttributeDTO;
 
 @Entity
 @Table(name = "goods_specification_value")
@@ -27,5 +28,16 @@ public class GoodsSpecificationValue extends BaseGoodsAttribute {
 
 	public void setDefinition(GoodsSpecificationDefinition definition) {
 		this.definition = definition;
+	}
+
+	@Override
+	public GoodsAttributeDTO asDTO() {
+		GoodsAttributeDTO dto = super.asDTO();
+		if (definition != null) {
+			GoodsAttributeDTO parent = new GoodsAttributeDTO();
+			parent.setId(definition.getId());
+			dto.setParent(parent);
+		}
+		return dto;
 	}
 }

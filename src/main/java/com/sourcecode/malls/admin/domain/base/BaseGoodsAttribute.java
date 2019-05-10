@@ -24,6 +24,7 @@ public abstract class BaseGoodsAttribute extends LongKeyEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "merchant_id")
+	@NotNull(message = "商家不能为空")
 	private Merchant merchant;
 
 	@Column(name = "order_num")

@@ -50,6 +50,7 @@ public class MerchantVerification extends LongKeyEntity {
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "merchant_id")
+	@NotNull
 	private Merchant merchant;
 
 	public MerchantVerificationDTO asDTO() {

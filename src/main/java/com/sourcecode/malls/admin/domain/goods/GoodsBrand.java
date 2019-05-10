@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.BeanUtils;
@@ -32,9 +33,24 @@ public class GoodsBrand extends LongKeyEntity {
 	private String logo;
 	@Column(name = "order_num")
 	private int order;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "merchant_id")
+	@NotNull(message = "商家不能为空")
 	private Merchant merchant;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id")
+	@NotNull(message = "商品分类不能为空")
+	private GoodsCategory category;
+
+	public GoodsCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(GoodsCategory category) {
+		this.category = category;
+	}
 
 	public String getName() {
 		return name;
@@ -71,6 +87,9 @@ public class GoodsBrand extends LongKeyEntity {
 	public GoodsBrandDTO asDTO() {
 		GoodsBrandDTO dto = new GoodsBrandDTO();
 		BeanUtils.copyProperties(this, dto);
+		if (category != null) {
+			dto.setCategoryId(category.getId());
+		}
 		return dto;
 	}
 }

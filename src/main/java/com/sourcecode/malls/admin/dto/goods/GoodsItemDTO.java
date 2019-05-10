@@ -18,6 +18,15 @@ public class GoodsItemDTO {
 	private Long merchantId;
 	private String searchText;
 	private String statusText;
+	private List<GoodsItemPropertyDTO> properties;
+
+	public List<GoodsItemPropertyDTO> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(List<GoodsItemPropertyDTO> properties) {
+		this.properties = properties;
+	}
 
 	public String getStatusText() {
 		return statusText;

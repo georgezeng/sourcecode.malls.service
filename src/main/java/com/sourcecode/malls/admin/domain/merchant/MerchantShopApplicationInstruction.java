@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.sourcecode.malls.admin.domain.base.LongKeyEntity;
@@ -29,6 +30,7 @@ public class MerchantShopApplicationInstruction extends LongKeyEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "application_id")
+	@NotNull
 	private MerchantShopApplication shopApplication;
 
 	public String getPath() {
