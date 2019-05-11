@@ -83,7 +83,7 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 			} catch (IOException e) {
 			}
 		});
-		http.rememberMe().alwaysRemember(true).userDetailsService(userService).authenticationSuccessHandler(successHandler);
+		http.rememberMe().alwaysRemember(true).userDetailsService(userService);
 		http.userDetailsService(userService);
 		http.authorizeRequests().accessDecisionManager(new AffirmativeBased(Arrays.asList(authorityVoter, new WebExpressionVoter())))
 				.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
