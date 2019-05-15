@@ -1,6 +1,6 @@
 aliyun:
   oss:
-    endpoint: oss-cn-shenzhen.aliyuncs.com
+    endpoint: oss-cn-shenzhen-internal.aliyuncs.com
     privateBucket: malls-admin-private-uat
     publicBucket: malls-admin-public-uat
   accesskey: LTAIwvOEmE5rhnxS
