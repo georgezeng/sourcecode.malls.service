@@ -12,8 +12,8 @@ test.server: 172.18.130.163
 
 log.server: ${test.server}
 
-host:
-  database: ${test.server}
+database:
+  host: ${test.server}
 
 spring:
   datasource:

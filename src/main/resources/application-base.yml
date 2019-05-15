@@ -17,7 +17,7 @@ spring:
           db-type: mysql
           log-slow-sql: true
           slow-sql-millis: 5000
-      url: jdbc:mysql://${host.database}/malls?useUnicode=true&characterEncoding=utf8
+      url: jdbc:mysql://${database.host}/malls?useUnicode=true&characterEncoding=utf8
       max-active: 20
       initial-size: 10
       max-wait: 60000

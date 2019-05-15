@@ -1,5 +1,5 @@
-host:
-  database: localhost
+database:
+  host: localhost
 
 spring:
   datasource:
