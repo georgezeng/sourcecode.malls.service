@@ -16,6 +16,8 @@ spring:
 
 access.control.allow.origin: http://localhost:8080
 
+user.type.name: 
+
 super-admin:
   username: admin
   password: 111111

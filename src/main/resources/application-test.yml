@@ -3,3 +3,5 @@ aliyun:
   secret: XdzLN3mHH1Og83Lx7D7ArVKJshcEJw
   sms: 
     signName: 百士兴科技有限公司
+    
+log.server: 172.18.130.163
