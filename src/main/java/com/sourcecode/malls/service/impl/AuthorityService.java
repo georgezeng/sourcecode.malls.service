@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.druid.util.StringUtils;
-import com.sourcecode.malls.domain.system.setting.Authority;
-import com.sourcecode.malls.domain.system.setting.Role;
+import com.sourcecode.malls.domain.system.Authority;
+import com.sourcecode.malls.domain.system.Role;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.dto.query.QueryInfo;
 import com.sourcecode.malls.properties.SuperAdminProperties;

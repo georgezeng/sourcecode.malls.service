@@ -1,4 +1,4 @@
-package com.sourcecode.malls.domain.system.setting;
+package com.sourcecode.malls.domain.system;
 
 import java.util.ArrayList;
 import java.util.List;

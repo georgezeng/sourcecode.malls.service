@@ -1,4 +1,4 @@
-package com.sourcecode.malls.web.filter;
+package com.sourcecode.malls.web.security.filter;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 import com.sourcecode.malls.context.UserContext;
-import com.sourcecode.malls.domain.system.setting.User;
+import com.sourcecode.malls.domain.system.User;
 import com.sourcecode.malls.exception.BusinessException;
 import com.sourcecode.malls.properties.SessionAttributesProperties;
 import com.sourcecode.malls.service.impl.UserService;

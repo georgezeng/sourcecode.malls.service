@@ -25,15 +25,19 @@ public class VerifyCodeService {
 	@Autowired
 	private CodeStoreRepository codeStoreRepository;
 
-	public void sendRegisterCode(String mobile, HttpSession session, String attr, String category) {
-		sendCode(mobile, session, attr, category, "SMS_162450479");
+	public void sendLoginCode(String mobile, HttpSession session, String attr, String category, String keySuffix) {
+		sendCode(mobile, session, attr, category, "SMS_162450481", keySuffix);
 	}
 
-	public void sendForgetPasswordCode(String mobile, HttpSession session, String attr, String category) {
-		sendCode(mobile, session, attr, category, "SMS_162450478");
+	public void sendRegisterCode(String mobile, HttpSession session, String attr, String category, String keySuffix) {
+		sendCode(mobile, session, attr, category, "SMS_162450479", keySuffix);
 	}
 
-	private void sendCode(String mobile, HttpSession session, String attr, String category, String codeId) {
+	public void sendForgetPasswordCode(String mobile, HttpSession session, String attr, String category, String keySuffix) {
+		sendCode(mobile, session, attr, category, "SMS_162450478", keySuffix);
+	}
+
+	private void sendCode(String mobile, HttpSession session, String attr, String category, String codeId, String keySuffix) {
 		Date sendTime = (Date) session.getAttribute(attr);
 		if (sendTime != null) {
 			Calendar c = Calendar.getInstance();
@@ -41,8 +45,12 @@ public class VerifyCodeService {
 			c.add(Calendar.SECOND, 30);
 			AssertUtil.assertTrue(new Date().after(c.getTime()), "操作太频繁，请稍后重试");
 		}
-		Optional<CodeStore> codeStoreOp = codeStoreRepository.findByCategoryAndKey(category, mobile);
-		CodeStore codeStore = codeStoreOp.orElse(new CodeStore(category, mobile, CodeUtil.generateRandomNumbers(6)));
+		String key = mobile;
+		if (keySuffix != null) {
+			key += "_" + keySuffix;
+		}
+		Optional<CodeStore> codeStoreOp = codeStoreRepository.findByCategoryAndKey(category, key);
+		CodeStore codeStore = codeStoreOp.orElse(new CodeStore(category, key, CodeUtil.generateRandomNumbers(6)));
 		if (codeStore.getId() != null) {
 			codeStore.setValue(CodeUtil.generateRandomNumbers(6));
 		}

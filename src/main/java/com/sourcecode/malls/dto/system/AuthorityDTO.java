@@ -3,7 +3,7 @@ package com.sourcecode.malls.dto.system;
 import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.domain.base.BaseAuthority;
-import com.sourcecode.malls.domain.system.setting.Authority;
+import com.sourcecode.malls.domain.system.Authority;
 
 public class AuthorityDTO extends BaseAuthority {
 	/**

@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.sourcecode.malls.context.UserContext;
 import com.sourcecode.malls.domain.merchant.MerchantShopApplication;
-import com.sourcecode.malls.domain.system.setting.User;
+import com.sourcecode.malls.domain.system.User;
 import com.sourcecode.malls.dto.base.ResultBean;
 import com.sourcecode.malls.enums.VerificationStatus;
 import com.sourcecode.malls.repository.jpa.impl.merchant.MerchantShopApplicationRepository;

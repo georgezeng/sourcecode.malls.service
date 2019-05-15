@@ -2,7 +2,7 @@ package com.sourcecode.malls.web.security.config.attribute;
 
 import org.springframework.security.access.ConfigAttribute;
 
-import com.sourcecode.malls.domain.system.setting.Authority;
+import com.sourcecode.malls.domain.system.Authority;
 
 public class AuthorityConfigAttribute implements ConfigAttribute {
 

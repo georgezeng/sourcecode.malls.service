@@ -25,8 +25,8 @@ import org.springframework.util.CollectionUtils;
 
 import com.alibaba.druid.util.StringUtils;
 import com.sourcecode.malls.constants.EnvConstant;
-import com.sourcecode.malls.domain.system.setting.Role;
-import com.sourcecode.malls.domain.system.setting.User;
+import com.sourcecode.malls.domain.system.Role;
+import com.sourcecode.malls.domain.system.User;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.dto.query.QueryInfo;
 import com.sourcecode.malls.dto.system.RoleDTO;

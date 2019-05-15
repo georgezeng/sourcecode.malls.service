@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sourcecode.malls.context.UserContext;
-import com.sourcecode.malls.domain.system.setting.User;
+import com.sourcecode.malls.domain.system.User;
 import com.sourcecode.malls.service.impl.UserService;
 import com.sourcecode.malls.web.security.config.attribute.AuthorityConfigAttribute;
 

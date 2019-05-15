@@ -1,4 +1,4 @@
-package com.sourcecode.malls.web.filter;
+package com.sourcecode.malls.web.security.filter;
 
 import java.io.IOException;
 

@@ -20,10 +20,8 @@ public abstract class BaseUser extends LongKeyEntity {
 	@NotBlank(message = "用户名不能为空")
 	@Size(max = 50, message = "用户名长度不能大于50")
 	private String username;
-	@NotBlank(message = "密码不能为空")
 	@Size(max = 255, message = "密码长度不能大于255")
 	private String password;
-	@NotBlank(message = "邮箱不能为空")
 	@Size(max = 50, message = "邮箱长度不能大于50")
 	@Email
 	private String email;

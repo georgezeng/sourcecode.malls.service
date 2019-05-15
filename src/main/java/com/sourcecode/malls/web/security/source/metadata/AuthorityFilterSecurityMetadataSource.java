@@ -1,4 +1,4 @@
-package com.sourcecode.malls.web.security.metadatasource;
+package com.sourcecode.malls.web.security.source.metadata;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +13,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.sourcecode.malls.domain.system.setting.Authority;
+import com.sourcecode.malls.domain.system.Authority;
 import com.sourcecode.malls.service.impl.AuthorityService;
 import com.sourcecode.malls.web.security.config.attribute.AuthorityConfigAttribute;
 

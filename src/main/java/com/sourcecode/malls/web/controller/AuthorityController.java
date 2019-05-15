@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sourcecode.malls.constants.ExceptionMessageConstant;
-import com.sourcecode.malls.domain.system.setting.Authority;
+import com.sourcecode.malls.domain.system.Authority;
 import com.sourcecode.malls.dto.base.KeyDTO;
 import com.sourcecode.malls.dto.base.ResultBean;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;

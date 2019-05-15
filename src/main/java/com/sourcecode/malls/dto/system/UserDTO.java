@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.domain.base.BaseUser;
-import com.sourcecode.malls.domain.system.setting.User;
+import com.sourcecode.malls.domain.system.User;
 
 public class UserDTO extends BaseUser {
 	/**

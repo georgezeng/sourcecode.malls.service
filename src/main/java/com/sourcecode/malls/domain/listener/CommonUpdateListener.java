@@ -8,7 +8,7 @@ import javax.persistence.PreUpdate;
 
 import com.sourcecode.malls.context.UserContext;
 import com.sourcecode.malls.domain.base.BaseEntity;
-import com.sourcecode.malls.domain.system.setting.User;
+import com.sourcecode.malls.domain.system.User;
 import com.sourcecode.malls.util.DateUtil;
 
 public class CommonUpdateListener {
