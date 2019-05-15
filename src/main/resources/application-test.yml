@@ -1,7 +1,35 @@
 aliyun:
+  oss:
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    privateBucket: malls-admin-private-uat
+    publicBucket: malls-admin-public-uat
   accesskey: LTAIwvOEmE5rhnxS
   secret: XdzLN3mHH1Og83Lx7D7ArVKJshcEJw
   sms: 
     signName: 百士兴科技有限公司
     
-log.server: 172.18.130.163
+test.server: 172.18.130.163
+
+log.server: ${test.server}
+
+host:
+  database: ${test.server}
+
+spring:
+  datasource:
+    druid:
+      username: root
+      password: "mall!@#"
+       
+super-admin:
+  username: admin
+  password: 111111
+  email: tt@test.com
+        
+session:
+  redis:
+    host: ${test.server}
+    password: "123!@#"
+    port: 6379
+
+access.control.allow.origin:     
