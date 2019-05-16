@@ -1,0 +1,30 @@
+aliyun:
+  oss:
+    endpoint: oss-cn-shenzhen-internal.aliyuncs.com
+    privateBucket: malls-admin-private-uat
+    publicBucket: malls-admin-public-uat
+    
+test.server: 172.18.130.163
+
+log.server: ${test.server}
+
+database:
+  host: ${test.server}
+
+spring:
+  datasource:
+    druid:
+      username: root
+      password: "mall!@#"
+       
+super-admin:
+  username: admin
+  password: 111111
+  email: tt@test.com
+        
+session:
+  redis:
+    host: ${test.server}
+    password: "123!@#"
+    port: 6379
+
