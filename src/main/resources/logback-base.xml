@@ -4,19 +4,14 @@
 		
 	<jmxConfigurator />
 	
-	<springProfile name="local">
-		<property name="envTier" value="local"/>
-		<property resource="application-local.yml" />
-	</springProfile>
-	
 	<springProfile name="uat">
 		<property name="envTier" value="uat"/>
-		<property resource="application-uat.yml" />
+		<property resource="application-uat-base.yml" />
 	</springProfile>
 	
 	<springProfile name="prod">
 		<property name="envTier" value="prod"/>
-		<property resource="application-prod.yml" />
+		<property resource="application-prod-base.yml" />
 	</springProfile>
 	
 	<springProfile name="server">
