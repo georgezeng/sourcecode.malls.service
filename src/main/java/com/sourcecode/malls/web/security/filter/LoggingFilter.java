@@ -27,7 +27,7 @@ public class LoggingFilter extends GenericFilterBean {
 		String url = req.getRequestURI();
 		if (req.getQueryString() != null) {
 			url += req.getQueryString();
-		}
+		}logger.info("header: " + req.getHeader("Access-Control-Allow-Origin"));
 		if (MediaType.APPLICATION_JSON_VALUE.equals(req.getContentType())) {
 			MultiReadHttpServletRequest reqWrapper = new MultiReadHttpServletRequest(req);
 			if (reqWrapper.getBodyByteArray() != null) {
