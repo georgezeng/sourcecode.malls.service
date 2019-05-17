@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
@@ -58,6 +59,8 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected AppAuthenticationFailureHandler failureHandler;
 	@Autowired
 	private AppEntryPoint entryPoint;
+	@Autowired
+	private Environment env;
 
 	@Value("${access.control.allow.origin}")
 	private String origin;
@@ -72,16 +75,18 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-	
-  	protected List<String> getAllowHeaders() {
-  		return Arrays.asList("Access-Control-Allow-Origin", "Content-Type");
-  	}
+
+	protected List<String> getAllowHeaders() {
+		return Arrays.asList("Access-Control-Allow-Origin", "Content-Type");
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		before(http);
 		successHandler.setRedirectStrategy(loginSuccessfulStrategy);
-		http.cors().configurationSource(corsConfigurationSource());
+		if (env.containsProperty("local")) {
+			http.cors().configurationSource(corsConfigurationSource());
+		}
 		http.csrf().disable();
 		http.httpBasic().disable();
 		http.exceptionHandling().authenticationEntryPoint(entryPoint);
@@ -108,11 +113,10 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 		// http.addFilterAfter(openEntityManagerInViewFilter, ErrorHandlerFilter.class);
 		after(http);
 	}
-	
-	protected void before(HttpSecurity http) throws Exception {
-		
-	}
 
+	protected void before(HttpSecurity http) throws Exception {
+
+	}
 
 	protected AuthenticationDetailsSource<HttpServletRequest, ?> getDetailsSource() {
 		return new WebAuthenticationDetailsSource();
