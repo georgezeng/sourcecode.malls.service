@@ -40,6 +40,8 @@ default:
   avatar: common/avatar.png
   img: common/img.png
 
+access.control.allow.origin: '*'
+
 session:
   attributes:
     userId: userId

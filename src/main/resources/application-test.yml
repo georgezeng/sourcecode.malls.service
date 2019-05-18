@@ -4,4 +4,3 @@ aliyun:
   sms: 
     signName: 百士兴科技有限公司
     
-access.control.allow.origin: '*'
