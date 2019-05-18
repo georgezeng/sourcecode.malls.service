@@ -18,8 +18,6 @@ session:
     password: 
     port: 6379
     
-access.control.allow.origin: http://localhost:8080
-
 aliyun:
   oss:
     endpoint: oss-cn-shenzhen.aliyuncs.com
