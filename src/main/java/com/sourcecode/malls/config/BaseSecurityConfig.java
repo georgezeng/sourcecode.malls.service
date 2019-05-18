@@ -59,8 +59,6 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected AppAuthenticationFailureHandler failureHandler;
 	@Autowired
 	private AppEntryPoint entryPoint;
-	@Autowired
-	private Environment env;
 
 	@Value("${access.control.allow.origin}")
 	private String origin;
@@ -84,9 +82,7 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		before(http);
 		successHandler.setRedirectStrategy(loginSuccessfulStrategy);
-		if (env.containsProperty("local")) {
-			http.cors().configurationSource(corsConfigurationSource());
-		}
+		http.cors().configurationSource(corsConfigurationSource());
 		http.csrf().disable();
 		http.httpBasic().disable();
 		http.exceptionHandling().authenticationEntryPoint(entryPoint);
