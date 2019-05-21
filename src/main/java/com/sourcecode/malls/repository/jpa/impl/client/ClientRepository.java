@@ -10,5 +10,6 @@ import com.sourcecode.malls.domain.merchant.Merchant;
 
 public interface ClientRepository extends JpaRepository<Client, Long>, JpaSpecificationExecutor<Client> {
 	Optional<Client> findByMerchantAndUsername(Merchant merchant, String username);
+	Optional<Client> findByMerchantAndUnionId(Merchant merchant, String unionId);
 
 }
