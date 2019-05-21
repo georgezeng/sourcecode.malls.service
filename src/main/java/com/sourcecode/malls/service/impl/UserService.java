@@ -10,8 +10,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.core.env.Profiles;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.alibaba.druid.util.StringUtils;
-import com.sourcecode.malls.constants.EnvConstant;
 import com.sourcecode.malls.domain.system.Role;
 import com.sourcecode.malls.domain.system.User;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
@@ -54,9 +51,6 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 	@Autowired
 	private RoleService roleService;
 
-	@Autowired
-	private Environment env;
-
 	public void prepareSuperAdmin() {
 		Optional<User> superAdminOp = userRepository.findByUsername(superAdminProperties.getUsername());
 		User user = null;
@@ -66,11 +60,7 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 		} else {
 			user = superAdminOp.get();
 		}
-		if (env.acceptsProfiles(Profiles.of(EnvConstant.PROD))) {
-			user.setPassword(superAdminProperties.getPassword());
-		} else {
-			user.setPassword(passwordEncoder.encode(superAdminProperties.getPassword()));
-		}
+		user.setPassword(passwordEncoder.encode(superAdminProperties.getPassword()));
 		user.setEmail(superAdminProperties.getEmail());
 		user.setEnabled(true);
 		userRepository.save(user);
