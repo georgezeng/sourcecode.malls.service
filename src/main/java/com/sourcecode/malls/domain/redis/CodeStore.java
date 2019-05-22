@@ -1,5 +1,7 @@
 package com.sourcecode.malls.domain.redis;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
@@ -14,15 +16,25 @@ public class CodeStore {
 	@Indexed
 	private String key;
 	private String value;
+	private Date createTime;
 
 	public CodeStore() {
 
 	}
 
-	public CodeStore(String category, String key, String value) {
+	public CodeStore(String category, String key, String value, Date createTime) {
 		this.category = category;
 		this.key = key;
 		this.value = value;
+		this.createTime = createTime;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
 	public String getCategory() {
