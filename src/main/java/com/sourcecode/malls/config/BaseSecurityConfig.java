@@ -94,12 +94,6 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.rememberMe().alwaysRemember(true).userDetailsService(getUserDetailsService());
 		http.userDetailsService(getUserDetailsService());
 		http.authorizeRequests().antMatchers("/actuator/health").permitAll();
-		// http.authorizeRequests().antMatchers("/index.html").permitAll();
-		// http.authorizeRequests().antMatchers("/css/**").permitAll();
-		// http.authorizeRequests().antMatchers("/js/**").permitAll();
-		// http.authorizeRequests().antMatchers("/fonts/**").permitAll();
-		// http.authorizeRequests().antMatchers("/img/**").permitAll();
-		// http.authorizeRequests().antMatchers("/favicon.ico").permitAll();
 		http.authorizeRequests().antMatchers("/**/login/**").permitAll();
 		http.authorizeRequests().antMatchers("/**/register/**").permitAll();
 		http.authorizeRequests().antMatchers("/**/forgetPassword/**").permitAll();
