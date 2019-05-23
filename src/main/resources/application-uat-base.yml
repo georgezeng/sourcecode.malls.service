@@ -19,7 +19,7 @@ spring:
        
 super-admin:
   username: admin
-  password: 111111
+  password: '$2a$10$2mx0HIdhHJ.ciiOAqKs7mejYGaeoDiE27.pLGqQCuQ4HYKTTW7twG'
   email: tt@test.com
         
 session:

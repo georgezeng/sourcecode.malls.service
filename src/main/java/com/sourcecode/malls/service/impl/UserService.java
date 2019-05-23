@@ -16,7 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -46,9 +45,6 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 	private SuperAdminProperties superAdminProperties;
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-	@Autowired
 	private RoleService roleService;
 
 	public void prepareSuperAdmin() {
@@ -60,7 +56,7 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 		} else {
 			user = superAdminOp.get();
 		}
-		user.setPassword(passwordEncoder.encode(superAdminProperties.getPassword()));
+		user.setPassword(superAdminProperties.getPassword());
 		user.setEmail(superAdminProperties.getEmail());
 		user.setEnabled(true);
 		userRepository.save(user);

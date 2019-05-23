@@ -1,18 +1,19 @@
 package com.sourcecode.malls.test;
 import java.util.Map;
 
+import org.junit.Test;
+
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
-import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SmsTests {
-    public static void main(String[] args) {
+	@Test
+    public void test() {
         DefaultProfile profile = DefaultProfile.getProfile("cn-shenzhen", "LTAIwvOEmE5rhnxS", "XdzLN3mHH1Og83Lx7D7ArVKJshcEJw");
         IAcsClient client = new DefaultAcsClient(profile);
 

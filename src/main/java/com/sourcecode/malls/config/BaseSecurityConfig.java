@@ -89,8 +89,7 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 		});
 		http.rememberMe().alwaysRemember(true).userDetailsService(getUserDetailsService());
 		http.userDetailsService(getUserDetailsService());
-		http.formLogin().disable();
-//		http.formLogin().permitAll().successHandler(successHandler).failureHandler(failureHandler);
+		http.formLogin().permitAll().successHandler(successHandler).failureHandler(failureHandler);
 		http.authorizeRequests().antMatchers("/actuator/health").permitAll();
 		http.authorizeRequests().antMatchers("/**/login/**").permitAll();
 		http.authorizeRequests().antMatchers("/**/register/**").permitAll();
