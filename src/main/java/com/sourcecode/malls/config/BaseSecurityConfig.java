@@ -4,12 +4,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.vote.AffirmativeBased;
-import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -93,6 +89,8 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 		});
 		http.rememberMe().alwaysRemember(true).userDetailsService(getUserDetailsService());
 		http.userDetailsService(getUserDetailsService());
+		http.formLogin().disable();
+//		http.formLogin().permitAll().successHandler(successHandler).failureHandler(failureHandler);
 		http.authorizeRequests().antMatchers("/actuator/health").permitAll();
 		http.authorizeRequests().antMatchers("/**/login/**").permitAll();
 		http.authorizeRequests().antMatchers("/**/register/**").permitAll();
@@ -109,16 +107,11 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	}
 
-	protected AuthenticationDetailsSource<HttpServletRequest, ?> getDetailsSource() {
-		return new WebAuthenticationDetailsSource();
-	}
-
 	protected UserDetailsService getUserDetailsService() {
 		return userService;
 	}
 
 	protected void processAuthorizations(HttpSecurity http) throws Exception {
-		http.formLogin().permitAll().authenticationDetailsSource(getDetailsSource()).successHandler(successHandler).failureHandler(failureHandler);
 		http.authorizeRequests().accessDecisionManager(new AffirmativeBased(Arrays.asList(authorityVoter, new WebExpressionVoter())))
 				.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
 
