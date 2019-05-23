@@ -19,8 +19,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
-import com.alibaba.druid.util.StringUtils;
 import com.sourcecode.malls.domain.system.Role;
 import com.sourcecode.malls.domain.system.User;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
