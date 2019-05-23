@@ -24,10 +24,11 @@ public class AppAuthenticationFailureHandler extends SimpleUrlAuthenticationFail
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
 			throws IOException, ServletException {
-		logger.error(exception.getMessage(), exception);
+		String traceId = LogUtil.getTraceId();
+		logger.error("[" + traceId + "]: " + exception.getMessage(), exception);
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-		response.getWriter().write(mapper.writeValueAsString(new ResultBean<>(LogUtil.getTraceId(), exception.getMessage())));
+		response.getWriter().write(mapper.writeValueAsString(new ResultBean<>(traceId, exception.getMessage())));
 		response.getWriter().flush();
 		response.getWriter().close();
 	}
