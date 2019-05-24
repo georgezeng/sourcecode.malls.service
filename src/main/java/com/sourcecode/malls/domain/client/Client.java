@@ -2,21 +2,27 @@ package com.sourcecode.malls.domain.client;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.sourcecode.malls.domain.base.BaseUser;
 import com.sourcecode.malls.domain.merchant.Merchant;
+import com.sourcecode.malls.dto.client.ClientDTO;
+import com.sourcecode.malls.enums.Sex;
 
 @Table(name = "client")
 @Entity
@@ -33,8 +39,11 @@ public class Client extends BaseUser implements UserDetails {
 	private Merchant merchant;
 	@Size(max = 255, message = "昵称长度不能大于255")
 	private String nickname;
-	@Column(name="unionid")
+	@Column(name = "unionid")
 	private String unionId;
+	@Enumerated(EnumType.STRING)
+	private Sex sex;
+	private Date birthday;
 
 	public Client() {
 
@@ -42,6 +51,22 @@ public class Client extends BaseUser implements UserDetails {
 
 	private Client(String username) {
 		super(username);
+	}
+
+	public Sex getSex() {
+		return sex;
+	}
+
+	public void setSex(Sex sex) {
+		this.sex = sex;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
 
 	public String getNickname() {
@@ -86,6 +111,12 @@ public class Client extends BaseUser implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Arrays.asList(new SimpleGrantedAuthority("AUTH_CLIENT"));
+	}
+
+	public ClientDTO asDTO() {
+		ClientDTO dto = new ClientDTO();
+		BeanUtils.copyProperties(this, dto);
+		return dto;
 	}
 
 }
