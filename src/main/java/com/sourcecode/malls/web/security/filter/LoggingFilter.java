@@ -26,7 +26,7 @@ public class LoggingFilter extends GenericFilterBean {
 		HttpServletRequest req = (HttpServletRequest) request;
 		String url = req.getRequestURI();
 		if (req.getQueryString() != null) {
-			url += req.getQueryString();
+			url += "?" + req.getQueryString();
 		}
 		if (MediaType.APPLICATION_JSON_VALUE.equals(req.getContentType())) {
 			MultiReadHttpServletRequest reqWrapper = new MultiReadHttpServletRequest(req);
