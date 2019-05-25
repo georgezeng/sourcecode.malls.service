@@ -23,19 +23,19 @@ public class VerifyCodeService {
 	@Autowired
 	private CodeStoreRepository codeStoreRepository;
 
-	public void sendLoginCode(String mobile, String attr, String category, String keySuffix) {
-		sendCode(mobile, attr, category, "SMS_162450481", keySuffix);
+	public void sendLoginCode(String mobile, String category, String keySuffix) {
+		sendCode(mobile, category, "SMS_162450481", keySuffix);
 	}
 
-	public void sendRegisterCode(String mobile, String attr, String category, String keySuffix) {
-		sendCode(mobile, attr, category, "SMS_162450479", keySuffix);
+	public void sendRegisterCode(String mobile, String category, String keySuffix) {
+		sendCode(mobile, category, "SMS_162450479", keySuffix);
 	}
 
-	public void sendForgetPasswordCode(String mobile, String attr, String category, String keySuffix) {
-		sendCode(mobile, attr, category, "SMS_162450478", keySuffix);
+	public void sendForgetPasswordCode(String mobile, String category, String keySuffix) {
+		sendCode(mobile, category, "SMS_162450478", keySuffix);
 	}
 
-	private void sendCode(String mobile, String attr, String category, String codeId, String keySuffix) {
+	private void sendCode(String mobile, String category, String codeId, String keySuffix) {
 		String key = mobile;
 		if (keySuffix != null) {
 			key += "_" + keySuffix;
