@@ -22,6 +22,7 @@ import com.sourcecode.malls.properties.SuperAdminProperties;
 import com.sourcecode.malls.web.security.entrypoint.AppEntryPoint;
 import com.sourcecode.malls.web.security.filter.ErrorHandlerFilter;
 import com.sourcecode.malls.web.security.filter.LoggingFilter;
+import com.sourcecode.malls.web.security.filter.TestFilter;
 import com.sourcecode.malls.web.security.filter.UserSessionFilter;
 import com.sourcecode.malls.web.security.handler.AppAuthenticationFailureHandler;
 import com.sourcecode.malls.web.security.handler.AppAuthenticationSuccessHandler;
@@ -54,6 +55,8 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected AppAuthenticationFailureHandler failureHandler;
 	@Autowired
 	private AppEntryPoint entryPoint;
+	@Autowired
+	private TestFilter testFilter;
 
 	@Value("${access.control.allow.origin}")
 	private String origin;
@@ -96,6 +99,7 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/**/forgetPassword/**").permitAll();
 		http.authorizeRequests().antMatchers("/actuator/**").hasAuthority(adminProperties.getAuthority());
 		processAuthorizations(http);
+		http.addFilterBefore(testFilter, ChannelProcessingFilter.class);
 		http.addFilterBefore(errorHandlerFilter, ChannelProcessingFilter.class);
 		http.addFilterAfter(loggingFilter, ChannelProcessingFilter.class);
 		// http.addFilterAfter(openEntityManagerInViewFilter, ErrorHandlerFilter.class);
