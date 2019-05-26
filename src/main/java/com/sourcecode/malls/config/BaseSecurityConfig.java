@@ -70,7 +70,7 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	protected List<String> getAllowHeaders() {
-		return Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Content-Type");
+		return Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Content-Type", "x-auth-token");
 	}
 
 	@Override
