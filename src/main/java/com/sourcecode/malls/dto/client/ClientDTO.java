@@ -2,12 +2,14 @@ package com.sourcecode.malls.dto.client;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.enums.Sex;
 
 public class ClientDTO {
 	private Long id;
 	private String username;
 	private String nickname;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;
 	private Sex sex;
 	private String avatar;
