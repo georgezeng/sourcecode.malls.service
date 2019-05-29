@@ -1,7 +1,5 @@
 package com.sourcecode.malls.dto.client;
 
-import javax.validation.constraints.NotBlank;
-
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.enums.VerificationStatus;
 
@@ -15,6 +13,15 @@ public class ClientIdentityDTO extends SimpleQueryDTO {
 	private String facePhoto;
 	private String badgePhoto;
 	private String peoplePhoto;
+	private String reason;
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 
 	public String getFacePhoto() {
 		return facePhoto;
