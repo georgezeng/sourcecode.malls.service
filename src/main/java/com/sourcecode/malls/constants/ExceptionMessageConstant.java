@@ -13,4 +13,6 @@ public interface ExceptionMessageConstant {
 	String MOBILE_ACCOUNT_SHOULD_BE_THE_RULE = "账号长度必须是11位且全部是数字";
 	String HAS_VERIFIED = "已经审核过";
 	String FAILED_REASON_CAN_NOT_BE_EMPTY = "失败原因不能为空";
+	String VERIFY_CODE_INVALID = "验证码无效";
+	String OLD_PASSWORD_IS_INVALID = "旧密码有误";
 }
