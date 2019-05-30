@@ -16,6 +16,16 @@ public class ClientDTO extends SimpleQueryDTO {
 	private String avatar;
 	private Long merchantId;
 	private boolean enabled;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date createTime;
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
 	public boolean isEnabled() {
 		return enabled;
