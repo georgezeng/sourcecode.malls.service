@@ -15,4 +15,5 @@ public interface ExceptionMessageConstant {
 	String FAILED_REASON_CAN_NOT_BE_EMPTY = "失败原因不能为空";
 	String VERIFY_CODE_INVALID = "验证码无效";
 	String OLD_PASSWORD_IS_INVALID = "旧密码有误";
+	String FILE_PATH_IS_INVALID = "文件路径不合法";
 }

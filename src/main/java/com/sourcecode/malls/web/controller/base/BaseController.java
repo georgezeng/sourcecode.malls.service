@@ -10,6 +10,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sourcecode.malls.constants.ExceptionMessageConstant;
 import com.sourcecode.malls.context.UserContext;
 import com.sourcecode.malls.domain.merchant.MerchantShopApplication;
 import com.sourcecode.malls.domain.system.User;
@@ -46,7 +47,7 @@ public abstract class BaseController {
 
 	protected Resource load(Long userId, String filePath, String dir, boolean isPublic) {
 		String dest = dir + "/" + userId + "/";
-		AssertUtil.assertTrue(filePath.startsWith("temp/" + dest) || filePath.startsWith(dest), "文件路径不合法: " + filePath);
+		AssertUtil.assertTrue(filePath.startsWith("temp/" + dest) || filePath.startsWith(dest), ExceptionMessageConstant.FILE_PATH_IS_INVALID + ": " + filePath);
 		if (filePath.startsWith("temp")) {
 			return new ByteArrayResource(fileService.load(false, filePath));
 		} else {
