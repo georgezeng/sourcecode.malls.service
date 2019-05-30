@@ -1,5 +1,8 @@
 package com.sourcecode.malls.dto.client;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.enums.VerificationStatus;
 
@@ -14,6 +17,16 @@ public class ClientIdentityDTO extends SimpleQueryDTO {
 	private String badgePhoto;
 	private String peoplePhoto;
 	private String reason;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date createTime;
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
 	public String getReason() {
 		return reason;
