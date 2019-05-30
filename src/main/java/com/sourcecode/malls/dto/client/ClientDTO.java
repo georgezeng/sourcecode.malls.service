@@ -3,9 +3,10 @@ package com.sourcecode.malls.dto.client;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.enums.Sex;
 
-public class ClientDTO {
+public class ClientDTO extends SimpleQueryDTO {
 	private Long id;
 	private String username;
 	private String nickname;
@@ -13,6 +14,24 @@ public class ClientDTO {
 	private Date birthday;
 	private Sex sex;
 	private String avatar;
+	private Long merchantId;
+	private boolean enabled;
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Long getMerchantId() {
+		return merchantId;
+	}
+
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
+	}
 
 	public Long getId() {
 		return id;
