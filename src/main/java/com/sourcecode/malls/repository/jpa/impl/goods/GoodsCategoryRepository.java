@@ -8,7 +8,12 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import com.sourcecode.malls.domain.goods.GoodsCategory;
 import com.sourcecode.malls.domain.merchant.Merchant;
 
-public interface GoodsCategoryRepository extends JpaRepository<GoodsCategory, Long>, JpaSpecificationExecutor<GoodsCategory> {
+public interface GoodsCategoryRepository
+		extends JpaRepository<GoodsCategory, Long>, JpaSpecificationExecutor<GoodsCategory> {
 	List<GoodsCategory> findByMerchant(Merchant merchant);
+
+	List<GoodsCategory> findByMerchantAndParentIsNull(Merchant merchant);
+
+	List<GoodsCategory> findByMerchantAndParent(Merchant merchant, GoodsCategory parent);
 
 }
