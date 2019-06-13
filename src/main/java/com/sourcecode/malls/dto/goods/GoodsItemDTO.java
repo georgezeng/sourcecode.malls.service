@@ -20,6 +20,24 @@ public class GoodsItemDTO {
 	private String searchText;
 	private String statusText;
 	private List<GoodsItemPropertyDTO> properties;
+	private BigDecimal goodPointRate;
+	private long orderNums;
+
+	public BigDecimal getGoodPointRate() {
+		return goodPointRate;
+	}
+
+	public void setGoodPointRate(BigDecimal goodPointRate) {
+		this.goodPointRate = goodPointRate;
+	}
+
+	public long getOrderNums() {
+		return orderNums;
+	}
+
+	public void setOrderNums(long orderNums) {
+		this.orderNums = orderNums;
+	}
 
 	public BigDecimal getRealPrice() {
 		return realPrice;

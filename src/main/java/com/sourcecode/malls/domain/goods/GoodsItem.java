@@ -1,7 +1,9 @@
 package com.sourcecode.malls.domain.goods;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,10 +52,15 @@ public class GoodsItem extends LongKeyEntity {
 	private String thumbnail;
 	private boolean enabled;
 
+	private Date putTime;
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	@NotNull(message = "商品分类不能为空")
 	private GoodsCategory category;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "item")
+	private GoodsItemRank rank;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "merchant_id")
@@ -71,6 +78,22 @@ public class GoodsItem extends LongKeyEntity {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
 	private List<GoodsItemProperty> properties;
+
+	public GoodsItemRank getRank() {
+		return rank;
+	}
+
+	public void setRank(GoodsItemRank rank) {
+		this.rank = rank;
+	}
+
+	public Date getPutTime() {
+		return putTime;
+	}
+
+	public void setPutTime(Date putTime) {
+		this.putTime = putTime;
+	}
 
 	public BigDecimal getRealPrice() {
 		return realPrice;
@@ -201,6 +224,17 @@ public class GoodsItem extends LongKeyEntity {
 		}
 		if (properties != null) {
 			dto.setProperties(properties.stream().map(it -> it.asDTO()).collect(Collectors.toList()));
+		}
+		if (rank != null) {
+			BigDecimal totalPoints = new BigDecimal(
+					rank.getGoodPoints() + rank.getBadPoints() + rank.getNeutralityPoints());
+			if (totalPoints.compareTo(BigDecimal.ZERO) > 0) {
+				dto.setGoodPointRate(new BigDecimal(rank.getGoodPoints()).divide(totalPoints, 4, RoundingMode.HALF_UP)
+						.multiply(new BigDecimal("100")));
+			} else {
+				dto.setGoodPointRate(BigDecimal.ZERO);
+			}
+			dto.setOrderNums(rank.getOrderNums());
 		}
 		return dto;
 	}
