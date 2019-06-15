@@ -9,7 +9,8 @@ public class GoodsItemDTO {
 	private String code;
 	private String thumbnail;
 	private BigDecimal marketPrice;
-	private BigDecimal realPrice;
+	private BigDecimal minPrice;
+	private BigDecimal maxPrice;
 	private String sellingPoints;
 	private String content;
 	private boolean enabled;
@@ -20,15 +21,33 @@ public class GoodsItemDTO {
 	private String searchText;
 	private String statusText;
 	private List<GoodsItemPropertyDTO> properties;
-	private BigDecimal goodPointRate;
+	private BigDecimal goodEvaluationRate;
 	private long orderNums;
+	private long totalEvaluations;
+	private GoodsItemEvaluationDTO topEvaluation;
 
-	public BigDecimal getGoodPointRate() {
-		return goodPointRate;
+	public long getTotalEvaluations() {
+		return totalEvaluations;
 	}
 
-	public void setGoodPointRate(BigDecimal goodPointRate) {
-		this.goodPointRate = goodPointRate;
+	public void setTotalEvaluations(long totalEvaluations) {
+		this.totalEvaluations = totalEvaluations;
+	}
+
+	public GoodsItemEvaluationDTO getTopEvaluation() {
+		return topEvaluation;
+	}
+
+	public void setTopEvaluation(GoodsItemEvaluationDTO topEvaluation) {
+		this.topEvaluation = topEvaluation;
+	}
+
+	public BigDecimal getGoodEvaluationRate() {
+		return goodEvaluationRate;
+	}
+
+	public void setGoodEvaluationRate(BigDecimal goodEvaluationRate) {
+		this.goodEvaluationRate = goodEvaluationRate;
 	}
 
 	public long getOrderNums() {
@@ -39,12 +58,20 @@ public class GoodsItemDTO {
 		this.orderNums = orderNums;
 	}
 
-	public BigDecimal getRealPrice() {
-		return realPrice;
+	public BigDecimal getMinPrice() {
+		return minPrice;
 	}
 
-	public void setRealPrice(BigDecimal realPrice) {
-		this.realPrice = realPrice;
+	public void setMinPrice(BigDecimal minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public BigDecimal getMaxPrice() {
+		return maxPrice;
+	}
+
+	public void setMaxPrice(BigDecimal maxPrice) {
+		this.maxPrice = maxPrice;
 	}
 
 	public List<GoodsItemPropertyDTO> getProperties() {

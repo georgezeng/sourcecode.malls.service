@@ -41,8 +41,10 @@ public class GoodsItem extends LongKeyEntity {
 	@Size(max = 50, message = "商品货号长度不能大于50")
 	private String code;
 	private BigDecimal marketPrice;
-	@NotNull(message = "价格不能为空")
-	private BigDecimal realPrice;
+	@NotNull(message = "最低价格不能为空")
+	private BigDecimal minPrice;
+	@NotNull(message = "最高价格不能为空")
+	private BigDecimal maxPrice;
 	@Size(max = 100, message = "商品卖点长度不能大于100")
 	private String sellingPoints;
 	@NotBlank(message = "商品描述不能为空")
@@ -95,12 +97,20 @@ public class GoodsItem extends LongKeyEntity {
 		this.putTime = putTime;
 	}
 
-	public BigDecimal getRealPrice() {
-		return realPrice;
+	public BigDecimal getMinPrice() {
+		return minPrice;
 	}
 
-	public void setRealPrice(BigDecimal realPrice) {
-		this.realPrice = realPrice;
+	public void setMinPrice(BigDecimal minPrice) {
+		this.minPrice = minPrice;
+	}
+
+	public BigDecimal getMaxPrice() {
+		return maxPrice;
+	}
+
+	public void setMaxPrice(BigDecimal maxPrice) {
+		this.maxPrice = maxPrice;
 	}
 
 	public List<GoodsItemProperty> getProperties() {
@@ -206,7 +216,7 @@ public class GoodsItem extends LongKeyEntity {
 		this.merchant = merchant;
 	}
 
-	public GoodsItemDTO asDTO() {
+	public GoodsItemDTO asDTO(boolean withPhoto, boolean withProperties) {
 		GoodsItemDTO dto = new GoodsItemDTO();
 		BeanUtils.copyProperties(this, dto, "merchant", "category", "brand", "photos", "properties");
 		if (category != null) {
@@ -215,25 +225,26 @@ public class GoodsItem extends LongKeyEntity {
 		if (brand != null) {
 			dto.setBrandId(brand.getId());
 		}
-		if (photos != null) {
+		if (withPhoto && photos != null) {
 			List<String> list = new ArrayList<>();
 			for (GoodsItemPhoto photo : photos) {
 				list.add(photo.getPath());
 			}
 			dto.setPhotos(list);
 		}
-		if (properties != null) {
+		if (withProperties && properties != null) {
 			dto.setProperties(properties.stream().map(it -> it.asDTO()).collect(Collectors.toList()));
 		}
 		if (rank != null) {
-			BigDecimal totalPoints = new BigDecimal(
-					rank.getGoodPoints() + rank.getBadPoints() + rank.getNeutralityPoints());
-			if (totalPoints.compareTo(BigDecimal.ZERO) > 0) {
-				dto.setGoodPointRate(new BigDecimal(rank.getGoodPoints()).divide(totalPoints, 4, RoundingMode.HALF_UP)
-						.multiply(new BigDecimal("100")));
+			BigDecimal totalEvaluations = new BigDecimal(
+					rank.getGoodEvaluations() + rank.getBadEvaluations() + rank.getNeutralityEvaluations());
+			if (totalEvaluations.compareTo(BigDecimal.ZERO) > 0) {
+				dto.setGoodEvaluationRate(new BigDecimal(rank.getGoodEvaluations())
+						.divide(totalEvaluations, 4, RoundingMode.HALF_UP).multiply(new BigDecimal("100")));
 			} else {
-				dto.setGoodPointRate(BigDecimal.ZERO);
+				dto.setGoodEvaluationRate(BigDecimal.ZERO);
 			}
+			dto.setTotalEvaluations(totalEvaluations.longValue());
 			dto.setOrderNums(rank.getOrderNums());
 		}
 		return dto;

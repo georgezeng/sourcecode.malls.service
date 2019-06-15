@@ -23,9 +23,9 @@ public class GoodsItemRank extends LongKeyEntity {
 	@NotNull(message = "商品不能为空")
 	private GoodsItem item;
 
-	private long goodPoints;
-	private long neutralityPoints;
-	private long badPoints;
+	private long goodEvaluations;
+	private long neutralityEvaluations;
+	private long badEvaluations;
 	private long orderNums;
 
 	public GoodsItem getItem() {
@@ -36,28 +36,28 @@ public class GoodsItemRank extends LongKeyEntity {
 		this.item = item;
 	}
 
-	public long getGoodPoints() {
-		return goodPoints;
+	public long getGoodEvaluations() {
+		return goodEvaluations;
 	}
 
-	public void setGoodPoints(long goodPoints) {
-		this.goodPoints = goodPoints;
+	public void setGoodEvaluations(long goodEvaluations) {
+		this.goodEvaluations = goodEvaluations;
 	}
 
-	public long getNeutralityPoints() {
-		return neutralityPoints;
+	public long getNeutralityEvaluations() {
+		return neutralityEvaluations;
 	}
 
-	public void setNeutralityPoints(long neutralityPoints) {
-		this.neutralityPoints = neutralityPoints;
+	public void setNeutralityEvaluations(long neutralityEvaluations) {
+		this.neutralityEvaluations = neutralityEvaluations;
 	}
 
-	public long getBadPoints() {
-		return badPoints;
+	public long getBadEvaluations() {
+		return badEvaluations;
 	}
 
-	public void setBadPoints(long badPoints) {
-		this.badPoints = badPoints;
+	public void setBadEvaluations(long badEvaluations) {
+		this.badEvaluations = badEvaluations;
 	}
 
 	public long getOrderNums() {

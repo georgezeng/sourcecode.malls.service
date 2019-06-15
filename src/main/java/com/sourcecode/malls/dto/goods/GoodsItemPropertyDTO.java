@@ -9,10 +9,19 @@ import org.springframework.beans.BeanUtils;
 import com.sourcecode.malls.domain.goods.GoodsItemProperty;
 
 public class GoodsItemPropertyDTO {
+	private Long id;
 	private List<GoodsAttributeDTO> values;
 	private String uid;
 	private BigDecimal price;
 	private int inventory;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getUid() {
 		return uid;
