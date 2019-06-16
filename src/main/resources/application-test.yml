@@ -7,6 +7,9 @@ aliyun:
 spring:
   datasource:
     druid:
+      stat-view-servlet:
+        login-password: 111111
+        login-username: admin
       filter:
         stat:
           enabled: true
