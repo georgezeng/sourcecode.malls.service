@@ -10,9 +10,11 @@ spring:
       stat-view-servlet:
         login-password: 111111
         login-username: admin
+      aop-patterns:
+      - com.sourcecode.malls.web.controller.*
       filter:
         stat:
           enabled: true
           db-type: mysql
           log-slow-sql: true
-          slow-sql-millis: 3000
+          slow-sql-millis: 2000
