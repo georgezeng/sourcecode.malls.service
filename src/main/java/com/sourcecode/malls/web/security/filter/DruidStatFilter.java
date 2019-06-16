@@ -7,9 +7,9 @@ import com.alibaba.druid.support.http.WebStatFilter;
 
 
 @WebFilter(
-        urlPatterns = "/druid/*",
+        urlPatterns = "/**",
         initParams = {
-                @WebInitParam(name = "exclusions", value = "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*")
+                @WebInitParam(name = "exclusions", value = "*.js,*.gif,*.jpg,*.png,*.css,*.ico,*.html,/druid/*")
         }
 )
 public class DruidStatFilter extends WebStatFilter {
