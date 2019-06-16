@@ -94,6 +94,7 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/**/login/**").permitAll();
 		http.authorizeRequests().antMatchers("/**/register/**").permitAll();
 		http.authorizeRequests().antMatchers("/**/forgetPassword/**").permitAll();
+		http.authorizeRequests().antMatchers("/druid/**").permitAll();
 		processAuthorizations(http);
 		http.addFilterBefore(errorHandlerFilter, ChannelProcessingFilter.class);
 		http.addFilterAfter(loggingFilter, ChannelProcessingFilter.class);
