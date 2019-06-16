@@ -12,12 +12,14 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 
 import com.sourcecode.malls.domain.base.BaseUser;
 import com.sourcecode.malls.domain.merchant.Merchant;
@@ -45,12 +47,23 @@ public class Client extends BaseUser implements UserDetails {
 	private Sex sex;
 	private Date birthday;
 
+	@Transient
+	private String auth;
+
 	public Client() {
 
 	}
 
 	private Client(String username) {
 		super(username);
+	}
+
+	public String getAuth() {
+		return auth;
+	}
+
+	public void setAuth(String auth) {
+		this.auth = auth;
 	}
 
 	public Sex getSex() {
@@ -110,7 +123,10 @@ public class Client extends BaseUser implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Arrays.asList(new SimpleGrantedAuthority("AUTH_CLIENT"));
+		if (StringUtils.isEmpty(auth)) {
+			auth = "AUTH_CLIENT";
+		}
+		return Arrays.asList(new SimpleGrantedAuthority(auth));
 	}
 
 	public ClientDTO asDTO() {
