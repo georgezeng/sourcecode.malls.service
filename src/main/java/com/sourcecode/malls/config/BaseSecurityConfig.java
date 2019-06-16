@@ -31,7 +31,7 @@ import com.sourcecode.malls.web.security.voter.AuthorityVoter;
 
 public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-	private SuperAdminProperties adminProperties;
+	protected SuperAdminProperties adminProperties;
 	@Autowired
 	private UserDetailsService userService;
 	@Autowired
