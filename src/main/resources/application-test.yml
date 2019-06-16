@@ -7,7 +7,6 @@ aliyun:
 spring:
   datasource:
     druid:
-      filters: stat  
       filter:
         stat:
           enabled: true
