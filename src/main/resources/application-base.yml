@@ -12,11 +12,6 @@ spring:
       user: ${spring.datasource.table.prefix}user
       user_role: ${spring.datasource.table.prefix}user_role
     druid:
-      filter:
-        stat:
-          db-type: mysql
-          log-slow-sql: true
-          slow-sql-millis: 5000
       max-active: 20
       initial-size: 10
       max-wait: 60000
@@ -27,6 +22,7 @@ spring:
       test-while-idle: true
       validation-query: SELECT 1
       url: jdbc:mysql://${database.host}/malls?useUnicode=true&characterEncoding=utf8
+          
   servlet:
     multipart:
       max-file-size: 100MB

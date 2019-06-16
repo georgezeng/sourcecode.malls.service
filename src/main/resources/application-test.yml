@@ -4,3 +4,12 @@ aliyun:
   sms: 
     signName: 百士兴科技有限公司
     
+spring:
+  datasource:
+    druid:
+      filter:
+        stat:
+          enabled: true
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 3000
