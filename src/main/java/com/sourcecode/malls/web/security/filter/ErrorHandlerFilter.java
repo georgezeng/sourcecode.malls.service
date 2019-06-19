@@ -4,9 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
@@ -14,7 +13,7 @@ import javax.validation.ValidationException;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.NestedServletException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,22 +22,24 @@ import com.sourcecode.malls.exception.BusinessException;
 import com.sourcecode.malls.util.LogUtil;
 
 @Component
-public class ErrorHandlerFilter extends GenericFilterBean {
+public class ErrorHandlerFilter extends OncePerRequestFilter {
 	@Autowired
 	private ObjectMapper mapper;
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
 		try {
 			long start = System.currentTimeMillis();
-			chain.doFilter(request, response);
+			filterChain.doFilter(request, response);
 			long end = System.currentTimeMillis();
 			HttpServletRequest httpreq = (HttpServletRequest) request;
-			if(httpreq.getRequestURI().startsWith("/goods/item/list"))
-			logger.info("filter elapsed: " + (end - start) / 1000);
+			if (httpreq.getRequestURI().startsWith("/goods/item/list"))
+				logger.info("filter elapsed: " + (end - start) / 1000);
 		} catch (Exception e) {
 			String traceId = LogUtil.getTraceId();
-			if (!(IOException.class.isAssignableFrom(e.getClass()) && e.getMessage().toLowerCase().contains("reset by peer"))) {
+			if (!(IOException.class.isAssignableFrom(e.getClass())
+					&& e.getMessage().toLowerCase().contains("reset by peer"))) {
 				logger.error("[" + traceId + "]: " + e.getMessage(), e);
 			}
 			String msg = null;
