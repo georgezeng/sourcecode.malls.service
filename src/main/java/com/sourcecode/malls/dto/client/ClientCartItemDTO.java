@@ -8,6 +8,7 @@ import com.sourcecode.malls.dto.goods.GoodsItemDTO;
 import com.sourcecode.malls.dto.goods.GoodsItemPropertyDTO;
 
 public class ClientCartItemDTO {
+	private Long id;
 	private GoodsItemDTO item;
 	private GoodsItemPropertyDTO property;
 	private Long itemId;
@@ -17,6 +18,14 @@ public class ClientCartItemDTO {
 	private List<String> attrs;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date updateTime;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Date getUpdateTime() {
 		return updateTime;
