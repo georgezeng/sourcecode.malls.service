@@ -17,6 +17,7 @@ public class GoodsItemDTO {
 	private List<String> photos;
 	private Long categoryId;
 	private Long brandId;
+	private String brand;
 	private Long merchantId;
 	private String searchText;
 	private String statusText;
@@ -25,6 +26,14 @@ public class GoodsItemDTO {
 	private long orderNums;
 	private long totalEvaluations;
 	private GoodsItemEvaluationDTO topEvaluation;
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
 
 	public long getTotalEvaluations() {
 		return totalEvaluations;

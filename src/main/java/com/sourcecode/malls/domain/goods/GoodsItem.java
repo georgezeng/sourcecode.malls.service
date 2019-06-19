@@ -224,6 +224,7 @@ public class GoodsItem extends LongKeyEntity {
 		}
 		if (brand != null) {
 			dto.setBrandId(brand.getId());
+			dto.setBrand(brand.getName());
 		}
 		if (withPhoto && photos != null) {
 			List<String> list = new ArrayList<>();
