@@ -6,6 +6,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
@@ -29,7 +30,12 @@ public class ErrorHandlerFilter extends GenericFilterBean {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		try {
+			long start = System.nanoTime();
 			chain.doFilter(request, response);
+			long end = System.nanoTime();
+			HttpServletRequest httpreq = (HttpServletRequest) request;
+			if(httpreq.getRequestURI().startsWith("/goods/item/list"))
+			logger.info("filter elapsed: " + (end - start) / 1000);
 		} catch (Exception e) {
 			String traceId = LogUtil.getTraceId();
 			if (!(IOException.class.isAssignableFrom(e.getClass()) && e.getMessage().toLowerCase().contains("reset by peer"))) {
