@@ -71,7 +71,6 @@ public class GoodsItem extends LongKeyEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "brand_id")
-	@NotNull(message = "品牌不能为空")
 	private GoodsBrand brand;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = { CascadeType.ALL }, orphanRemoval = true)
