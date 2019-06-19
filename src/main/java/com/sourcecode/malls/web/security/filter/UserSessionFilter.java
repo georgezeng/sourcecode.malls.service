@@ -25,6 +25,8 @@ import com.sourcecode.malls.service.impl.UserService;
 
 @Component
 public class UserSessionFilter extends OncePerRequestFilter {
+	
+	public static ThreadLocal<Long> V = new ThreadLocal<>();
 
 	@Autowired
 	private UserService userService;
@@ -57,11 +59,10 @@ public class UserSessionFilter extends OncePerRequestFilter {
 			} else {
 				throw new BusinessException("用户登录状态有误");
 			}
-			long start = System.currentTimeMillis();
 			filterChain.doFilter(request, response);
 			long end = System.currentTimeMillis();
 			if (request.getRequestURI().startsWith("/goods/item/list/params"))
-				logger.info("elapsed: " + (end - start) / 1000d);
+				logger.info("elapsed: " + (end - V.get()) / 1000d);
 		} finally {
 			UserContext.set(null);
 		}
