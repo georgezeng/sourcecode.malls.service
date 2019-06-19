@@ -30,9 +30,9 @@ public class ErrorHandlerFilter extends GenericFilterBean {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		try {
-			long start = System.nanoTime();
+			long start = System.currentTimeMillis();
 			chain.doFilter(request, response);
-			long end = System.nanoTime();
+			long end = System.currentTimeMillis();
 			HttpServletRequest httpreq = (HttpServletRequest) request;
 			if(httpreq.getRequestURI().startsWith("/goods/item/list"))
 			logger.info("filter elapsed: " + (end - start) / 1000);
