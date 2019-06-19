@@ -5,9 +5,8 @@ import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.sourcecode.malls.context.UserContext;
 import com.sourcecode.malls.domain.system.User;
@@ -25,7 +24,7 @@ import com.sourcecode.malls.properties.SessionAttributesProperties;
 import com.sourcecode.malls.service.impl.UserService;
 
 @Component
-public class UserSessionFilter extends GenericFilterBean {
+public class UserSessionFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private UserService userService;
@@ -34,7 +33,8 @@ public class UserSessionFilter extends GenericFilterBean {
 	private SessionAttributesProperties sessionProperties;
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
 		try {
 			HttpSession session = ((HttpServletRequest) request).getSession();
 			Long userId = (Long) session.getAttribute(sessionProperties.getUserId());
@@ -57,7 +57,11 @@ public class UserSessionFilter extends GenericFilterBean {
 			} else {
 				throw new BusinessException("用户登录状态有误");
 			}
-			chain.doFilter(request, response);
+			long start = System.currentTimeMillis();
+			filterChain.doFilter(request, response);
+			long end = System.currentTimeMillis();
+			if (request.getRequestURI().startsWith("/goods/item/list/params"))
+				logger.info("elapsed: " + (end - start) / 1000d);
 		} finally {
 			UserContext.set(null);
 		}

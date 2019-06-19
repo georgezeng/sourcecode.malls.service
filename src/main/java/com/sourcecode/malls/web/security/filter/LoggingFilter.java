@@ -5,24 +5,24 @@ import java.net.InetAddress;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.MDC;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.sourcecode.malls.web.request.MultiReadHttpServletRequest;
 
 @Component
-public class LoggingFilter extends GenericFilterBean {
+public class LoggingFilter extends OncePerRequestFilter {
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		String url = req.getRequestURI();
 		if (req.getQueryString() != null) {
@@ -56,7 +56,7 @@ public class LoggingFilter extends GenericFilterBean {
 		}
 		MDC.put("clientIP", clientIP);
 		MDC.put("hostIP", InetAddress.getLocalHost().getHostAddress());
-		chain.doFilter(req, response);
+		filterChain.doFilter(req, response);
 	}
 
 }

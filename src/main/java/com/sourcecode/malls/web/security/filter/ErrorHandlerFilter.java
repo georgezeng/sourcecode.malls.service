@@ -30,12 +30,7 @@ public class ErrorHandlerFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
-			long start = System.currentTimeMillis();
 			filterChain.doFilter(request, response);
-			long end = System.currentTimeMillis();
-			HttpServletRequest httpreq = (HttpServletRequest) request;
-			if (httpreq.getRequestURI().startsWith("/goods/item/list"))
-				logger.info("filter elapsed: " + (end - start) / 1000);
 		} catch (Exception e) {
 			String traceId = LogUtil.getTraceId();
 			if (!(IOException.class.isAssignableFrom(e.getClass())
