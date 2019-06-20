@@ -60,9 +60,6 @@ public class UserSessionFilter extends OncePerRequestFilter {
 				throw new BusinessException("用户登录状态有误");
 			}
 			filterChain.doFilter(request, response);
-			long end = System.currentTimeMillis();
-			if (request.getRequestURI().startsWith("/goods/item/list/params"))
-				logger.info("elapsed: " + (end - V.get()) / 1000d);
 		} finally {
 			UserContext.set(null);
 		}
