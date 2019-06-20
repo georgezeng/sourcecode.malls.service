@@ -72,7 +72,7 @@
 			<!-- bootstrap.servers is the only mandatory producerConfig -->
 			<producerConfig>bootstrap.servers=${log.server}:9092</producerConfig>
 		</appender>
-		<logger name="org.springframework" level="TRACE" />
+		
 		<root level="info">
 			<appender-ref ref="KAFKA" />
 			
