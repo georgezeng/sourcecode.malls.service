@@ -1,6 +1,7 @@
 package com.sourcecode.malls.repository.jpa.impl.client;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +15,9 @@ import com.sourcecode.malls.domain.client.ClientAddress;
 
 public interface ClientAddressRepository
 		extends JpaRepository<ClientAddress, Long>, JpaSpecificationExecutor<ClientAddress> {
-	List<ClientAddress> findByClient(Client client, Pageable pageable);
+	List<ClientAddress> findAllByClient(Client client, Pageable pageable);
+	
+	Optional<ClientAddress> findByClientAndIsDefault(Client client, boolean isDefault);
 
 	@Transactional
 	@Modifying

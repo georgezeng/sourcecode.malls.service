@@ -56,7 +56,7 @@ public class GoodsItem extends LongKeyEntity {
 
 	private Date putTime;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	@NotNull(message = "商品分类不能为空")
 	private GoodsCategory category;

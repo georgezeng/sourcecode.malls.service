@@ -1,5 +1,8 @@
 package com.sourcecode.malls.dto.client;
 
+import org.springframework.beans.BeanUtils;
+
+import com.sourcecode.malls.domain.order.OrderAddress;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 
 public class ClientAddressDTO extends SimpleQueryDTO {
@@ -74,6 +77,12 @@ public class ClientAddressDTO extends SimpleQueryDTO {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public OrderAddress asOrderAddressEntity() {
+		OrderAddress data = new OrderAddress();
+		BeanUtils.copyProperties(this, data, "id");
+		return data;
 	}
 
 }
