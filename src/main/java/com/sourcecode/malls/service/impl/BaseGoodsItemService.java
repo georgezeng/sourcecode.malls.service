@@ -29,7 +29,7 @@ public class BaseGoodsItemService {
 		AssertUtil.assertTrue(dataOp.isPresent(), ExceptionMessageConstant.NO_SUCH_RECORD);
 		AssertUtil.assertTrue(dataOp.get().getMerchant().getId().equals(merchantId),
 				ExceptionMessageConstant.NO_SUCH_RECORD);
-		GoodsItemDTO dto = dataOp.get().asDTO(true, true);
+		GoodsItemDTO dto = dataOp.get().asDTO(true, true, true);
 		if (!CollectionUtils.isEmpty(dto.getProperties())) {
 			for (GoodsItemPropertyDTO p : dto.getProperties()) {
 				List<GoodsItemValue> values = valueRepository.findAllByUid(p.getUid());

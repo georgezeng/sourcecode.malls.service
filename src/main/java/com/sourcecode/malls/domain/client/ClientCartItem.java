@@ -76,7 +76,7 @@ public class ClientCartItem extends LongKeyEntity {
 		ClientCartItemDTO dto = new ClientCartItemDTO();
 		BeanUtils.copyProperties(this, dto);
 		if (item != null) {
-			dto.setItem(item.asDTO(false, false));
+			dto.setItem(item.asDTO(false, false, false));
 		}
 		if (property != null) {
 			dto.setProperty(property.asDTO());

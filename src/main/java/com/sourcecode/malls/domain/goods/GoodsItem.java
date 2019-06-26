@@ -215,9 +215,12 @@ public class GoodsItem extends LongKeyEntity {
 		this.merchant = merchant;
 	}
 
-	public GoodsItemDTO asDTO(boolean withPhoto, boolean withProperties) {
+	public GoodsItemDTO asDTO(boolean withPhoto, boolean withProperties, boolean withContent) {
 		GoodsItemDTO dto = new GoodsItemDTO();
 		BeanUtils.copyProperties(this, dto, "merchant", "category", "brand", "photos", "properties");
+		if (!withContent) {
+			dto.setContent(null);
+		}
 		if (category != null) {
 			dto.setCategoryId(category.getId());
 		}
