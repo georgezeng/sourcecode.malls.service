@@ -2,6 +2,7 @@ package com.sourcecode.malls.dto.client;
 
 import org.springframework.beans.BeanUtils;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sourcecode.malls.domain.order.OrderAddress;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 
@@ -13,6 +14,7 @@ public class ClientAddressDTO extends SimpleQueryDTO {
 	private String city;
 	private String district;
 	private String location;
+	@JsonProperty("asDefault")
 	private boolean isDefault;
 
 	public boolean isDefault() {
