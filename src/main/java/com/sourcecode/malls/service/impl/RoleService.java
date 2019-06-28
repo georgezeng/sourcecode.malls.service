@@ -113,18 +113,18 @@ public class RoleService implements JpaService<Role, Long> {
 					}
 				}
 			}
-			for (Iterator<User> it = oldUsers.iterator(); it.hasNext();) {
-				User oldUserInRole = it.next();
-				boolean remove = true;
-				for (UserDTO user : users) {
-					if (user.getId().equals(oldUserInRole.getId())) {
-						remove = false;
-						break;
-					}
+		}
+		for (Iterator<User> it = oldUsers.iterator(); it.hasNext();) {
+			User oldUserInRole = it.next();
+			boolean remove = true;
+			for (UserDTO user : users) {
+				if (user.getId().equals(oldUserInRole.getId())) {
+					remove = false;
+					break;
 				}
-				if (remove) {
-					it.remove();
-				}
+			}
+			if (remove) {
+				it.remove();
 			}
 		}
 		List<Authority> oldAuthorities = role.getAuthorities();
@@ -163,7 +163,8 @@ public class RoleService implements JpaService<Role, Long> {
 		}
 		if (isSuperAdmin(role)) {
 			AssertUtil.assertTrue(role.getUsers().size() == 1, "不能修改超级管理员");
-			boolean isSpecificUser = role.getUsers().stream().anyMatch(user -> superAdminProperties.getUsername().equals(user.getUsername()));
+			boolean isSpecificUser = role.getUsers().stream()
+					.anyMatch(user -> superAdminProperties.getUsername().equals(user.getUsername()));
 			AssertUtil.assertTrue(isSpecificUser, "不能修改超级管理员的所属用户");
 		}
 		AssertUtil.assertTrue(!CollectionUtils.isEmpty(role.getAuthorities()), "请关联至少一条权限记录");
@@ -175,7 +176,8 @@ public class RoleService implements JpaService<Role, Long> {
 	}
 
 	public boolean isSuperAdmin(Role role) {
-		return role.getAuthorities().stream().anyMatch(auth -> superAdminProperties.getAuthority().equals(auth.getCode()));
+		return role.getAuthorities().stream()
+				.anyMatch(auth -> superAdminProperties.getAuthority().equals(auth.getCode()));
 	}
 
 	@Override
