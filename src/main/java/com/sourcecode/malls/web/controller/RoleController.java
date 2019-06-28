@@ -46,7 +46,7 @@ public class RoleController {
 			Optional<Role> dataOp = roleService.findById(dto.getId());
 			AssertUtil.assertTrue(dataOp.isPresent(), ExceptionMessageConstant.NO_SUCH_RECORD);
 			data = dataOp.get();
-			BeanUtils.copyProperties(dto, data, "id");
+			BeanUtils.copyProperties(dto, data, "id", "users", "authorities");
 		} else {
 			data = dto.asEntity();
 		}
