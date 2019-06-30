@@ -2,6 +2,8 @@ package com.sourcecode.malls.service.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -14,6 +16,8 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.auth.CredentialsProvider;
 import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import com.aliyun.oss.model.OSSObject;
+import com.aliyun.oss.model.OSSObjectSummary;
+import com.aliyun.oss.model.ObjectListing;
 import com.sourcecode.malls.properties.AliyunProperties;
 import com.sourcecode.malls.properties.OssProperties;
 import com.sourcecode.malls.service.FileOnlineSystemService;
@@ -31,7 +35,8 @@ public class OssService implements FileOnlineSystemService {
 
 	@PostConstruct
 	public void init() {
-		CredentialsProvider provider = new DefaultCredentialProvider(aliyunConfig.getAccesskey(), aliyunConfig.getSecret());
+		CredentialsProvider provider = new DefaultCredentialProvider(aliyunConfig.getAccesskey(),
+				aliyunConfig.getSecret());
 		ClientConfiguration conf = new ClientConfiguration();
 		client = new OSSClient(ossConfig.getEndpoint(), provider, conf);
 	}
@@ -46,7 +51,8 @@ public class OssService implements FileOnlineSystemService {
 		try {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			byte[] buf = new byte[1024];
-			OSSObject object = client.getObject(publicBucket ? ossConfig.getPublicBucket() : ossConfig.getPrivateBucket(), path);
+			OSSObject object = client
+					.getObject(publicBucket ? ossConfig.getPublicBucket() : ossConfig.getPrivateBucket(), path);
 			InputStream in = object.getObjectContent();
 			for (int n = 0; n != -1;) {
 				n = in.read(buf);
@@ -64,6 +70,22 @@ public class OssService implements FileOnlineSystemService {
 	@Override
 	public void delete(boolean publicBucket, String path) {
 		client.deleteObject(publicBucket ? ossConfig.getPublicBucket() : ossConfig.getPrivateBucket(), path);
+	}
+
+	@Override
+	public List<String> list(boolean publicBucket, String path) {
+		ObjectListing listing = client
+				.listObjects(publicBucket ? ossConfig.getPublicBucket() : ossConfig.getPrivateBucket(), path);
+		List<String> list = new ArrayList<String>();
+		if (listing != null) {
+			List<OSSObjectSummary> summaries = listing.getObjectSummaries();
+			if (summaries != null) {
+				for (OSSObjectSummary summary : summaries) {
+					list.add(summary.getKey());
+				}
+			}
+		}
+		return list;
 	}
 
 }

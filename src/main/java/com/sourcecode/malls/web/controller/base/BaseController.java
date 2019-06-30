@@ -37,17 +37,22 @@ public abstract class BaseController {
 		}
 	}
 
-	protected ResultBean<String> upload(MultipartFile file, String dir, Long id, Long userId, boolean toPublic) throws IOException {
+	protected ResultBean<String> upload(MultipartFile file, String dir, Long id, Long userId, boolean toPublic)
+			throws IOException {
 		String extend = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 		String idDir = id != null ? id + "/" : "";
-		String filePath = "temp/" + dir + "/" + userId + "/" + idDir + System.nanoTime() + extend;
+		String filePath = dir + "/" + userId + "/" + idDir + System.nanoTime() + extend;
+		if (!toPublic) {
+			filePath = "temp/" + filePath;
+		}
 		fileService.upload(toPublic, filePath, file.getInputStream());
 		return new ResultBean<>(filePath);
 	}
 
 	protected Resource load(Long userId, String filePath, String dir, boolean isPublic) {
 		String dest = dir + "/" + userId + "/";
-		AssertUtil.assertTrue(filePath.startsWith("temp/" + dest) || filePath.startsWith(dest), ExceptionMessageConstant.FILE_PATH_IS_INVALID + ": " + filePath);
+		AssertUtil.assertTrue(filePath.startsWith("temp/" + dest) || filePath.startsWith(dest),
+				ExceptionMessageConstant.FILE_PATH_IS_INVALID + ": " + filePath);
 		if (filePath.startsWith("temp")) {
 			return new ByteArrayResource(fileService.load(false, filePath));
 		} else {
@@ -56,8 +61,10 @@ public abstract class BaseController {
 	}
 
 	protected void checkIfApplicationPassed(String type) {
-		Optional<MerchantShopApplication> applicationOp = applicationRepository.findByMerchantId(getRelatedCurrentUser().getId());
-		AssertUtil.assertTrue(applicationOp.isPresent() && VerificationStatus.Passed.equals(applicationOp.get().getStatus()),
+		Optional<MerchantShopApplication> applicationOp = applicationRepository
+				.findByMerchantId(getRelatedCurrentUser().getId());
+		AssertUtil.assertTrue(
+				applicationOp.isPresent() && VerificationStatus.Passed.equals(applicationOp.get().getStatus()),
 				"必须先通过店铺申请才能编辑商品" + type);
 	}
 
