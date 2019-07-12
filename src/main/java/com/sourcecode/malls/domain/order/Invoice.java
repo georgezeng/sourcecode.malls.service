@@ -11,8 +11,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.BeanUtils;
+
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.client.Client;
+import com.sourcecode.malls.dto.order.InvoiceDTO;
 import com.sourcecode.malls.enums.InvoiceType;
 
 @Table(name = "invoice")
@@ -27,7 +30,7 @@ public class Invoice extends LongKeyEntity {
 	@JoinColumn(name = "order_id")
 	@NotNull(message = "订单不能为空")
 	private Order order;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "client_id")
 	@NotNull(message = "用户不能为空")
@@ -38,14 +41,14 @@ public class Invoice extends LongKeyEntity {
 	private InvoiceType type;
 
 	@NotBlank(message = "抬头不能为空")
-	@Size(max=255, message = "抬头长度不能超过255")
+	@Size(max = 255, message = "抬头长度不能超过255")
 	private String title;
 
-	@Size(max=255, message = "编号长度不能超过255")
+	@Size(max = 255, message = "编号长度不能超过255")
 	private String code;
 
 	@NotBlank(message = "内容不能为空")
-	@Size(max=50, message = "内容长度不能超过50")
+	@Size(max = 50, message = "内容长度不能超过50")
 	private String content;
 
 	public Client getClient() {
@@ -94,5 +97,11 @@ public class Invoice extends LongKeyEntity {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public InvoiceDTO asDTO() {
+		InvoiceDTO dto = new InvoiceDTO();
+		BeanUtils.copyProperties(this, dto);
+		return dto;
 	}
 }

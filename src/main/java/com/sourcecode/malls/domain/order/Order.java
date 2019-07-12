@@ -1,6 +1,8 @@
 package com.sourcecode.malls.domain.order;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -16,9 +18,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.util.CollectionUtils;
+
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.client.Client;
 import com.sourcecode.malls.domain.merchant.Merchant;
+import com.sourcecode.malls.dto.order.OrderDTO;
+import com.sourcecode.malls.dto.order.SubOrderDTO;
 import com.sourcecode.malls.enums.OrderStatus;
 import com.sourcecode.malls.enums.Payment;
 
@@ -64,6 +71,29 @@ public class Order extends LongKeyEntity {
 
 	@Size(max = 30, message = "买家留言长度不能超过30")
 	private String remark;
+
+	private boolean deleted;
+
+	private Date payTime;
+
+	@OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+	private Invoice invoice;
+
+	public Date getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(Date payTime) {
+		this.payTime = payTime;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	public String getRemark() {
 		return remark;
@@ -135,6 +165,25 @@ public class Order extends LongKeyEntity {
 
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	public OrderDTO asDTO() {
+		OrderDTO dto = new OrderDTO();
+		BeanUtils.copyProperties(this, dto, "subList", "address");
+		if (!CollectionUtils.isEmpty(subList)) {
+			List<SubOrderDTO> dtos = new ArrayList<>();
+			for (SubOrder sub : subList) {
+				dtos.add(sub.asDTO());
+			}
+			dto.setSubList(dtos);
+		}
+		if (address != null) {
+			dto.setAddress(address.asDTO());
+		}
+		if (invoice != null) {
+			dto.setInvoice(invoice.asDTO());
+		}
+		return dto;
 	}
 
 }

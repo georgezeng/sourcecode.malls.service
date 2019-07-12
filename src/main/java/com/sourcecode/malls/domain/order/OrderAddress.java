@@ -9,7 +9,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.BeanUtils;
+
 import com.sourcecode.malls.domain.base.LongKeyEntity;
+import com.sourcecode.malls.dto.client.ClientAddressDTO;
 
 @Table(name = "order_address")
 @Entity
@@ -41,7 +44,7 @@ public class OrderAddress extends LongKeyEntity {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id")
-	@NotNull(message="订单不能为空")
+	@NotNull(message = "订单不能为空")
 	private Order order;
 
 	public String getName() {
@@ -98,6 +101,12 @@ public class OrderAddress extends LongKeyEntity {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	public ClientAddressDTO asDTO() {
+		ClientAddressDTO dto = new ClientAddressDTO();
+		BeanUtils.copyProperties(this, dto, "order");
+		return dto;
 	}
 
 }

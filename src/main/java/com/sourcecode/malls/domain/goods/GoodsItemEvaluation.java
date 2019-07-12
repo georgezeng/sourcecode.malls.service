@@ -15,6 +15,8 @@ import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.client.Client;
+import com.sourcecode.malls.domain.order.Order;
+import com.sourcecode.malls.domain.order.SubOrder;
 import com.sourcecode.malls.dto.goods.GoodsItemEvaluationDTO;
 import com.sourcecode.malls.enums.GoodsItemEvaluationValue;
 
@@ -31,6 +33,16 @@ public class GoodsItemEvaluation extends LongKeyEntity {
 	@JoinColumn(name = "item_id")
 	@NotNull(message = "商品不能为空")
 	private GoodsItem item;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "sub_order_id")
+	@NotNull(message = "子订单不能为空")
+	private SubOrder subOrder;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "order_id")
+	@NotNull(message = "订单不能为空")
+	private Order order;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "client_id")
@@ -46,6 +58,22 @@ public class GoodsItemEvaluation extends LongKeyEntity {
 	@Size(max = 255, message = "评论长度不能超过255")
 	private String remark;
 	private boolean anonymous;
+
+	public SubOrder getSubOrder() {
+		return subOrder;
+	}
+
+	public void setSubOrder(SubOrder subOrder) {
+		this.subOrder = subOrder;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
 
 	public Client getClient() {
 		return client;

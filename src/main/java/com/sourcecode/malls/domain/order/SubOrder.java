@@ -3,8 +3,6 @@ package com.sourcecode.malls.domain.order;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,10 +11,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.BeanUtils;
+
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.client.Client;
-import com.sourcecode.malls.enums.Payment;
-import com.sourcecode.malls.enums.SubOrderStatus;
+import com.sourcecode.malls.dto.order.SubOrderDTO;
 
 @Table(name = "sub_order")
 @Entity
@@ -32,18 +31,14 @@ public class SubOrder extends LongKeyEntity {
 	@NotNull(message = "父订单不能为空")
 	private Order parent;
 
-	@NotBlank(message = "订单编号不能为空")
-	@Size(max=255, message="订单编号长度不能超过255")
-	private String orderId;
-
 	@NotNull(message = "商品编号不能为空")
 	private Long itemId;
 
-	@Size(max=50, message="商品货号长度不能超过50")
+	@Size(max = 50, message = "商品货号长度不能超过50")
 	private String itemCode;
 
 	@NotBlank(message = "商品名称不能为空")
-	@Size(max=50, message="商品名称长度不能超过50")
+	@Size(max = 50, message = "商品名称长度不能超过50")
 	private String itemName;
 
 	@NotBlank(message = "商品缩略图不能为空")
@@ -74,38 +69,34 @@ public class SubOrder extends LongKeyEntity {
 	@NotNull(message = "单价不能为空")
 	private BigDecimal unitPrice;
 
-	@NotNull(message = "交易价格不能为空")
+	@NotNull(message = "交易金额不能为空")
 	private BigDecimal dealPrice;
 
 	private int nums;
+
+	private boolean comment;
+
+	private boolean additionalComment;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "client_id")
 	@NotNull(message = "用户不能为空")
 	private Client client;
 
-	@Enumerated(EnumType.STRING)
-	@NotNull(message = "交易状态不能为空")
-	private SubOrderStatus status;
-
-	@Enumerated(EnumType.STRING)
-	@NotNull(message = "支付方式不能为空")
-	private Payment payment;
-
-	public Payment getPayment() {
-		return payment;
+	public boolean isComment() {
+		return comment;
 	}
 
-	public void setPayment(Payment payment) {
-		this.payment = payment;
+	public void setComment(boolean comment) {
+		this.comment = comment;
 	}
 
-	public SubOrderStatus getStatus() {
-		return status;
+	public boolean isAdditionalComment() {
+		return additionalComment;
 	}
 
-	public void setStatus(SubOrderStatus status) {
-		this.status = status;
+	public void setAdditionalComment(boolean additionalComment) {
+		this.additionalComment = additionalComment;
 	}
 
 	public Order getParent() {
@@ -114,14 +105,6 @@ public class SubOrder extends LongKeyEntity {
 
 	public void setParent(Order parent) {
 		this.parent = parent;
-	}
-
-	public String getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
 	}
 
 	public Long getItemId() {
@@ -242,6 +225,12 @@ public class SubOrder extends LongKeyEntity {
 
 	public void setClient(Client client) {
 		this.client = client;
+	}
+
+	public SubOrderDTO asDTO() {
+		SubOrderDTO dto = new SubOrderDTO();
+		BeanUtils.copyProperties(this, dto);
+		return dto;
 	}
 
 }
