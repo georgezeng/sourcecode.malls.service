@@ -8,7 +8,6 @@ import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
@@ -17,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 import com.sourcecode.malls.properties.RedisSessionProperties;
 
 @Configuration
-@EnableScheduling
 @EnableRedisHttpSession
 @EnableAspectJAutoProxy
 @EnableRedisRepositories(basePackages="com.sourcecode.malls.repository.redis.impl")
