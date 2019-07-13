@@ -1,9 +1,9 @@
 package com.github.wxpay.sdk;
 
-import com.github.wxpay.sdk.WXPayConstants.SignType;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import com.github.wxpay.sdk.WXPayConstants.SignType;
 
 public class WXPay {
 
@@ -46,6 +46,7 @@ public class WXPay {
         else {
             this.signType = SignType.HMACSHA256;
         }
+        this.checkWXPayConfig();
         this.wxPayRequest = new WXPayRequest(config);
     }
 
@@ -84,16 +85,18 @@ public class WXPay {
      * @throws Exception
      */
     public Map<String, String> fillRequestData(Map<String, String> reqData) throws Exception {
-        reqData.put("appid", config.getAppID());
-        reqData.put("mch_id", config.getMchID());
-        reqData.put("nonce_str", WXPayUtil.generateNonceStr());
+    	Map<String, String> map = new HashMap<>();
+    	map.put("appid", config.getAppID());
+    	map.put("mch_id", config.getMchID());
+    	map.put("nonce_str", WXPayUtil.generateNonceStr());
         if (SignType.MD5.equals(this.signType)) {
-            reqData.put("sign_type", WXPayConstants.MD5);
+        	map.put("sign_type", WXPayConstants.MD5);
         }
         else if (SignType.HMACSHA256.equals(this.signType)) {
-            reqData.put("sign_type", WXPayConstants.HMACSHA256);
+        	map.put("sign_type", WXPayConstants.HMACSHA256);
         }
-        reqData.put("sign", WXPayUtil.generateSignature(reqData, config.getKey(), this.signType));
+        reqData.put("sign", WXPayUtil.generateSignature(map, config.getKey(), this.signType));
+        reqData.putAll(map);
         return reqData;
     }
 

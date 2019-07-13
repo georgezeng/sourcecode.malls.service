@@ -4,15 +4,6 @@ public class DeveloperSettingDTO {
 	private String account;
 	private String secret;
 	private String mch;
-	private byte[] cert;
-
-	public byte[] getCert() {
-		return cert;
-	}
-
-	public void setCert(byte[] cert) {
-		this.cert = cert;
-	}
 
 	public String getMch() {
 		return mch;
