@@ -3,9 +3,13 @@ package com.github.wxpay.sdk;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.wxpay.sdk.WXPayConstants.SignType;
 
 public class WXPay {
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
     private WXPayConfig config;
     private SignType signType;
@@ -85,18 +89,16 @@ public class WXPay {
      * @throws Exception
      */
     public Map<String, String> fillRequestData(Map<String, String> reqData) throws Exception {
-    	Map<String, String> map = new HashMap<>();
-    	map.put("appid", config.getAppID());
-    	map.put("mch_id", config.getMchID());
-    	map.put("nonce_str", WXPayUtil.generateNonceStr());
+        reqData.put("appid", config.getAppID());
+        reqData.put("mch_id", config.getMchID());
+        reqData.put("nonce_str", WXPayUtil.generateNonceStr());
         if (SignType.MD5.equals(this.signType)) {
-        	map.put("sign_type", WXPayConstants.MD5);
+            reqData.put("sign_type", WXPayConstants.MD5);
         }
         else if (SignType.HMACSHA256.equals(this.signType)) {
-        	map.put("sign_type", WXPayConstants.HMACSHA256);
+            reqData.put("sign_type", WXPayConstants.HMACSHA256);
         }
-        reqData.put("sign", WXPayUtil.generateSignature(map, config.getKey(), this.signType));
-        reqData.putAll(map);
+        reqData.put("sign", WXPayUtil.generateSignature(reqData, config.getKey(), this.signType));
         return reqData;
     }
 
@@ -157,7 +159,7 @@ public class WXPay {
                                      int connectTimeoutMs, int readTimeoutMs) throws Exception {
         String msgUUID = reqData.get("nonce_str");
         String reqBody = WXPayUtil.mapToXml(reqData);
-
+        logger.info(reqBody);
         String resp = this.wxPayRequest.requestWithoutCert(urlSuffix, msgUUID, reqBody, connectTimeoutMs, readTimeoutMs, autoReport);
         return resp;
     }
