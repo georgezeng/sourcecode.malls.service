@@ -1,15 +1,11 @@
 package com.github.wxpay.sdk;
 
+import com.github.wxpay.sdk.WXPayConstants.SignType;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.github.wxpay.sdk.WXPayConstants.SignType;
-
 public class WXPay {
-	private Logger logger = LoggerFactory.getLogger(getClass());
 
     private WXPayConfig config;
     private SignType signType;
@@ -159,7 +155,7 @@ public class WXPay {
                                      int connectTimeoutMs, int readTimeoutMs) throws Exception {
         String msgUUID = reqData.get("nonce_str");
         String reqBody = WXPayUtil.mapToXml(reqData);
-        logger.info(reqBody);
+
         String resp = this.wxPayRequest.requestWithoutCert(urlSuffix, msgUUID, reqBody, connectTimeoutMs, readTimeoutMs, autoReport);
         return resp;
     }
