@@ -34,6 +34,9 @@ public class SubOrder extends LongKeyEntity {
 	@NotNull(message = "商品编号不能为空")
 	private Long itemId;
 
+	@NotNull(message = "商品规格不能为空")
+	private Long propertyId;
+
 	@Size(max = 50, message = "商品货号长度不能超过50")
 	private String itemCode;
 
@@ -82,6 +85,14 @@ public class SubOrder extends LongKeyEntity {
 	@JoinColumn(name = "client_id")
 	@NotNull(message = "用户不能为空")
 	private Client client;
+
+	public Long getPropertyId() {
+		return propertyId;
+	}
+
+	public void setPropertyId(Long propertyId) {
+		this.propertyId = propertyId;
+	}
 
 	public boolean isComment() {
 		return comment;
