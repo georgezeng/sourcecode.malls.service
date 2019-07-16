@@ -16,8 +16,8 @@ public class WechatToken extends LongKeyEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@NotNull(message = "用户不能为空")
-	private Long userId;
+	@NotNull(message = "商户不能为空")
+	private Long merchantId;
 	@Size(max = 255, message = "openId长度不能大于255")
 	@NotBlank(message = "openId不能为空")
 	private String openId;
@@ -28,12 +28,12 @@ public class WechatToken extends LongKeyEntity {
 	@NotBlank(message = "refreshToken不能为空")
 	private String refreshToken;
 
-	public Long getUserId() {
-		return userId;
+	public Long getMerchantId() {
+		return merchantId;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
 	}
 
 	public String getOpenId() {
