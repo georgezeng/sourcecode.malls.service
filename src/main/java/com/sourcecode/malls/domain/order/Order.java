@@ -77,7 +77,7 @@ public class Order extends LongKeyEntity {
 
 	private Date payTime;
 
-	@OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
 	private List<Express> expressList;
 
 	@OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
