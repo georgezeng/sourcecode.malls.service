@@ -11,7 +11,6 @@ public class SubOrderDTO {
 	private BigDecimal unitPrice;
 	private BigDecimal dealPrice;
 	private int nums;
-	private String expressNumber;
 	private boolean comment;
 	private boolean additionalComment;
 
@@ -95,11 +94,4 @@ public class SubOrderDTO {
 		this.nums = nums;
 	}
 
-	public String getExpressNumber() {
-		return expressNumber;
-	}
-
-	public void setExpressNumber(String expressNumber) {
-		this.expressNumber = expressNumber;
-	}
 }

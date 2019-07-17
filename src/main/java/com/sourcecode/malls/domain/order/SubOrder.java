@@ -64,9 +64,6 @@ public class SubOrder extends LongKeyEntity {
 	@Size(max = 255, message = "规格组长度不能大于255")
 	private String specificationValues;
 
-	@Size(max = 255, message = "快递单号长度不能大于255")
-	private String expressNumber;
-
 	private BigDecimal marketPrice;
 
 	@NotNull(message = "单价不能为空")
@@ -188,14 +185,6 @@ public class SubOrder extends LongKeyEntity {
 
 	public void setSpecificationValues(String specificationValues) {
 		this.specificationValues = specificationValues;
-	}
-
-	public String getExpressNumber() {
-		return expressNumber;
-	}
-
-	public void setExpressNumber(String expressNumber) {
-		this.expressNumber = expressNumber;
 	}
 
 	public BigDecimal getMarketPrice() {

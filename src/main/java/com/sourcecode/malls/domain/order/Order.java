@@ -83,6 +83,22 @@ public class Order extends LongKeyEntity {
 	@OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
 	private Invoice invoice;
 
+	public List<Express> getExpressList() {
+		return expressList;
+	}
+
+	public void setExpressList(List<Express> expressList) {
+		this.expressList = expressList;
+	}
+
+	public Invoice getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
+	}
+
 	public Date getPayTime() {
 		return payTime;
 	}
@@ -174,6 +190,7 @@ public class Order extends LongKeyEntity {
 	public OrderDTO asDTO(boolean withSub, boolean withMoreDetail) {
 		OrderDTO dto = new OrderDTO();
 		BeanUtils.copyProperties(this, dto, "subList", "address", "expressList", "invoice");
+		dto.setBuyer(client.getUsername());
 		if (withSub) {
 			if (!CollectionUtils.isEmpty(subList)) {
 				List<SubOrderDTO> dtos = new ArrayList<>();

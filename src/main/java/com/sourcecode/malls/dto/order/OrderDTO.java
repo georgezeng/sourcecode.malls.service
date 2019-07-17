@@ -12,9 +12,8 @@ import com.sourcecode.malls.enums.Payment;
 
 public class OrderDTO extends SimpleQueryDTO {
 	private Long merchantId;
-	private Date startTime;
-	private Date endTime;
 
+	private String buyer;
 	private Long id;
 	private String orderId;
 	private BigDecimal totalPrice;
@@ -27,28 +26,20 @@ public class OrderDTO extends SimpleQueryDTO {
 	private Payment payment;
 	private List<ExpressDTO> expressList;
 
+	public String getBuyer() {
+		return buyer;
+	}
+
+	public void setBuyer(String buyer) {
+		this.buyer = buyer;
+	}
+
 	public List<ExpressDTO> getExpressList() {
 		return expressList;
 	}
 
 	public void setExpressList(List<ExpressDTO> expressList) {
 		this.expressList = expressList;
-	}
-
-	public Date getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
 	}
 
 	public Long getMerchantId() {
