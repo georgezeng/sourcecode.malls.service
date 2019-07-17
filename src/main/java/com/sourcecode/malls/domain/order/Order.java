@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -75,6 +76,9 @@ public class Order extends LongKeyEntity {
 	private boolean deleted;
 
 	private Date payTime;
+
+	@OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+	private List<Express> expressList;
 
 	@OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
 	private Invoice invoice;
@@ -167,21 +171,28 @@ public class Order extends LongKeyEntity {
 		this.totalPrice = totalPrice;
 	}
 
-	public OrderDTO asDTO() {
+	public OrderDTO asDTO(boolean withSub, boolean withMoreDetail) {
 		OrderDTO dto = new OrderDTO();
-		BeanUtils.copyProperties(this, dto, "subList", "address");
-		if (!CollectionUtils.isEmpty(subList)) {
-			List<SubOrderDTO> dtos = new ArrayList<>();
-			for (SubOrder sub : subList) {
-				dtos.add(sub.asDTO());
+		BeanUtils.copyProperties(this, dto, "subList", "address", "expressList", "invoice");
+		if (withSub) {
+			if (!CollectionUtils.isEmpty(subList)) {
+				List<SubOrderDTO> dtos = new ArrayList<>();
+				for (SubOrder sub : subList) {
+					dtos.add(sub.asDTO());
+				}
+				dto.setSubList(dtos);
 			}
-			dto.setSubList(dtos);
 		}
-		if (address != null) {
-			dto.setAddress(address.asDTO());
-		}
-		if (invoice != null) {
-			dto.setInvoice(invoice.asDTO());
+		if (withMoreDetail) {
+			if (address != null) {
+				dto.setAddress(address.asDTO());
+			}
+			if (invoice != null) {
+				dto.setInvoice(invoice.asDTO());
+			}
+			if (expressList != null) {
+				dto.setExpressList(expressList.stream().map(it -> it.asDTO()).collect(Collectors.toList()));
+			}
 		}
 		return dto;
 	}

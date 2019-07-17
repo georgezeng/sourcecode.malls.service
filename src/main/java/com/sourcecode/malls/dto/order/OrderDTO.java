@@ -5,11 +5,16 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.dto.client.ClientAddressDTO;
 import com.sourcecode.malls.enums.OrderStatus;
 import com.sourcecode.malls.enums.Payment;
 
-public class OrderDTO {
+public class OrderDTO extends SimpleQueryDTO {
+	private Long merchantId;
+	private Date startTime;
+	private Date endTime;
+
 	private Long id;
 	private String orderId;
 	private BigDecimal totalPrice;
@@ -20,6 +25,39 @@ public class OrderDTO {
 	private ClientAddressDTO address;
 	private InvoiceDTO invoice;
 	private Payment payment;
+	private List<ExpressDTO> expressList;
+
+	public List<ExpressDTO> getExpressList() {
+		return expressList;
+	}
+
+	public void setExpressList(List<ExpressDTO> expressList) {
+		this.expressList = expressList;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	public Long getMerchantId() {
+		return merchantId;
+	}
+
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
+	}
 
 	public Payment getPayment() {
 		return payment;
