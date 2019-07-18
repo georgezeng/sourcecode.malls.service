@@ -70,7 +70,6 @@ public class Order extends LongKeyEntity {
 	private String transactionId;
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "order")
-	@NotNull(message = "地址不能为空")
 	private OrderAddress address;
 
 	@Size(max = 30, message = "买家留言长度不能超过30")
