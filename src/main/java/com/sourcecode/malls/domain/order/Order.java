@@ -67,7 +67,10 @@ public class Order extends LongKeyEntity {
 	@NotNull(message = "支付方式不能为空")
 	private Payment payment;
 
+	private String transactionId;
+
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "order")
+	@NotNull(message = "地址不能为空")
 	private OrderAddress address;
 
 	@Size(max = 30, message = "买家留言长度不能超过30")
@@ -82,6 +85,14 @@ public class Order extends LongKeyEntity {
 
 	@OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
 	private Invoice invoice;
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+	}
 
 	public List<Express> getExpressList() {
 		return expressList;

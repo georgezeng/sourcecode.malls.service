@@ -1,5 +1,6 @@
 package com.sourcecode.malls.domain.order;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,11 +46,20 @@ public class Express extends LongKeyEntity {
 
 	private String company;
 	private String number;
+	private Date expressTime;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "express_sub_order", joinColumns = { @JoinColumn(name = "express_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "sub_order_id") })
 	private List<SubOrder> subList;
+
+	public Date getExpressTime() {
+		return expressTime;
+	}
+
+	public void setExpressTime(Date expressTime) {
+		this.expressTime = expressTime;
+	}
 
 	public Order getOrder() {
 		return order;

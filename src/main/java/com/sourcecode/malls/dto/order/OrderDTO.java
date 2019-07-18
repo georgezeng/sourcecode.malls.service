@@ -20,11 +20,39 @@ public class OrderDTO extends SimpleQueryDTO {
 	private List<SubOrderDTO> subList;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date payTime;
 	private OrderStatus status;
 	private ClientAddressDTO address;
 	private InvoiceDTO invoice;
 	private Payment payment;
 	private List<ExpressDTO> expressList;
+	private String transactionId;
+	private String remark;
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public Date getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(Date payTime) {
+		this.payTime = payTime;
+	}
 
 	public String getBuyer() {
 		return buyer;

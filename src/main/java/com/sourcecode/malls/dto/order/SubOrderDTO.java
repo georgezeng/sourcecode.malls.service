@@ -13,6 +13,15 @@ public class SubOrderDTO {
 	private int nums;
 	private boolean comment;
 	private boolean additionalComment;
+	private int inventory;
+
+	public int getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(int inventory) {
+		this.inventory = inventory;
+	}
 
 	public boolean isComment() {
 		return comment;

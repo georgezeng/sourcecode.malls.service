@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.client.Client;
+import com.sourcecode.malls.domain.goods.GoodsItemProperty;
 import com.sourcecode.malls.dto.order.SubOrderDTO;
 
 @Table(name = "sub_order")
@@ -34,8 +35,10 @@ public class SubOrder extends LongKeyEntity {
 	@NotNull(message = "商品编号不能为空")
 	private Long itemId;
 
+	@ManyToOne(fetch = FetchType.LAZY)
 	@NotNull(message = "商品规格不能为空")
-	private Long propertyId;
+	@JoinColumn(name="property_id")
+	private GoodsItemProperty property;
 
 	@Size(max = 50, message = "商品货号长度不能超过50")
 	private String itemCode;
@@ -83,12 +86,12 @@ public class SubOrder extends LongKeyEntity {
 	@NotNull(message = "用户不能为空")
 	private Client client;
 
-	public Long getPropertyId() {
-		return propertyId;
+	public GoodsItemProperty getProperty() {
+		return property;
 	}
 
-	public void setPropertyId(Long propertyId) {
-		this.propertyId = propertyId;
+	public void setProperty(GoodsItemProperty property) {
+		this.property = property;
 	}
 
 	public boolean isComment() {
@@ -230,6 +233,7 @@ public class SubOrder extends LongKeyEntity {
 	public SubOrderDTO asDTO() {
 		SubOrderDTO dto = new SubOrderDTO();
 		BeanUtils.copyProperties(this, dto);
+		dto.setInventory(property.getInventory());
 		return dto;
 	}
 

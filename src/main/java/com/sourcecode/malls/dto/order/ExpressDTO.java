@@ -1,9 +1,11 @@
 package com.sourcecode.malls.dto.order;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.domain.order.Express;
 
 public class ExpressDTO {
@@ -12,6 +14,16 @@ public class ExpressDTO {
 	private String company;
 	private String number;
 	private List<SubOrderDTO> subList;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date expressTime;
+
+	public Date getExpressTime() {
+		return expressTime;
+	}
+
+	public void setExpressTime(Date expressTime) {
+		this.expressTime = expressTime;
+	}
 
 	public Long getOrderId() {
 		return orderId;
