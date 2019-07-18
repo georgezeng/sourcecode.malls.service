@@ -1,6 +1,7 @@
 package com.sourcecode.malls.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -16,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import com.sourcecode.malls.properties.RedisSessionProperties;
 
 @Configuration
+@EnableCaching
 @EnableRedisHttpSession
 @EnableAspectJAutoProxy
 @EnableRedisRepositories(basePackages="com.sourcecode.malls.repository.redis.impl")
