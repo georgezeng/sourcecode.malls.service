@@ -16,7 +16,7 @@ public class ClientCartItemDTO {
 	private int nums;
 	private boolean selected;
 	private List<String> attrs;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date updateTime;
 
 	public Long getId() {

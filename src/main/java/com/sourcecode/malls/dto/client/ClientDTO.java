@@ -10,13 +10,13 @@ public class ClientDTO extends SimpleQueryDTO {
 	private Long id;
 	private String username;
 	private String nickname;
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
 	private Date birthday;
 	private Sex sex;
 	private String avatar;
 	private Long merchantId;
 	private boolean enabled;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date createTime;
 
 	public Date getCreateTime() {

@@ -14,7 +14,7 @@ public class ExpressDTO {
 	private String company;
 	private String number;
 	private List<SubOrderDTO> subList;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date expressTime;
 
 	public Date getExpressTime() {

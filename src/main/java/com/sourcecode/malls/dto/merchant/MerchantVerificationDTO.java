@@ -21,7 +21,7 @@ public class MerchantVerificationDTO {
 	private String username;
 	private String statusText;
 	private String searchText;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date updateTime;
 
 	public Date getUpdateTime() {

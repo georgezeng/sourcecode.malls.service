@@ -27,7 +27,7 @@ public class MerchantShopApplicationDTO {
 	private String statusText;
 	private List<String> instructions;
 	private String reason;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date updateTime;
 	private String androidUrl;
 	private String iosUrl;

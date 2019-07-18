@@ -18,9 +18,9 @@ public class OrderDTO extends SimpleQueryDTO {
 	private String orderId;
 	private BigDecimal totalPrice;
 	private List<SubOrderDTO> subList;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date createTime;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date payTime;
 	private OrderStatus status;
 	private ClientAddressDTO address;
