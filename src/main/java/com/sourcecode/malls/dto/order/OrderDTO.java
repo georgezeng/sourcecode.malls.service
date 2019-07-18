@@ -17,6 +17,7 @@ public class OrderDTO extends SimpleQueryDTO {
 	private Long id;
 	private String orderId;
 	private BigDecimal totalPrice;
+	private Boolean cancelForRefund;
 	private List<SubOrderDTO> subList;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date createTime;
@@ -29,6 +30,14 @@ public class OrderDTO extends SimpleQueryDTO {
 	private List<ExpressDTO> expressList;
 	private String transactionId;
 	private String remark;
+
+	public Boolean getCancelForRefund() {
+		return cancelForRefund;
+	}
+
+	public void setCancelForRefund(Boolean cancelForRefund) {
+		this.cancelForRefund = cancelForRefund;
+	}
 
 	public String getRemark() {
 		return remark;
