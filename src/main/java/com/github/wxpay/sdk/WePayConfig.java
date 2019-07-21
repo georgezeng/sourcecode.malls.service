@@ -19,13 +19,13 @@ public class WePayConfig extends WXPayConfig implements Serializable {
 	private String appId;
 	private String key;
 	private String mchId;
-	private ByteArrayInputStream bis;
+	private byte[] buf;
 
 	public WePayConfig(DeveloperSettingDTO info, byte[] cert) {
 		this.appId = info.getAccount();
 		this.key = info.getSecret();
 		this.mchId = info.getMch();
-		this.bis = new ByteArrayInputStream(cert);
+		this.buf = cert;
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class WePayConfig extends WXPayConfig implements Serializable {
 
 	@Override
 	InputStream getCertStream() {
-		return bis;
+		return new ByteArrayInputStream(buf);
 	}
 
 	@Override
