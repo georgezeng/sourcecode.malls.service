@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.sourcecode.malls.domain.base.BaseEntity;
 
-public interface JpaService<E extends BaseEntity, K extends Serializable> {
+public interface JpaService<E extends BaseEntity, K extends Serializable> extends BaseService {
 	JpaRepository<E, K> getRepository();
 
 	default Optional<E> findById(K id) {

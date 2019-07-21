@@ -78,16 +78,24 @@ public class Order extends LongKeyEntity {
 	private boolean deleted;
 
 	private Date payTime;
-	
+
 	private Date refundTime;
-	
-	private boolean cancelForRefund;
 
 	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
 	private List<Express> expressList;
 
 	@OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
 	private Invoice invoice;
+	
+	private int aftersaleAppliedNums;
+
+	public int getAftersaleAppliedNums() {
+		return aftersaleAppliedNums;
+	}
+
+	public void setAftersaleAppliedNums(int aftersaleAppliedNums) {
+		this.aftersaleAppliedNums = aftersaleAppliedNums;
+	}
 
 	public Date getRefundTime() {
 		return refundTime;
@@ -95,14 +103,6 @@ public class Order extends LongKeyEntity {
 
 	public void setRefundTime(Date refundTime) {
 		this.refundTime = refundTime;
-	}
-
-	public boolean isCancelForRefund() {
-		return cancelForRefund;
-	}
-
-	public void setCancelForRefund(boolean cancelForRefund) {
-		this.cancelForRefund = cancelForRefund;
 	}
 
 	public String getTransactionId() {

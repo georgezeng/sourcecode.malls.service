@@ -3,6 +3,7 @@ package com.sourcecode.malls.dto.client;
 import org.springframework.beans.BeanUtils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sourcecode.malls.domain.aftersale.AfterSaleAddress;
 import com.sourcecode.malls.domain.order.OrderAddress;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 
@@ -83,6 +84,12 @@ public class ClientAddressDTO extends SimpleQueryDTO {
 
 	public OrderAddress asOrderAddressEntity() {
 		OrderAddress data = new OrderAddress();
+		BeanUtils.copyProperties(this, data, "id");
+		return data;
+	}
+
+	public AfterSaleAddress asAfterSaleAddressEntity() {
+		AfterSaleAddress data = new AfterSaleAddress();
 		BeanUtils.copyProperties(this, data, "id");
 		return data;
 	}
