@@ -6,6 +6,7 @@ import java.util.List;
 public class GoodsItemDTO {
 	private Long id;
 	private String name;
+	private String number;
 	private String code;
 	private String thumbnail;
 	private BigDecimal marketPrice;
@@ -26,6 +27,14 @@ public class GoodsItemDTO {
 	private long orderNums;
 	private long totalEvaluations;
 	private GoodsItemEvaluationDTO topEvaluation;
+
+	public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
 
 	public String getBrand() {
 		return brand;

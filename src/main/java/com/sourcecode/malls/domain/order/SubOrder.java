@@ -32,8 +32,12 @@ public class SubOrder extends LongKeyEntity {
 	@NotNull(message = "父订单不能为空")
 	private Order parent;
 
-	@NotNull(message = "商品编号不能为空")
+	@NotNull(message = "商品序号不能为空")
 	private Long itemId;
+	
+	@Size(max = 255, message = "商品编号长度不能超过255")
+	@NotNull(message = "商品编号不能为空")
+	private String itemNumber;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@NotNull(message = "商品规格不能为空")
@@ -85,6 +89,14 @@ public class SubOrder extends LongKeyEntity {
 	@JoinColumn(name = "client_id")
 	@NotNull(message = "用户不能为空")
 	private Client client;
+
+	public String getItemNumber() {
+		return itemNumber;
+	}
+
+	public void setItemNumber(String itemNumber) {
+		this.itemNumber = itemNumber;
+	}
 
 	public GoodsItemProperty getProperty() {
 		return property;

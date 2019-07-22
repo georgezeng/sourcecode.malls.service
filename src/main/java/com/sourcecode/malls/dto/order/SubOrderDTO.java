@@ -6,6 +6,7 @@ public class SubOrderDTO {
 	private Long id;
 	private Long itemId;
 	private String itemName;
+	private String itemNumber;
 	private String thumbnail;
 	private String specificationValues;
 	private BigDecimal unitPrice;
@@ -14,6 +15,14 @@ public class SubOrderDTO {
 	private boolean comment;
 	private boolean additionalComment;
 	private int inventory;
+
+	public String getItemNumber() {
+		return itemNumber;
+	}
+
+	public void setItemNumber(String itemNumber) {
+		this.itemNumber = itemNumber;
+	}
 
 	public int getInventory() {
 		return inventory;
