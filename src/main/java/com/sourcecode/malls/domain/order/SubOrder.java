@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.client.Client;
+import com.sourcecode.malls.domain.goods.GoodsItem;
 import com.sourcecode.malls.domain.goods.GoodsItemProperty;
 import com.sourcecode.malls.dto.order.SubOrderDTO;
 
@@ -32,16 +33,18 @@ public class SubOrder extends LongKeyEntity {
 	@NotNull(message = "父订单不能为空")
 	private Order parent;
 
-	@NotNull(message = "商品序号不能为空")
-	private Long itemId;
-	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "item_id")
+	@NotNull(message = "商品不能为空")
+	private GoodsItem item;
+
 	@Size(max = 255, message = "商品编号长度不能超过255")
 	@NotNull(message = "商品编号不能为空")
 	private String itemNumber;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@NotNull(message = "商品规格不能为空")
-	@JoinColumn(name="property_id")
+	@JoinColumn(name = "property_id")
 	private GoodsItemProperty property;
 
 	@Size(max = 50, message = "商品货号长度不能超过50")
@@ -83,8 +86,6 @@ public class SubOrder extends LongKeyEntity {
 
 	private boolean comment;
 
-	private boolean additionalComment;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "client_id")
 	@NotNull(message = "用户不能为空")
@@ -114,14 +115,6 @@ public class SubOrder extends LongKeyEntity {
 		this.comment = comment;
 	}
 
-	public boolean isAdditionalComment() {
-		return additionalComment;
-	}
-
-	public void setAdditionalComment(boolean additionalComment) {
-		this.additionalComment = additionalComment;
-	}
-
 	public Order getParent() {
 		return parent;
 	}
@@ -130,12 +123,12 @@ public class SubOrder extends LongKeyEntity {
 		this.parent = parent;
 	}
 
-	public Long getItemId() {
-		return itemId;
+	public GoodsItem getItem() {
+		return item;
 	}
 
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
+	public void setItem(GoodsItem item) {
+		this.item = item;
 	}
 
 	public String getItemCode() {
@@ -246,6 +239,9 @@ public class SubOrder extends LongKeyEntity {
 		SubOrderDTO dto = new SubOrderDTO();
 		BeanUtils.copyProperties(this, dto);
 		dto.setInventory(property.getInventory());
+		if (item != null) {
+			dto.setItemId(item.getId());
+		}
 		return dto;
 	}
 
