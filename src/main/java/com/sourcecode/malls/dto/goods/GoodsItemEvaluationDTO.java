@@ -197,7 +197,7 @@ public class GoodsItemEvaluationDTO extends SimpleQueryDTO {
 
 	public GoodsItemEvaluation asEntity() {
 		GoodsItemEvaluation data = new GoodsItemEvaluation();
-		BeanUtils.copyProperties(this, data, "id", "photos");
+		BeanUtils.copyProperties(this, data, "id", "photos", "createTime", "replyTime");
 		return data;
 	}
 }
