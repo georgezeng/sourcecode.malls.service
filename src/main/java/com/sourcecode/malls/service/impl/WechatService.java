@@ -32,17 +32,24 @@ public class WechatService {
 		return new WePayConfig(info.get(), service.loadWepayCert(merchantId));
 	}
 
-	public void refund(WePayConfig config, String transactionId, String refundNum, BigDecimal amount, int subSize) throws Exception {
+	public void refund(WePayConfig config, String transactionId, String refundNum, BigDecimal totalAmount,
+			BigDecimal refundAmount, int subOrderNums) throws Exception {
 		WXPay wxpay = new WXPay(config);
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("transaction_id", transactionId);
 		data.put("out_refund_no", refundNum);
-		String fee = amount.multiply(new BigDecimal("100")).intValue() + "";
+		String totalFee = totalAmount.multiply(new BigDecimal("100")).intValue() + "";
+		String refundFee = refundAmount.multiply(new BigDecimal("100")).intValue() + "";
 		if (!env.acceptsProfiles(Profiles.of(EnvConstant.PROD))) {
-			fee = subSize + "";
+			totalFee = subOrderNums + "";
+			if (totalFee.equals(refundFee)) {
+				refundFee = totalFee;
+			} else {
+				refundFee = "1";
+			}
 		}
-		data.put("total_fee", fee);
-		data.put("refund_fee", fee);
+		data.put("total_fee", totalFee);
+		data.put("refund_fee", refundFee);
 		Map<String, String> resp = wxpay.refund(data);
 		AssertUtil.assertTrue("SUCCESS".equals(resp.get("return_code")), "退款失败: " + resp.get("return_msg"));
 		AssertUtil.assertTrue("SUCCESS".equals(resp.get("result_code")), "退款失败: " + resp.get("err_code_des"));

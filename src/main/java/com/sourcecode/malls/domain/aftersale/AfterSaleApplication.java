@@ -364,6 +364,7 @@ public class AfterSaleApplication extends LongKeyEntity {
 		if (order != null) {
 			dto.setOrder(order.asDTO(false, false));
 		}
+		dto.setAgree(!AfterSaleStatus.Rejected.equals(status));
 		return dto;
 	}
 
