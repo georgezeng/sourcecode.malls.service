@@ -54,7 +54,6 @@ public class SubOrder extends LongKeyEntity {
 	@Size(max = 50, message = "商品名称长度不能超过50")
 	private String itemName;
 
-	@NotBlank(message = "商品缩略图不能为空")
 	@Size(max = 255, message = "缩略图长度不能大于255")
 	private String thumbnail;
 
