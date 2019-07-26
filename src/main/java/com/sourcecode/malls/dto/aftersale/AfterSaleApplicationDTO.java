@@ -17,7 +17,7 @@ public class AfterSaleApplicationDTO extends SimpleQueryDTO {
 	private Long id;
 
 	private int nums;
-	
+
 	private String buyer;
 
 	private BigDecimal amount;
@@ -35,7 +35,7 @@ public class AfterSaleApplicationDTO extends SimpleQueryDTO {
 	private ClientAddressDTO address;
 
 	private String specificationValues;
-	
+
 	private OrderDTO order;
 
 	private SubOrderDTO subOrder;
@@ -66,7 +66,7 @@ public class AfterSaleApplicationDTO extends SimpleQueryDTO {
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date rejectTime;
-	
+
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date pickupTime;
 
@@ -74,11 +74,11 @@ public class AfterSaleApplicationDTO extends SimpleQueryDTO {
 	private Date sendTime;
 
 	private String rejectReason;
-	
+
 	private String remark;
-	
-	private boolean agree;
-	
+
+	private Boolean agree;
+
 	private String clientExpressCompany;
 
 	private String clientExpressNumber;
@@ -151,11 +151,11 @@ public class AfterSaleApplicationDTO extends SimpleQueryDTO {
 		this.merchantExpressNumber = merchantExpressNumber;
 	}
 
-	public boolean isAgree() {
+	public Boolean getAgree() {
 		return agree;
 	}
 
-	public void setAgree(boolean agree) {
+	public void setAgree(Boolean agree) {
 		this.agree = agree;
 	}
 
