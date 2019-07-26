@@ -23,3 +23,9 @@ aliyun:
     endpoint: oss-cn-shenzhen.aliyuncs.com
     privateBucket: malls-admin-private-local
     publicBucket: malls-admin-public-local
+ 
+alipay:
+  api:
+    url:
+      pay:
+        notify:     

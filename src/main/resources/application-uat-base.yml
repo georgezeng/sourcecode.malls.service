@@ -28,3 +28,8 @@ session:
     password: "123!@#"
     port: 6379
 
+alipay:
+  api:
+    url:
+      pay:
+        notify: 'https://mall-server.bsxkj.com/client/alipay/notify/pay'

@@ -8,9 +8,6 @@ public class AlipayConfig {
 	@Value("${alipay.api.url.gateway}")
 	private String gateway;
 
-	@Value("${alipay.api.public.key}")
-	private String publicKey;
-
 	@Value("${alipay.api.url.pay.notify}")
 	private String notifyUrl;
 
@@ -26,14 +23,6 @@ public class AlipayConfig {
 
 	public void setGateway(String gateway) {
 		this.gateway = gateway;
-	}
-
-	public String getPublicKey() {
-		return publicKey;
-	}
-
-	public void setPublicKey(String publicKey) {
-		this.publicKey = publicKey;
 	}
 
 	public String getNotifyUrl() {

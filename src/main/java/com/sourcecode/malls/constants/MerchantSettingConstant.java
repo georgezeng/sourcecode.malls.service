@@ -7,4 +7,5 @@ public interface MerchantSettingConstant {
 	String RETURN_ADDRESS = "RETURN_ADDRESS";
 	String ALIPAY_ACCOUNT = "ALIPAY_ACCOUNT";
 	String ALIPAY_SECRET = "ALIPAY_SECRET";
+	String ALIPAY_PUBLIC_KEY = "ALIPAY_PUBLIC_KEY";
 }

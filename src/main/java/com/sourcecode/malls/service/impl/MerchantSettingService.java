@@ -66,14 +66,17 @@ public class MerchantSettingService {
 				MerchantSettingConstant.WECHAT_GZH_SECRET);
 		Optional<MerchantSetting> mch = settingRepository.findByMerchantAndCode(merchant.get(),
 				MerchantSettingConstant.WECHAT_PAY_MCH);
-		if (account.isPresent() && secret.isPresent() && mch.isPresent()) {
-			DeveloperSettingDTO setting = new DeveloperSettingDTO();
+		DeveloperSettingDTO setting = new DeveloperSettingDTO();
+		if (account.isPresent()) {
 			setting.setAccount(Base64Util.decode(account.get().getValue()));
-			setting.setSecret(Base64Util.decode(secret.get().getValue()));
-			setting.setMch(Base64Util.decode(mch.get().getValue()));
-			return Optional.of(setting);
 		}
-		return Optional.empty();
+		if (secret.isPresent()) {
+			setting.setSecret(Base64Util.decode(secret.get().getValue()));
+		}
+		if (mch.isPresent()) {
+			setting.setMch(Base64Util.decode(mch.get().getValue()));
+		}
+		return Optional.of(setting);
 	}
 
 	public void uploadWepayCert(MultipartFile file, Long merchantId) throws Exception {
@@ -102,6 +105,13 @@ public class MerchantSettingService {
 		secret.setMerchant(merchant.get());
 		secret.setValue(Base64Util.encode(setting.getSecret()));
 		settingRepository.save(secret);
+		MerchantSetting pubKey = settingRepository
+				.findByMerchantAndCode(merchant.get(), MerchantSettingConstant.ALIPAY_PUBLIC_KEY)
+				.orElseGet(MerchantSetting::new);
+		pubKey.setCode(MerchantSettingConstant.ALIPAY_PUBLIC_KEY);
+		pubKey.setMerchant(merchant.get());
+		pubKey.setValue(Base64Util.encode(setting.getMch()));
+		settingRepository.save(pubKey);
 	}
 
 	public Optional<DeveloperSettingDTO> loadAlipay(Long merchantId) {
@@ -110,12 +120,18 @@ public class MerchantSettingService {
 				MerchantSettingConstant.ALIPAY_ACCOUNT);
 		Optional<MerchantSetting> secret = settingRepository.findByMerchantAndCode(merchant.get(),
 				MerchantSettingConstant.ALIPAY_SECRET);
-		if (account.isPresent() && secret.isPresent()) {
-			DeveloperSettingDTO setting = new DeveloperSettingDTO();
+		Optional<MerchantSetting> mch = settingRepository.findByMerchantAndCode(merchant.get(),
+				MerchantSettingConstant.ALIPAY_PUBLIC_KEY);
+		DeveloperSettingDTO setting = new DeveloperSettingDTO();
+		if (account.isPresent()) {
 			setting.setAccount(Base64Util.decode(account.get().getValue()));
-			setting.setSecret(Base64Util.decode(secret.get().getValue()));
-			return Optional.of(setting);
 		}
-		return Optional.empty();
+		if (secret.isPresent()) {
+			setting.setSecret(Base64Util.decode(secret.get().getValue()));
+		}
+		if (mch.isPresent()) {
+			setting.setMch(Base64Util.decode(mch.get().getValue()));
+		}
+		return Optional.of(setting);
 	}
 }

@@ -44,3 +44,8 @@ session:
 
 aliyun:
   region-id: cn-shenzhen   
+
+alipay:
+  api:
+    url:
+      gateway: 'https://openapi.alipay.com/gateway.do'  
