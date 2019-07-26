@@ -48,6 +48,7 @@ public class MerchantSettingService {
 		secret.setCode(MerchantSettingConstant.WECHAT_GZH_SECRET);
 		secret.setMerchant(merchant.get());
 		secret.setValue(Base64Util.encode(setting.getSecret()));
+		settingRepository.save(secret);
 		MerchantSetting mch = settingRepository
 				.findByMerchantAndCode(merchant.get(), MerchantSettingConstant.WECHAT_PAY_MCH)
 				.orElseGet(MerchantSetting::new);
@@ -81,5 +82,40 @@ public class MerchantSettingService {
 
 	public byte[] loadWepayCert(Long merchantId) throws Exception {
 		return fileService.load(false, String.format(certDir, merchantId.toString()));
+	}
+
+	public void saveAlipay(DeveloperSettingDTO setting, Long merchantId) {
+		AssertUtil.assertNotEmpty(setting.getAccount(), "账号不能为空");
+		AssertUtil.assertNotEmpty(setting.getSecret(), "密钥不能为空");
+		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
+		MerchantSetting account = settingRepository
+				.findByMerchantAndCode(merchant.get(), MerchantSettingConstant.ALIPAY_ACCOUNT)
+				.orElseGet(MerchantSetting::new);
+		account.setCode(MerchantSettingConstant.ALIPAY_ACCOUNT);
+		account.setMerchant(merchant.get());
+		account.setValue(Base64Util.encode(setting.getAccount()));
+		settingRepository.save(account);
+		MerchantSetting secret = settingRepository
+				.findByMerchantAndCode(merchant.get(), MerchantSettingConstant.ALIPAY_SECRET)
+				.orElseGet(MerchantSetting::new);
+		secret.setCode(MerchantSettingConstant.ALIPAY_SECRET);
+		secret.setMerchant(merchant.get());
+		secret.setValue(Base64Util.encode(setting.getSecret()));
+		settingRepository.save(secret);
+	}
+
+	public Optional<DeveloperSettingDTO> loadAlipay(Long merchantId) {
+		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
+		Optional<MerchantSetting> account = settingRepository.findByMerchantAndCode(merchant.get(),
+				MerchantSettingConstant.ALIPAY_ACCOUNT);
+		Optional<MerchantSetting> secret = settingRepository.findByMerchantAndCode(merchant.get(),
+				MerchantSettingConstant.ALIPAY_SECRET);
+		if (account.isPresent() && secret.isPresent()) {
+			DeveloperSettingDTO setting = new DeveloperSettingDTO();
+			setting.setAccount(Base64Util.decode(account.get().getValue()));
+			setting.setSecret(Base64Util.decode(secret.get().getValue()));
+			return Optional.of(setting);
+		}
+		return Optional.empty();
 	}
 }

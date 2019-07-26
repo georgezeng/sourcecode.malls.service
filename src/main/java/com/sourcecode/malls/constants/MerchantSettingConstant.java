@@ -5,4 +5,6 @@ public interface MerchantSettingConstant {
 	String WECHAT_GZH_SECRET = "WECHAT_GZH_SECRET";
 	String WECHAT_PAY_MCH = "WECHAT_PAY_MCH";
 	String RETURN_ADDRESS = "RETURN_ADDRESS";
+	String ALIPAY_ACCOUNT = "ALIPAY_ACCOUNT";
+	String ALIPAY_SECRET = "ALIPAY_SECRET";
 }
