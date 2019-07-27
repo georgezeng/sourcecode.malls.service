@@ -87,7 +87,7 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 			} catch (IOException e) {
 			}
 		});
-		http.rememberMe().alwaysRemember(true).userDetailsService(getUserDetailsService());
+		http.rememberMe().key("User_Rememberme_Key").alwaysRemember(true).userDetailsService(getUserDetailsService());
 		http.userDetailsService(getUserDetailsService());
 		http.formLogin().permitAll().successHandler(successHandler).failureHandler(failureHandler);
 		http.authorizeRequests().antMatchers("/actuator/health").permitAll();
@@ -112,7 +112,8 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	protected void processAuthorizations(HttpSecurity http) throws Exception {
-		http.authorizeRequests().accessDecisionManager(new AffirmativeBased(Arrays.asList(authorityVoter, new WebExpressionVoter())))
+		http.authorizeRequests()
+				.accessDecisionManager(new AffirmativeBased(Arrays.asList(authorityVoter, new WebExpressionVoter())))
 				.withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
 
 					@Override
