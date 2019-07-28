@@ -241,6 +241,7 @@ public class SubOrder extends LongKeyEntity {
 		if (item != null) {
 			dto.setItemId(item.getId());
 		}
+		dto.setParentId(parent.getId());
 		return dto;
 	}
 

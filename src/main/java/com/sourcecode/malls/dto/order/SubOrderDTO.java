@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class SubOrderDTO {
 	private Long id;
+	private Long parentId;
 	private Long itemId;
 	private String itemName;
 	private String itemNumber;
@@ -15,6 +16,14 @@ public class SubOrderDTO {
 	private boolean comment;
 	private boolean additionalComment;
 	private int inventory;
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
 
 	public String getItemNumber() {
 		return itemNumber;
