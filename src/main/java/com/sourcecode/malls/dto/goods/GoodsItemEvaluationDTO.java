@@ -34,7 +34,16 @@ public class GoodsItemEvaluationDTO extends SimpleQueryDTO {
 	private boolean additional;
 	private boolean open;
 	private boolean hasAudit;
+	private boolean replied;
 	private GoodsItemEvaluationDTO additionalEvaluation;
+
+	public boolean isReplied() {
+		return replied;
+	}
+
+	public void setReplied(boolean replied) {
+		this.replied = replied;
+	}
 
 	public Long getItemId() {
 		return itemId;
