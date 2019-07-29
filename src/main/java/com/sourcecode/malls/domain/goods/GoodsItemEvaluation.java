@@ -261,6 +261,7 @@ public class GoodsItemEvaluation extends LongKeyEntity {
 			dto.setClientNickname(client.getNickname());
 		}
 		dto.setBuyer(client.getUsername());
+		dto.setItemId(item.getId());
 		if (photos != null) {
 			List<String> list = new ArrayList<>();
 			for (GoodsItemEvaluationPhoto photo : photos) {

@@ -12,6 +12,7 @@ import com.sourcecode.malls.enums.GoodsItemEvaluationValue;
 
 public class GoodsItemEvaluationDTO extends SimpleQueryDTO {
 	private Long id;
+	private Long itemId;
 	private String itemThumbnail;
 	private String itemName;
 	private int itemNums;
@@ -34,6 +35,14 @@ public class GoodsItemEvaluationDTO extends SimpleQueryDTO {
 	private boolean open;
 	private boolean hasAudit;
 	private GoodsItemEvaluationDTO additionalEvaluation;
+
+	public Long getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(Long itemId) {
+		this.itemId = itemId;
+	}
 
 	public boolean isHasAudit() {
 		return hasAudit;
