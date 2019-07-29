@@ -36,7 +36,7 @@ public class User extends BaseUser implements UserDetails {
 
 	}
 
-	private User(String username) {
+	public User(String username) {
 		super(username);
 	}
 
