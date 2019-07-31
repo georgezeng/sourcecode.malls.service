@@ -3,6 +3,7 @@ package com.sourcecode.malls.domain.client;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
@@ -50,12 +52,35 @@ public class Client extends BaseUser implements UserDetails {
 	@Transient
 	private String auth;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "parent_id")
+	private Client parent;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+	private List<Client> subList;
+
 	public Client() {
 
 	}
 
 	private Client(String username) {
 		super(username);
+	}
+
+	public List<Client> getSubList() {
+		return subList;
+	}
+
+	public void setSubList(List<Client> subList) {
+		this.subList = subList;
+	}
+
+	public Client getParent() {
+		return parent;
+	}
+
+	public void setParent(Client parent) {
+		this.parent = parent;
 	}
 
 	public String getAuth() {
