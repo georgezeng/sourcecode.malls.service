@@ -27,6 +27,7 @@ public abstract class BaseUser extends LongKeyEntity {
 	private String email;
 	@Pattern(regexp = RegexpConstant.MOBILE_PATTERN, message = "手机必须是11位数字")
 	private String mobile;
+	@Size(max = 255, message = "头像长度不能大于255")
 	private String avatar;
 	private boolean enabled;
 
