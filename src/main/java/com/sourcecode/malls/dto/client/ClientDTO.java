@@ -10,6 +10,7 @@ public class ClientDTO extends SimpleQueryDTO {
 	private Long id;
 	private String username;
 	private String nickname;
+	private String shopName;
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
 	private Date birthday;
 	private Sex sex;
@@ -18,6 +19,14 @@ public class ClientDTO extends SimpleQueryDTO {
 	private boolean enabled;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date createTime;
+
+	public String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
+	}
 
 	public Date getCreateTime() {
 		return createTime;
