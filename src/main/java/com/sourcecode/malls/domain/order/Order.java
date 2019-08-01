@@ -86,16 +86,6 @@ public class Order extends LongKeyEntity {
 
 	@OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
 	private Invoice invoice;
-	
-	private int aftersaleAppliedNums;
-
-	public int getAftersaleAppliedNums() {
-		return aftersaleAppliedNums;
-	}
-
-	public void setAftersaleAppliedNums(int aftersaleAppliedNums) {
-		this.aftersaleAppliedNums = aftersaleAppliedNums;
-	}
 
 	public Date getRefundTime() {
 		return refundTime;
