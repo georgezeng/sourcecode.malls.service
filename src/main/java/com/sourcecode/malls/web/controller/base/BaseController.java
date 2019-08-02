@@ -29,10 +29,14 @@ public abstract class BaseController {
 	protected MerchantShopApplicationRepository applicationRepository;
 
 	protected void transfer(boolean toPublic, List<String> tmpPaths, List<String> newPaths) {
+		transfer(false, toPublic, tmpPaths, newPaths);
+	}
+
+	protected void transfer(boolean fromPublic, boolean toPublic, List<String> tmpPaths, List<String> newPaths) {
 		for (int i = 0; i < newPaths.size(); i++) {
 			String newPath = newPaths.get(i);
 			String tmpPath = tmpPaths.get(i);
-			byte[] buf = fileService.load(false, tmpPath);
+			byte[] buf = fileService.load(fromPublic, tmpPath);
 			fileService.upload(toPublic, newPath, new ByteArrayInputStream(buf));
 		}
 	}
