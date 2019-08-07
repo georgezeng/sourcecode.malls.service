@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sourcecode.malls.constants.EnvConstant;
 import com.sourcecode.malls.constants.ExceptionMessageConstant;
 import com.sourcecode.malls.domain.system.User;
 import com.sourcecode.malls.dto.base.KeyDTO;
@@ -49,6 +52,9 @@ public class UserController extends BaseController {
 	@Value("${user.type.name}")
 	private String userDir;
 
+	@Autowired
+	private Environment env;
+	
 	@RequestMapping(value = "/list")
 	public ResultBean<PageResult<UserDTO>> list(@RequestBody QueryInfo<SimpleQueryDTO> queryInfo) {
 		Page<User> pageResult = userService.findAll(queryInfo);
@@ -82,7 +88,11 @@ public class UserController extends BaseController {
 		List<String> tmpPaths = new ArrayList<>();
 		List<String> newPaths = new ArrayList<>();
 		if (dto.getAvatar() != null && dto.getAvatar().startsWith("temp")) {
-			String newPath = userDir + "/" + data.getId() + "/avatar.png";
+			String newPath = userDir + "/" + data.getId() + "/avatar";
+			if (env.acceptsProfiles(Profiles.of(EnvConstant.LOCAL))) {
+				newPath += "_" + System.nanoTime();
+			}
+			newPath += ".png";
 			newPaths.add(newPath);
 			tmpPaths.add(dto.getAvatar());
 			data.setAvatar(newPath);
