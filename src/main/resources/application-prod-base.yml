@@ -4,7 +4,7 @@ aliyun:
     privateBucket: mall-private-uat
     publicBucket: mall-public-uat
     
-remote.server: 172.26.176.63
+remote.server: 172.26.176.62
 
 log.server: ${remote.server}
 
@@ -19,7 +19,7 @@ spring:
        
 super-admin:
   username: admin
-  password: 111111
+  password: 'sljj!@#'
   email: feleio@qq.com
         
 session:
@@ -32,4 +32,4 @@ alipay:
   api:
     url:
       pay:
-        notify: 'https://uat.mall-server.bsxkj.com/client/alipay/notify/pay'
+        notify: 'https://mall-server.bsxkj.com/client/alipay/notify/pay'

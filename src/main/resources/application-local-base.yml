@@ -21,8 +21,8 @@ session:
 aliyun:
   oss:
     endpoint: oss-cn-shenzhen.aliyuncs.com
-    privateBucket: malls-admin-private-local
-    publicBucket: malls-admin-public-local
+    privateBucket: mall-private-local
+    publicBucket: mall-public-local
  
 alipay:
   api:
