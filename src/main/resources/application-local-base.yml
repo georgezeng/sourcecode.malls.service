@@ -20,7 +20,7 @@ session:
     
 aliyun:
   oss:
-    endpoint: oss-cn-shenzhen.aliyuncs.com
+    endpoint: oss-cn-zhangjiakou.aliyuncs.com
     privateBucket: mall-private-local
     publicBucket: mall-public-local
  

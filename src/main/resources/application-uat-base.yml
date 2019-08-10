@@ -1,6 +1,6 @@
 aliyun:
   oss:
-    endpoint: oss-cn-shenzhen-internal.aliyuncs.com
+    endpoint: oss-cn-zhangjiakou-internal.aliyuncs.com
     privateBucket: mall-private-uat
     publicBucket: mall-public-uat
     

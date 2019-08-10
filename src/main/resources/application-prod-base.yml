@@ -1,8 +1,13 @@
 aliyun:
+  accesskey: LTAIolH6fF83Q5C2
+  secret: ny1CTPPqwfRCKKtTb3rrbgcf4Zr1HX
+  sms: 
+    signName: 多呗商城
   oss:
-    endpoint: oss-cn-shenzhen-internal.aliyuncs.com
+    endpoint: oss-cn-zhangjiakou-internal.aliyuncs.com
     privateBucket: mall-private-uat
     publicBucket: mall-public-uat
+    
     
 remote.server: 172.26.176.62
 
@@ -16,6 +21,17 @@ spring:
     druid:
       username: root
       password: "mall!@#"
+      stat-view-servlet:
+        login-password: 'mall#@!'
+        login-username: admin
+      aop-patterns:
+        - com.sourcecode.malls.web.controller.*
+      filter:
+        stat:
+          enabled: true
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 2000
        
 super-admin:
   username: admin
