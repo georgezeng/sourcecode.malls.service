@@ -33,9 +33,9 @@ public class ErrorHandlerFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 		} catch (Exception e) {
 			String traceId = LogUtil.getTraceId();
-//			if (!e.getMessage().toLowerCase().contains("reset by peer")) {
+			if (!e.getMessage().toLowerCase().contains("reset by peer")) {
 				logger.error("error-[" + traceId + "]: " + e.getMessage(), e);
-//			}
+			}
 			String msg = null;
 			if (!response.isCommitted()) {
 				if (BusinessException.class.isAssignableFrom(e.getClass())) {
