@@ -22,9 +22,9 @@ spring:
       test-while-idle: true
       validation-query: SELECT 1
       url: jdbc:mysql://${database.host}/malls?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-          
   servlet:
     multipart:
+      enabled: true
       max-file-size: 20MB
       max-request-size: 20MB
        
