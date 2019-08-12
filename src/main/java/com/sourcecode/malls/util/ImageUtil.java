@@ -55,4 +55,42 @@ public class ImageUtil {
 		graphics2d.dispose();
 		return img;
 	}
+
+	/**
+	 * 变更图像为指定大小
+	 * 
+	 * @param bufferedimage 目标图像
+	 * @param w             宽
+	 * @param h             高
+	 * @return
+	 */
+	public static BufferedImage resizeImage(final BufferedImage bufferedimage, final int w, final int h) {
+		int type = bufferedimage.getColorModel().getTransparency();
+		BufferedImage img;
+		Graphics2D graphics2d;
+		(graphics2d = (img = new BufferedImage(w, h, type)).createGraphics())
+				.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		graphics2d.drawImage(bufferedimage, 0, 0, w, h, 0, 0, bufferedimage.getWidth(), bufferedimage.getHeight(),
+				null);
+		graphics2d.dispose();
+		return img;
+	}
+
+	/**
+	 * 水平翻转图像
+	 * 
+	 * @param bufferedimage 目标图像
+	 * @return
+	 */
+	public static BufferedImage flipImage(final BufferedImage bufferedimage) {
+		int w = bufferedimage.getWidth();
+		int h = bufferedimage.getHeight();
+		BufferedImage img;
+		Graphics2D graphics2d;
+		(graphics2d = (img = new BufferedImage(w, h, bufferedimage.getColorModel().getTransparency())).createGraphics())
+				.drawImage(bufferedimage, 0, 0, w, h, w, 0, 0, h, null);
+		graphics2d.dispose();
+		return img;
+	}
+
 }
