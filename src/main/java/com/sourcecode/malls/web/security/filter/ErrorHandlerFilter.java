@@ -30,15 +30,11 @@ public class ErrorHandlerFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
-			if(request.getRequestURI().contains("upload")) {
-				logger.info("upload.........");
-			}
 			filterChain.doFilter(request, response);
 		} catch (Exception e) {
 			String traceId = LogUtil.getTraceId();
-			if (!(IOException.class.isAssignableFrom(e.getClass())
-					&& e.getMessage().toLowerCase().contains("reset by peer"))) {
-				logger.error("[" + traceId + "]: " + e.getMessage(), e);
+			if (!e.getMessage().toLowerCase().contains("reset by peer")) {
+				logger.error("error-[" + traceId + "]: " + e.getMessage(), e);
 			}
 			String msg = null;
 			if (!response.isCommitted()) {
