@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
@@ -24,6 +25,11 @@ public class WechatService {
 
 	@Autowired
 	private Environment env;
+	
+	@CacheEvict(cacheNames = "wepay_config", key = "#merchantId")
+	public void clearWePayConfig(Long merchantId) {
+		
+	}
 
 	@Cacheable(cacheNames = "wepay_config", key = "#merchantId")
 	public WePayConfig createWePayConfig(Long merchantId) throws Exception {
