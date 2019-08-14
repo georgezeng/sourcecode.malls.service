@@ -51,18 +51,29 @@ public class ErrorHandlerFilter extends OncePerRequestFilter {
 					}
 				} else if (NestedServletException.class.isAssignableFrom(e.getClass())) {
 					Throwable cause = ((NestedServletException) e).getRootCause();
-					if (BusinessException.class.isAssignableFrom(cause.getClass())) {
-						BusinessException ex = (BusinessException) cause;
-						msg = ex.getMessage();
-					} else if (ValidationException.class.isAssignableFrom(cause.getClass())) {
-						if (ConstraintViolationException.class.isAssignableFrom(cause.getClass())) {
+					out: do {
+						if (BusinessException.class.isAssignableFrom(cause.getClass())) {
+							BusinessException ex = (BusinessException) cause;
+							msg = ex.getMessage();
+							break;
+						} else if (ValidationException.class.isAssignableFrom(cause.getClass())) {
+							if (ConstraintViolationException.class.isAssignableFrom(cause.getClass())) {
+								ConstraintViolationException cve = (ConstraintViolationException) cause;
+								for (ConstraintViolation<?> cv : cve.getConstraintViolations()) {
+									msg = cv.getMessage();
+									break out;
+								}
+							}
+						} else if (ConstraintViolationException.class.isAssignableFrom(cause.getClass())) {
 							ConstraintViolationException cve = (ConstraintViolationException) cause;
 							for (ConstraintViolation<?> cv : cve.getConstraintViolations()) {
 								msg = cv.getMessage();
-								break;
+								break out;
 							}
 						}
-					}
+						cause = cause.getCause();
+					} while (cause != null);
+
 				}
 				if (msg == null) {
 					msg = "系统错误";
