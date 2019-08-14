@@ -36,8 +36,6 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userService;
 	@Autowired
 	private UserSessionFilter userSessionFilter;
-	// @Autowired
-	// private OpenEntityManagerInViewFilter openEntityManagerInViewFilter;
 	@Autowired
 	private ErrorHandlerFilter errorHandlerFilter;
 	@Autowired
@@ -99,7 +97,6 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 		processAuthorizations(http);
 		http.addFilterBefore(errorHandlerFilter, ChannelProcessingFilter.class);
 		http.addFilterAfter(loggingFilter, ChannelProcessingFilter.class);
-		// http.addFilterAfter(openEntityManagerInViewFilter, ErrorHandlerFilter.class);
 		after(http);
 	}
 

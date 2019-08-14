@@ -8,7 +8,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
-import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
@@ -20,21 +19,21 @@ import com.sourcecode.malls.properties.RedisSessionProperties;
 @EnableCaching
 @EnableRedisHttpSession
 @EnableAspectJAutoProxy
-@EnableRedisRepositories(basePackages="com.sourcecode.malls.repository.redis.impl")
+@EnableRedisRepositories(basePackages = "com.sourcecode.malls.repository.redis.impl")
 public class CommonConfig {
 	@Autowired
 	private RedisSessionProperties redisProperties;
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
-	
+
 	@Bean
 	public LettuceConnectionFactory connectionFactory() {
 		LettuceConnectionFactory factory = new LettuceConnectionFactory();
@@ -43,9 +42,5 @@ public class CommonConfig {
 		factory.getStandaloneConfiguration().setPassword(RedisPassword.of(redisProperties.getPassword()));
 		return factory;
 	}
-	
-	@Bean
-	public OpenEntityManagerInViewFilter openEntityManagerInViewFilter() {
-		return new OpenEntityManagerInViewFilter();
-	}
+
 }
