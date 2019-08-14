@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -24,6 +25,7 @@ public class BaseGoodsItemService {
 	@Autowired
 	protected GoodsItemValueRepository valueRepository;
 
+	@Transactional(readOnly = true)
 	public GoodsItemDTO load(Long merchantId, @PathVariable Long id) {
 		Optional<GoodsItem> dataOp = itemRepository.findById(id);
 		AssertUtil.assertTrue(dataOp.isPresent(), ExceptionMessageConstant.NO_SUCH_RECORD);
