@@ -5,6 +5,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 
 public class ImageUtil {
@@ -92,5 +93,23 @@ public class ImageUtil {
 		graphics2d.dispose();
 		return img;
 	}
+	
+	/**
+     * 图片切圆角
+     * @param srcImage
+     * @param radius
+     * @return
+     */
+    public static BufferedImage setClip(BufferedImage srcImage, int radius){
+        int width = srcImage.getWidth();
+        int height = srcImage.getHeight();
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D gs = image.createGraphics();
+        gs.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        gs.setClip(new RoundRectangle2D.Double(0, 0, width, height, radius, radius));
+        gs.drawImage(srcImage, 0, 0, null);
+        gs.dispose();
+        return image;
+    }
 
 }
