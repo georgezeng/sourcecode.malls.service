@@ -1,9 +1,12 @@
 package com.sourcecode.malls.dto.coupon.cash;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sourcecode.malls.dto.goods.GoodsItemDTO;
 import com.sourcecode.malls.enums.CashCouponEventType;
 import com.sourcecode.malls.enums.CouponSettingStatus;
 
@@ -26,6 +29,33 @@ public class CashCouponSettingDTO {
 	private CashCouponEventType eventType;
 	private CashCouponConsumeEventSettingDTO consumeSetting;
 	private CashCouponInviteEventSettingDTO inviteSetting;
+	private Boolean applyToAll;
+	private List<Long> categoryIds = new ArrayList<>();
+	private List<GoodsItemDTO> items = new ArrayList<>();
+
+	public Boolean getApplyToAll() {
+		return applyToAll;
+	}
+
+	public void setApplyToAll(Boolean applyToAll) {
+		this.applyToAll = applyToAll;
+	}
+
+	public List<Long> getCategoryIds() {
+		return categoryIds;
+	}
+
+	public void setCategoryIds(List<Long> categoryIds) {
+		this.categoryIds = categoryIds;
+	}
+
+	public List<GoodsItemDTO> getItems() {
+		return items;
+	}
+
+	public void setItems(List<GoodsItemDTO> items) {
+		this.items = items;
+	}
 
 	public Date getUpdateTime() {
 		return updateTime;

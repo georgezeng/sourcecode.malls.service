@@ -2,12 +2,17 @@ package com.sourcecode.malls.domain.coupon.cash;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,8 +21,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.CollectionUtils;
 
 import com.sourcecode.malls.domain.base.LongKeyEntity;
+import com.sourcecode.malls.domain.goods.GoodsCategory;
+import com.sourcecode.malls.domain.goods.GoodsItem;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.dto.coupon.cash.CashCouponSettingDTO;
 import com.sourcecode.malls.enums.CashCouponEventType;
@@ -75,8 +83,42 @@ public class CashCouponSetting extends LongKeyEntity {
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "setting")
 	private CashCouponInviteEventSetting inviteSetting;
-	
+
 	private boolean enabled;
+
+	private Boolean applyToAll;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "cash_coupon_goods_category", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private List<GoodsCategory> categories;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "cash_coupon_goods_item", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
+	private List<GoodsItem> items;
+
+	public Boolean getApplyToAll() {
+		return applyToAll;
+	}
+
+	public void setApplyToAll(Boolean applyToAll) {
+		this.applyToAll = applyToAll;
+	}
+
+	public List<GoodsCategory> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<GoodsCategory> categories) {
+		this.categories = categories;
+	}
+
+	public List<GoodsItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<GoodsItem> items) {
+		this.items = items;
+	}
 
 	public boolean isEnabled() {
 		return enabled;
@@ -200,13 +242,25 @@ public class CashCouponSetting extends LongKeyEntity {
 
 	public CashCouponSettingDTO asDTO(boolean withSetting) {
 		CashCouponSettingDTO dto = new CashCouponSettingDTO();
-		BeanUtils.copyProperties(this, dto, "consumeSetting", "inviteSetting");
-		if(withSetting) {
+		BeanUtils.copyProperties(this, dto, "consumeSetting", "inviteSetting", "items", "categories");
+		if (withSetting) {
 			if (consumeSetting != null) {
 				dto.setConsumeSetting(consumeSetting.asDTO());
 			}
 			if (inviteSetting != null) {
 				dto.setInviteSetting(inviteSetting.asDTO());
+			}
+			if (applyToAll != null) {
+				if (!applyToAll) {
+					if (!CollectionUtils.isEmpty(categories)) {
+						dto.setCategoryIds(categories.stream().map(it -> it.getId()).collect(Collectors.toList()));
+					}
+					if (!CollectionUtils.isEmpty(items)) {
+						for (GoodsItem item : items) {
+							dto.getItems().add(item.asDTO(false, false, false));
+						}
+					}
+				}
 			}
 		}
 		return dto;
