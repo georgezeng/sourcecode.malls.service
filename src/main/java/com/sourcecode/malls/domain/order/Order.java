@@ -78,6 +78,8 @@ public class Order extends LongKeyEntity {
 	private boolean deleted;
 
 	private Date payTime;
+	
+	private Date sentTime;
 
 	private Date refundTime;
 
@@ -86,6 +88,14 @@ public class Order extends LongKeyEntity {
 
 	@OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
 	private Invoice invoice;
+
+	public Date getSentTime() {
+		return sentTime;
+	}
+
+	public void setSentTime(Date sentTime) {
+		this.sentTime = sentTime;
+	}
 
 	public Date getRefundTime() {
 		return refundTime;
