@@ -1,5 +1,6 @@
 package com.sourcecode.malls.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sourcecode.malls.constants.MerchantSettingConstant;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.domain.merchant.MerchantSetting;
+import com.sourcecode.malls.dto.coupon.CouponMerchantSettingDTO;
 import com.sourcecode.malls.dto.setting.DeveloperSettingDTO;
 import com.sourcecode.malls.repository.jpa.impl.merchant.MerchantRepository;
 import com.sourcecode.malls.repository.jpa.impl.merchant.MerchantSettingRepository;
@@ -35,6 +37,7 @@ public class MerchantSettingService {
 		AssertUtil.assertNotEmpty(setting.getAccount(), "账号不能为空");
 		AssertUtil.assertNotEmpty(setting.getSecret(), "密钥不能为空");
 		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
+		AssertUtil.assertTrue(merchant.isPresent(), "找不到商户信息");
 		MerchantSetting account = settingRepository
 				.findByMerchantAndCode(merchant.get(), MerchantSettingConstant.WECHAT_GZH_ACCOUNT)
 				.orElseGet(MerchantSetting::new);
@@ -60,6 +63,7 @@ public class MerchantSettingService {
 
 	public Optional<DeveloperSettingDTO> loadWechatGzh(Long merchantId) {
 		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
+		AssertUtil.assertTrue(merchant.isPresent(), "找不到商户信息");
 		Optional<MerchantSetting> account = settingRepository.findByMerchantAndCode(merchant.get(),
 				MerchantSettingConstant.WECHAT_GZH_ACCOUNT);
 		Optional<MerchantSetting> secret = settingRepository.findByMerchantAndCode(merchant.get(),
@@ -91,6 +95,7 @@ public class MerchantSettingService {
 		AssertUtil.assertNotEmpty(setting.getAccount(), "账号不能为空");
 		AssertUtil.assertNotEmpty(setting.getSecret(), "密钥不能为空");
 		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
+		AssertUtil.assertTrue(merchant.isPresent(), "找不到商户信息");
 		MerchantSetting account = settingRepository
 				.findByMerchantAndCode(merchant.get(), MerchantSettingConstant.ALIPAY_ACCOUNT)
 				.orElseGet(MerchantSetting::new);
@@ -133,5 +138,31 @@ public class MerchantSettingService {
 			setting.setMch(Base64Util.decode(mch.get().getValue()));
 		}
 		return Optional.of(setting);
+	}
+
+	public void saveCouponSetting(Long merchantId, CouponMerchantSettingDTO dto) {
+		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
+		AssertUtil.assertTrue(merchant.isPresent(), "找不到商户信息");
+		Optional<MerchantSetting> limitedSettingOp = settingRepository.findByMerchantAndCode(merchant.get(),
+				MerchantSettingConstant.COUPON_LIMITED_AMOUNT);
+		MerchantSetting limitedSetting = limitedSettingOp.orElseGet(MerchantSetting::new);
+		if (limitedSetting.getId() == null) {
+			limitedSetting.setCode(MerchantSettingConstant.COUPON_LIMITED_AMOUNT);
+			limitedSetting.setMerchant(merchant.get());
+		}
+		limitedSetting.setValue(dto.getLimitedAmount().toString());
+		settingRepository.save(limitedSetting);
+	}
+
+	public CouponMerchantSettingDTO loadCouponSetting(Long merchantId) {
+		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
+		AssertUtil.assertTrue(merchant.isPresent(), "找不到商户信息");
+		Optional<MerchantSetting> limitedSettingOp = settingRepository.findByMerchantAndCode(merchant.get(),
+				MerchantSettingConstant.COUPON_LIMITED_AMOUNT);
+		CouponMerchantSettingDTO dto = new CouponMerchantSettingDTO();
+		if (limitedSettingOp.isPresent()) {
+			dto.setLimitedAmount(new BigDecimal(limitedSettingOp.get().getValue()));
+		}
+		return dto;
 	}
 }
