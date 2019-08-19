@@ -139,30 +139,4 @@ public class MerchantSettingService {
 		}
 		return Optional.of(setting);
 	}
-
-	public void saveCouponSetting(Long merchantId, CouponMerchantSettingDTO dto) {
-		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
-		AssertUtil.assertTrue(merchant.isPresent(), "找不到商户信息");
-		Optional<MerchantSetting> limitedSettingOp = settingRepository.findByMerchantAndCode(merchant.get(),
-				MerchantSettingConstant.COUPON_LIMITED_AMOUNT);
-		MerchantSetting limitedSetting = limitedSettingOp.orElseGet(MerchantSetting::new);
-		if (limitedSetting.getId() == null) {
-			limitedSetting.setCode(MerchantSettingConstant.COUPON_LIMITED_AMOUNT);
-			limitedSetting.setMerchant(merchant.get());
-		}
-		limitedSetting.setValue(dto.getLimitedAmount().toString());
-		settingRepository.save(limitedSetting);
-	}
-
-	public CouponMerchantSettingDTO loadCouponSetting(Long merchantId) {
-		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
-		AssertUtil.assertTrue(merchant.isPresent(), "找不到商户信息");
-		Optional<MerchantSetting> limitedSettingOp = settingRepository.findByMerchantAndCode(merchant.get(),
-				MerchantSettingConstant.COUPON_LIMITED_AMOUNT);
-		CouponMerchantSettingDTO dto = new CouponMerchantSettingDTO();
-		if (limitedSettingOp.isPresent()) {
-			dto.setLimitedAmount(new BigDecimal(limitedSettingOp.get().getValue()));
-		}
-		return dto;
-	}
 }

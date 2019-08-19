@@ -95,6 +95,16 @@ public class CashCouponSetting extends LongKeyEntity {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinTable(name = "cash_coupon_goods_item", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
 	private List<GoodsItem> items;
+	
+	private int limitedNums;
+
+	public int getLimitedNums() {
+		return limitedNums;
+	}
+
+	public void setLimitedNums(int limitedNums) {
+		this.limitedNums = limitedNums;
+	}
 
 	public Boolean getApplyToAll() {
 		return applyToAll;

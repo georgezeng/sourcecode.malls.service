@@ -16,4 +16,6 @@ public interface CashClientCouponRepository
 	Optional<CashClientCoupon> findByClientAndSetting(Client client, CashCouponSetting setting);
 
 	List<CashClientCoupon> findAllByClientAndStatus(Client client, ClientCouponStatus status);
+
+	List<CashClientCoupon> findAllByClientAndSetting(Client client, CashCouponSetting setting);
 }
