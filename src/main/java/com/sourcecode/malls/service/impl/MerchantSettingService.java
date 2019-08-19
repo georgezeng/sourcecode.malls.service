@@ -1,6 +1,5 @@
 package com.sourcecode.malls.service.impl;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sourcecode.malls.constants.MerchantSettingConstant;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.domain.merchant.MerchantSetting;
-import com.sourcecode.malls.dto.coupon.CouponMerchantSettingDTO;
 import com.sourcecode.malls.dto.setting.DeveloperSettingDTO;
 import com.sourcecode.malls.repository.jpa.impl.merchant.MerchantRepository;
 import com.sourcecode.malls.repository.jpa.impl.merchant.MerchantSettingRepository;
