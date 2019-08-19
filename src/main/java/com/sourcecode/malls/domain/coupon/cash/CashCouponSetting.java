@@ -29,6 +29,7 @@ import com.sourcecode.malls.domain.goods.GoodsItem;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.dto.coupon.cash.CashCouponSettingDTO;
 import com.sourcecode.malls.enums.CashCouponEventType;
+import com.sourcecode.malls.enums.CouponRelationType;
 import com.sourcecode.malls.enums.CouponSettingStatus;
 
 @Table(name = "cash_coupon_setting")
@@ -86,17 +87,40 @@ public class CashCouponSetting extends LongKeyEntity {
 
 	private boolean enabled;
 
-	private Boolean applyToAll;
+	@Enumerated(EnumType.STRING)
+	private CouponRelationType hxType;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinTable(name = "cash_coupon_goods_category", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<GoodsCategory> categories;
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "cash_coupon_real_category", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private List<GoodsCategory> realCategories;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinTable(name = "cash_coupon_goods_item", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
 	private List<GoodsItem> items;
-	
+
 	private int limitedNums;
+	
+	private String title;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public List<GoodsCategory> getRealCategories() {
+		return realCategories;
+	}
+
+	public void setRealCategories(List<GoodsCategory> realCategories) {
+		this.realCategories = realCategories;
+	}
 
 	public int getLimitedNums() {
 		return limitedNums;
@@ -106,12 +130,12 @@ public class CashCouponSetting extends LongKeyEntity {
 		this.limitedNums = limitedNums;
 	}
 
-	public Boolean getApplyToAll() {
-		return applyToAll;
+	public CouponRelationType getHxType() {
+		return hxType;
 	}
 
-	public void setApplyToAll(Boolean applyToAll) {
-		this.applyToAll = applyToAll;
+	public void setHxType(CouponRelationType hxType) {
+		this.hxType = hxType;
 	}
 
 	public List<GoodsCategory> getCategories() {
@@ -260,16 +284,12 @@ public class CashCouponSetting extends LongKeyEntity {
 			if (inviteSetting != null) {
 				dto.setInviteSetting(inviteSetting.asDTO());
 			}
-			if (applyToAll != null) {
-				if (!applyToAll) {
-					if (!CollectionUtils.isEmpty(categories)) {
-						dto.setCategoryIds(categories.stream().map(it -> it.getId()).collect(Collectors.toList()));
-					}
-					if (!CollectionUtils.isEmpty(items)) {
-						for (GoodsItem item : items) {
-							dto.getItems().add(item.asDTO(false, false, false));
-						}
-					}
+			if (!CollectionUtils.isEmpty(categories)) {
+				dto.setCategoryIds(categories.stream().map(it -> it.getId()).collect(Collectors.toList()));
+			}
+			if (!CollectionUtils.isEmpty(items)) {
+				for (GoodsItem item : items) {
+					dto.getItems().add(item.asDTO(false, false, false));
 				}
 			}
 		}

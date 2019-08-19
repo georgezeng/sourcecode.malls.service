@@ -6,15 +6,24 @@ import java.util.List;
 
 import com.sourcecode.malls.dto.goods.GoodsAttributeDTO;
 import com.sourcecode.malls.dto.goods.GoodsItemDTO;
+import com.sourcecode.malls.enums.CouponRelationType;
 
 public class CashCouponConsumeEventSettingDTO {
 	private List<GoodsAttributeDTO> categories = new ArrayList<>();
 	private List<Long> categoryIds = new ArrayList<>();
 	private List<GoodsItemDTO> items = new ArrayList<>();
 	private List<Long> itemIds = new ArrayList<>();
-	private boolean applyToAll;
+	private CouponRelationType type;
 	private BigDecimal upToAmount;
-	
+
+	public CouponRelationType getType() {
+		return type;
+	}
+
+	public void setType(CouponRelationType type) {
+		this.type = type;
+	}
+
 	public BigDecimal getUpToAmount() {
 		return upToAmount;
 	}
@@ -53,14 +62,6 @@ public class CashCouponConsumeEventSettingDTO {
 
 	public void setItems(List<GoodsItemDTO> items) {
 		this.items = items;
-	}
-
-	public boolean isApplyToAll() {
-		return applyToAll;
-	}
-
-	public void setApplyToAll(boolean applyToAll) {
-		this.applyToAll = applyToAll;
 	}
 
 }

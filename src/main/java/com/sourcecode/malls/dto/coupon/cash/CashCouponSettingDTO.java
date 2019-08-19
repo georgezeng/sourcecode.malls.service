@@ -8,11 +8,13 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.dto.goods.GoodsItemDTO;
 import com.sourcecode.malls.enums.CashCouponEventType;
+import com.sourcecode.malls.enums.CouponRelationType;
 import com.sourcecode.malls.enums.CouponSettingStatus;
 
 public class CashCouponSettingDTO {
 	private Long id;
 	private String name;
+	private String title;
 	private BigDecimal amount;
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date startDate;
@@ -29,16 +31,24 @@ public class CashCouponSettingDTO {
 	private CashCouponEventType eventType;
 	private CashCouponConsumeEventSettingDTO consumeSetting;
 	private CashCouponInviteEventSettingDTO inviteSetting;
-	private Boolean applyToAll;
+	private CouponRelationType hxType;
 	private List<Long> categoryIds = new ArrayList<>();
 	private List<GoodsItemDTO> items = new ArrayList<>();
 
-	public Boolean getApplyToAll() {
-		return applyToAll;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setApplyToAll(Boolean applyToAll) {
-		this.applyToAll = applyToAll;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public CouponRelationType getHxType() {
+		return hxType;
+	}
+
+	public void setHxType(CouponRelationType hxType) {
+		this.hxType = hxType;
 	}
 
 	public List<Long> getCategoryIds() {

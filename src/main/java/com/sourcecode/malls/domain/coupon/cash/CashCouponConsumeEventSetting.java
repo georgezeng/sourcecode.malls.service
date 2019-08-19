@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -20,6 +22,7 @@ import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.goods.GoodsCategory;
 import com.sourcecode.malls.domain.goods.GoodsItem;
 import com.sourcecode.malls.dto.coupon.cash.CashCouponConsumeEventSettingDTO;
+import com.sourcecode.malls.enums.CouponRelationType;
 
 @Table(name = "cash_coupon_consume_event_setting")
 @Entity
@@ -40,13 +43,27 @@ public class CashCouponConsumeEventSetting extends LongKeyEntity {
 	private List<GoodsCategory> categories;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinTable(name = "cash_consume_event_real_category", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private List<GoodsCategory> realCategories;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
 	@JoinTable(name = "cash_consume_event_goods_item", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
 	private List<GoodsItem> items;
 
-	private boolean applyToAll;
+	@NotNull(message = "关联类型不能为空")
+	@Enumerated(EnumType.STRING)
+	private CouponRelationType type;
 
 	@NotNull(message = "满赠金额不能为空")
 	private BigDecimal upToAmount;
+
+	public List<GoodsCategory> getRealCategories() {
+		return realCategories;
+	}
+
+	public void setRealCategories(List<GoodsCategory> realCategories) {
+		this.realCategories = realCategories;
+	}
 
 	public BigDecimal getUpToAmount() {
 		return upToAmount;
@@ -80,12 +97,12 @@ public class CashCouponConsumeEventSetting extends LongKeyEntity {
 		this.items = items;
 	}
 
-	public boolean isApplyToAll() {
-		return applyToAll;
+	public CouponRelationType getType() {
+		return type;
 	}
 
-	public void setApplyToAll(boolean applyToAll) {
-		this.applyToAll = applyToAll;
+	public void setType(CouponRelationType type) {
+		this.type = type;
 	}
 
 	public CashCouponConsumeEventSettingDTO asDTO() {
