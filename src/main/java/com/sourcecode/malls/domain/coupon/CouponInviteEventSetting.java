@@ -1,4 +1,4 @@
-package com.sourcecode.malls.domain.coupon.cash;
+package com.sourcecode.malls.domain.coupon;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,11 +10,11 @@ import javax.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.domain.base.LongKeyEntity;
-import com.sourcecode.malls.dto.coupon.cash.CashCouponInviteEventSettingDTO;
+import com.sourcecode.malls.dto.coupon.CouponInviteEventSettingDTO;
 
-@Table(name = "cash_coupon_invite_event_setting")
+@Table(name = "coupon_invite_event_setting")
 @Entity
-public class CashCouponInviteEventSetting extends LongKeyEntity {
+public class CouponInviteEventSetting extends LongKeyEntity {
 
 	/**
 	 * 
@@ -24,15 +24,15 @@ public class CashCouponInviteEventSetting extends LongKeyEntity {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "setting_id")
 	@NotNull(message = "优惠券不能为空")
-	private CashCouponSetting setting;
+	private CouponSetting setting;
 
 	private int memberNums;
 
-	public CashCouponSetting getSetting() {
+	public CouponSetting getSetting() {
 		return setting;
 	}
 
-	public void setSetting(CashCouponSetting setting) {
+	public void setSetting(CouponSetting setting) {
 		this.setting = setting;
 	}
 
@@ -44,8 +44,8 @@ public class CashCouponInviteEventSetting extends LongKeyEntity {
 		this.memberNums = memberNums;
 	}
 
-	public CashCouponInviteEventSettingDTO asDTO() {
-		CashCouponInviteEventSettingDTO dto = new CashCouponInviteEventSettingDTO();
+	public CouponInviteEventSettingDTO asDTO() {
+		CouponInviteEventSettingDTO dto = new CouponInviteEventSettingDTO();
 		BeanUtils.copyProperties(this, dto);
 		return dto;
 	}

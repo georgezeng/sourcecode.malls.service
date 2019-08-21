@@ -1,6 +1,6 @@
-package com.sourcecode.malls.dto.coupon.cash;
+package com.sourcecode.malls.dto.coupon;
 
-public class CashCouponHxDTO extends CashCouponConsumeEventSettingDTO {
+public class CouponHxDTO extends CouponConsumeEventSettingDTO {
 	private Long id;
 	private int limitedNums;
 

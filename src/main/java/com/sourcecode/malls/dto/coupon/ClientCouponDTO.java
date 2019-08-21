@@ -1,4 +1,4 @@
-package com.sourcecode.malls.dto.coupon.cash;
+package com.sourcecode.malls.dto.coupon;
 
 import java.util.Date;
 
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.enums.ClientCouponStatus;
 
-public class CashClientCouponDTO extends SimpleQueryDTO {
+public class ClientCouponDTO extends SimpleQueryDTO {
 	private Long id;
 	
 	private String couponId;

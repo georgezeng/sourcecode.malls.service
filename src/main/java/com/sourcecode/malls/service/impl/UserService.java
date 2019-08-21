@@ -99,7 +99,7 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 	@Transactional(readOnly = true)
 	public Page<User> findAll(QueryInfo<SimpleQueryDTO> queryInfo) {
 		SimpleQueryDTO data = queryInfo.getData();
-		Page<User> pageReulst = null;
+		Page<User> pageResult = null;
 		Specification<User> spec = new Specification<User>() {
 
 			/**
@@ -123,8 +123,8 @@ public class UserService implements UserDetailsService, JpaService<User, Long> {
 				return query.where(predicate.toArray(new Predicate[] {})).getRestriction();
 			}
 		};
-		pageReulst = userRepository.findAll(spec, queryInfo.getPage().pageable());
-		return pageReulst;
+		pageResult = userRepository.findAll(spec, queryInfo.getPage().pageable());
+		return pageResult;
 	}
 
 	@Transactional(readOnly = true)

@@ -66,7 +66,7 @@ public class RoleService implements JpaService<Role, Long> {
 	@Transactional(readOnly = true)
 	public Page<Role> findAll(QueryInfo<SimpleQueryDTO> queryInfo) {
 		SimpleQueryDTO data = queryInfo.getData();
-		Page<Role> pageReulst = null;
+		Page<Role> pageResult = null;
 		Specification<Role> spec = new Specification<Role>() {
 
 			/**
@@ -88,8 +88,8 @@ public class RoleService implements JpaService<Role, Long> {
 				return query.where(predicate.toArray(new Predicate[] {})).getRestriction();
 			}
 		};
-		pageReulst = roleRepository.findAll(spec, queryInfo.getPage().pageable());
-		return pageReulst;
+		pageResult = roleRepository.findAll(spec, queryInfo.getPage().pageable());
+		return pageResult;
 	}
 
 	public void relateToUsersAndAuthorities(Role role, List<UserDTO> users, List<AuthorityDTO> authorities) {

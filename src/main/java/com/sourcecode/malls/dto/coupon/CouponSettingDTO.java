@@ -1,4 +1,4 @@
-package com.sourcecode.malls.dto.coupon.cash;
+package com.sourcecode.malls.dto.coupon;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -6,12 +6,14 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.dto.goods.GoodsItemDTO;
 import com.sourcecode.malls.enums.CashCouponEventType;
 import com.sourcecode.malls.enums.CouponRelationType;
 import com.sourcecode.malls.enums.CouponSettingStatus;
+import com.sourcecode.malls.enums.CouponType;
 
-public class CashCouponSettingDTO {
+public class CouponSettingDTO extends SimpleQueryDTO {
 	private Long id;
 	private String name;
 	private String title;
@@ -29,11 +31,20 @@ public class CashCouponSettingDTO {
 	private CouponSettingStatus status;
 	private String description;
 	private CashCouponEventType eventType;
-	private CashCouponConsumeEventSettingDTO consumeSetting;
-	private CashCouponInviteEventSettingDTO inviteSetting;
+	private CouponConsumeEventSettingDTO consumeSetting;
+	private CouponInviteEventSettingDTO inviteSetting;
 	private CouponRelationType hxType;
 	private List<Long> categoryIds = new ArrayList<>();
 	private List<GoodsItemDTO> items = new ArrayList<>();
+	private CouponType type;
+
+	public CouponType getType() {
+		return type;
+	}
+
+	public void setType(CouponType type) {
+		this.type = type;
+	}
 
 	public String getTitle() {
 		return title;
@@ -75,19 +86,19 @@ public class CashCouponSettingDTO {
 		this.updateTime = updateTime;
 	}
 
-	public CashCouponConsumeEventSettingDTO getConsumeSetting() {
+	public CouponConsumeEventSettingDTO getConsumeSetting() {
 		return consumeSetting;
 	}
 
-	public void setConsumeSetting(CashCouponConsumeEventSettingDTO consumeSetting) {
+	public void setConsumeSetting(CouponConsumeEventSettingDTO consumeSetting) {
 		this.consumeSetting = consumeSetting;
 	}
 
-	public CashCouponInviteEventSettingDTO getInviteSetting() {
+	public CouponInviteEventSettingDTO getInviteSetting() {
 		return inviteSetting;
 	}
 
-	public void setInviteSetting(CashCouponInviteEventSettingDTO inviteSetting) {
+	public void setInviteSetting(CouponInviteEventSettingDTO inviteSetting) {
 		this.inviteSetting = inviteSetting;
 	}
 

@@ -54,7 +54,7 @@ public class AuthorityService implements JpaService<Authority, Long> {
 	@Transactional(readOnly = true)
 	public Page<Authority> findAll(QueryInfo<SimpleQueryDTO> queryInfo) {
 		SimpleQueryDTO data = queryInfo.getData();
-		Page<Authority> pageReulst = null;
+		Page<Authority> pageResult = null;
 		Specification<Authority> spec = new Specification<Authority>() {
 
 			/**
@@ -75,8 +75,8 @@ public class AuthorityService implements JpaService<Authority, Long> {
 				return query.where(predicate.toArray(new Predicate[] {})).getRestriction();
 			}
 		};
-		pageReulst = authorityRepository.findAll(spec, queryInfo.getPage().pageable());
-		return pageReulst;
+		pageResult = authorityRepository.findAll(spec, queryInfo.getPage().pageable());
+		return pageResult;
 	}
 
 	@Transactional(readOnly = true)

@@ -1,4 +1,4 @@
-package com.sourcecode.malls.domain.coupon.cash;
+package com.sourcecode.malls.domain.coupon;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -27,14 +27,15 @@ import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.goods.GoodsCategory;
 import com.sourcecode.malls.domain.goods.GoodsItem;
 import com.sourcecode.malls.domain.merchant.Merchant;
-import com.sourcecode.malls.dto.coupon.cash.CashCouponSettingDTO;
+import com.sourcecode.malls.dto.coupon.CouponSettingDTO;
 import com.sourcecode.malls.enums.CashCouponEventType;
 import com.sourcecode.malls.enums.CouponRelationType;
 import com.sourcecode.malls.enums.CouponSettingStatus;
+import com.sourcecode.malls.enums.CouponType;
 
-@Table(name = "cash_coupon_setting")
+@Table(name = "coupon_setting")
 @Entity
-public class CashCouponSetting extends LongKeyEntity {
+public class CouponSetting extends LongKeyEntity {
 
 	/**
 	 * 
@@ -80,10 +81,10 @@ public class CashCouponSetting extends LongKeyEntity {
 	private CashCouponEventType eventType;
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "setting")
-	private CashCouponConsumeEventSetting consumeSetting;
+	private CouponConsumeEventSetting consumeSetting;
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "setting")
-	private CashCouponInviteEventSetting inviteSetting;
+	private CouponInviteEventSetting inviteSetting;
 
 	private boolean enabled;
 
@@ -91,20 +92,32 @@ public class CashCouponSetting extends LongKeyEntity {
 	private CouponRelationType hxType;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-	@JoinTable(name = "cash_coupon_goods_category", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	@JoinTable(name = "coupon_setting_goods_category", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<GoodsCategory> categories;
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-	@JoinTable(name = "cash_coupon_real_category", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	@JoinTable(name = "coupon_setting_real_category", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<GoodsCategory> realCategories;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-	@JoinTable(name = "cash_coupon_goods_item", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
+	@JoinTable(name = "coupon_setting_goods_item", joinColumns = @JoinColumn(name = "setting_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
 	private List<GoodsItem> items;
 
 	private int limitedNums;
 	
 	private String title;
+	
+	@Enumerated(EnumType.STRING)
+	@NotNull(message = "优惠券类型不能为空")
+	private CouponType type;
+
+	public CouponType getType() {
+		return type;
+	}
+
+	public void setType(CouponType type) {
+		this.type = type;
+	}
 
 	public String getTitle() {
 		return title;
@@ -162,19 +175,19 @@ public class CashCouponSetting extends LongKeyEntity {
 		this.enabled = enabled;
 	}
 
-	public CashCouponConsumeEventSetting getConsumeSetting() {
+	public CouponConsumeEventSetting getConsumeSetting() {
 		return consumeSetting;
 	}
 
-	public void setConsumeSetting(CashCouponConsumeEventSetting consumeSetting) {
+	public void setConsumeSetting(CouponConsumeEventSetting consumeSetting) {
 		this.consumeSetting = consumeSetting;
 	}
 
-	public CashCouponInviteEventSetting getInviteSetting() {
+	public CouponInviteEventSetting getInviteSetting() {
 		return inviteSetting;
 	}
 
-	public void setInviteSetting(CashCouponInviteEventSetting inviteSetting) {
+	public void setInviteSetting(CouponInviteEventSetting inviteSetting) {
 		this.inviteSetting = inviteSetting;
 	}
 
@@ -274,8 +287,8 @@ public class CashCouponSetting extends LongKeyEntity {
 		this.description = description;
 	}
 
-	public CashCouponSettingDTO asDTO(boolean withSetting) {
-		CashCouponSettingDTO dto = new CashCouponSettingDTO();
+	public CouponSettingDTO asDTO(boolean withSetting) {
+		CouponSettingDTO dto = new CouponSettingDTO();
 		BeanUtils.copyProperties(this, dto, "consumeSetting", "inviteSetting", "items", "categories");
 		if (withSetting) {
 			if (consumeSetting != null) {

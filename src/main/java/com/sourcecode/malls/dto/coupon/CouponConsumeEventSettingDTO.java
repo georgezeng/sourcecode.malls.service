@@ -1,4 +1,4 @@
-package com.sourcecode.malls.dto.coupon.cash;
+package com.sourcecode.malls.dto.coupon;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import com.sourcecode.malls.dto.goods.GoodsAttributeDTO;
 import com.sourcecode.malls.dto.goods.GoodsItemDTO;
 import com.sourcecode.malls.enums.CouponRelationType;
 
-public class CashCouponConsumeEventSettingDTO {
+public class CouponConsumeEventSettingDTO {
 	private List<GoodsAttributeDTO> categories = new ArrayList<>();
 	private List<Long> categoryIds = new ArrayList<>();
 	private List<GoodsItemDTO> items = new ArrayList<>();

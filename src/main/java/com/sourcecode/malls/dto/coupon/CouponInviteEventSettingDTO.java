@@ -1,6 +1,6 @@
-package com.sourcecode.malls.dto.coupon.cash;
+package com.sourcecode.malls.dto.coupon;
 
-public class CashCouponInviteEventSettingDTO {
+public class CouponInviteEventSettingDTO {
 	private int memberNums;
 
 	public int getMemberNums() {

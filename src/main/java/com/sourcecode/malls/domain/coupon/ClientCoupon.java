@@ -1,4 +1,4 @@
-package com.sourcecode.malls.domain.coupon.cash;
+package com.sourcecode.malls.domain.coupon;
 
 import java.util.Date;
 
@@ -19,12 +19,12 @@ import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.client.Client;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.domain.order.Order;
-import com.sourcecode.malls.dto.coupon.cash.CashClientCouponDTO;
+import com.sourcecode.malls.dto.coupon.ClientCouponDTO;
 import com.sourcecode.malls.enums.ClientCouponStatus;
 
-@Table(name = "cash_client_coupon")
+@Table(name = "client_coupon")
 @Entity
-public class CashClientCoupon extends LongKeyEntity {
+public class ClientCoupon extends LongKeyEntity {
 
 	/**
 	 * 
@@ -48,7 +48,7 @@ public class CashClientCoupon extends LongKeyEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "setting_id")
 	@NotNull(message = "优惠券不能为空")
-	private CashCouponSetting setting;
+	private CouponSetting setting;
 
 	@NotNull(message = "领取时间不能为空")
 	private Date receivedTime;
@@ -95,11 +95,11 @@ public class CashClientCoupon extends LongKeyEntity {
 		this.merchant = merchant;
 	}
 
-	public CashCouponSetting getSetting() {
+	public CouponSetting getSetting() {
 		return setting;
 	}
 
-	public void setSetting(CashCouponSetting setting) {
+	public void setSetting(CouponSetting setting) {
 		this.setting = setting;
 	}
 
@@ -127,8 +127,8 @@ public class CashClientCoupon extends LongKeyEntity {
 		this.order = order;
 	}
 
-	public CashClientCouponDTO asDTO() {
-		CashClientCouponDTO dto = new CashClientCouponDTO();
+	public ClientCouponDTO asDTO() {
+		ClientCouponDTO dto = new ClientCouponDTO();
 		BeanUtils.copyProperties(this, dto);
 		if (client != null) {
 			dto.setClientName(client.getUsername());
