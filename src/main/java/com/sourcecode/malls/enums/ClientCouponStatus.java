@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @JsonFormat(shape = Shape.OBJECT)
 public enum ClientCouponStatus {
-	UnUse("未使用"), Used("已使用");
+	UnUse("未使用"), Used("已使用"), Out("已过期");
 
 	private String text;
 
