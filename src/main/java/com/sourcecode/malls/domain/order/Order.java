@@ -97,6 +97,17 @@ public class Order extends LongKeyEntity {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
 	private List<ClientCoupon> coupons;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fromOrder")
+	private List<ClientCoupon> generatedCoupons;
+
+	public List<ClientCoupon> getGeneratedCoupons() {
+		return generatedCoupons;
+	}
+
+	public void setGeneratedCoupons(List<ClientCoupon> generatedCoupons) {
+		this.generatedCoupons = generatedCoupons;
+	}
 
 	public List<ClientCoupon> getCoupons() {
 		return coupons;

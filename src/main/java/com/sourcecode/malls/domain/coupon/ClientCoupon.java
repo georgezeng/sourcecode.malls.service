@@ -59,10 +59,22 @@ public class ClientCoupon extends LongKeyEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id")
 	private Order order;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "from_order_id")
+	private Order fromOrder;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "状态不能为空")
 	private ClientCouponStatus status;
+
+	public Order getFromOrder() {
+		return fromOrder;
+	}
+
+	public void setFromOrder(Order fromOrder) {
+		this.fromOrder = fromOrder;
+	}
 
 	public ClientCouponStatus getStatus() {
 		return status;
