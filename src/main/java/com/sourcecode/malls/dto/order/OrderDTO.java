@@ -7,6 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.dto.client.ClientAddressDTO;
+import com.sourcecode.malls.dto.coupon.OrderCouponDTO;
 import com.sourcecode.malls.enums.OrderStatus;
 import com.sourcecode.malls.enums.Payment;
 
@@ -31,6 +32,33 @@ public class OrderDTO extends SimpleQueryDTO {
 	private String transactionId;
 	private String remark;
 	private boolean applied;
+	private BigDecimal realPrice;
+	private BigDecimal couponAmount;
+	private List<OrderCouponDTO> coupons;
+
+	public List<OrderCouponDTO> getCoupons() {
+		return coupons;
+	}
+
+	public void setCoupons(List<OrderCouponDTO> coupons) {
+		this.coupons = coupons;
+	}
+
+	public BigDecimal getRealPrice() {
+		return realPrice;
+	}
+
+	public void setRealPrice(BigDecimal realPrice) {
+		this.realPrice = realPrice;
+	}
+
+	public BigDecimal getCouponAmount() {
+		return couponAmount;
+	}
+
+	public void setCouponAmount(BigDecimal couponAmount) {
+		this.couponAmount = couponAmount;
+	}
 
 	public boolean isApplied() {
 		return applied;

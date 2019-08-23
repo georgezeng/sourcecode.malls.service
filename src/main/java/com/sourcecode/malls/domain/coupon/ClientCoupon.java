@@ -20,6 +20,7 @@ import com.sourcecode.malls.domain.client.Client;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.domain.order.Order;
 import com.sourcecode.malls.dto.coupon.ClientCouponDTO;
+import com.sourcecode.malls.dto.coupon.OrderCouponDTO;
 import com.sourcecode.malls.enums.ClientCouponStatus;
 
 @Table(name = "client_coupon")
@@ -136,6 +137,13 @@ public class ClientCoupon extends LongKeyEntity {
 		if (order != null) {
 			dto.setOrderId(order.getOrderId());
 		}
+		return dto;
+	}
+	
+	public OrderCouponDTO asOrderDTO() {
+		OrderCouponDTO dto = new OrderCouponDTO();
+		BeanUtils.copyProperties(this, dto);
+		BeanUtils.copyProperties(setting, dto, "id");
 		return dto;
 	}
 

@@ -24,6 +24,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.client.Client;
+import com.sourcecode.malls.domain.coupon.ClientCoupon;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.dto.order.OrderDTO;
 import com.sourcecode.malls.dto.order.SubOrderDTO;
@@ -59,6 +60,11 @@ public class Order extends LongKeyEntity {
 	@NotNull(message = "合计金额不能为空")
 	private BigDecimal totalPrice;
 
+	@NotNull(message = "实付金额不能为空")
+	private BigDecimal realPrice;
+
+	private BigDecimal couponAmount;
+
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "交易状态不能为空")
 	private OrderStatus status;
@@ -78,7 +84,7 @@ public class Order extends LongKeyEntity {
 	private boolean deleted;
 
 	private Date payTime;
-	
+
 	private Date sentTime;
 
 	private Date refundTime;
@@ -88,6 +94,33 @@ public class Order extends LongKeyEntity {
 
 	@OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
 	private Invoice invoice;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+	private List<ClientCoupon> coupons;
+
+	public List<ClientCoupon> getCoupons() {
+		return coupons;
+	}
+
+	public void setCoupons(List<ClientCoupon> coupons) {
+		this.coupons = coupons;
+	}
+
+	public BigDecimal getCouponAmount() {
+		return couponAmount;
+	}
+
+	public void setCouponAmount(BigDecimal couponAmount) {
+		this.couponAmount = couponAmount;
+	}
+
+	public BigDecimal getRealPrice() {
+		return realPrice;
+	}
+
+	public void setRealPrice(BigDecimal realPrice) {
+		this.realPrice = realPrice;
+	}
 
 	public Date getSentTime() {
 		return sentTime;
@@ -219,7 +252,7 @@ public class Order extends LongKeyEntity {
 
 	public OrderDTO asDTO(boolean withSub, boolean withMoreDetail) {
 		OrderDTO dto = new OrderDTO();
-		BeanUtils.copyProperties(this, dto, "subList", "address", "expressList", "invoice");
+		BeanUtils.copyProperties(this, dto, "subList", "address", "expressList", "invoice", "coupons");
 		dto.setBuyer(client.getUsername());
 		if (withSub) {
 			if (!CollectionUtils.isEmpty(subList)) {
@@ -239,6 +272,9 @@ public class Order extends LongKeyEntity {
 			}
 			if (expressList != null) {
 				dto.setExpressList(expressList.stream().map(it -> it.asDTO()).collect(Collectors.toList()));
+			}
+			if (coupons != null) {
+				dto.setCoupons(coupons.stream().map(it -> it.asOrderDTO()).collect(Collectors.toList()));
 			}
 		}
 		return dto;
