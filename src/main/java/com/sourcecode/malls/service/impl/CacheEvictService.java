@@ -11,9 +11,9 @@ public class CacheEvictService {
 			@CacheEvict(cacheNames = "client_unuse_coupon_nums", allEntries = true, condition = "#clientId == null"),
 			@CacheEvict(cacheNames = "client_coupon_nums", allEntries = true, condition = "#clientId == null"),
 			@CacheEvict(cacheNames = "client_unuse_coupon_nums", key = "#clientId", condition = "#clientId != null"),
-			@CacheEvict(cacheNames = "client_coupon_nums", key = "#clientId '-UnUse'", condition = "#clientId != null"),
-			@CacheEvict(cacheNames = "client_coupon_nums", key = "#clientId '-Used'", condition = "#clientId != null"),
-			@CacheEvict(cacheNames = "client_coupon_nums", key = "#clientId '-Out'", condition = "#clientId != null")})
+			@CacheEvict(cacheNames = "client_coupon_nums", key = "#clientId + '-UnUse'", condition = "#clientId != null"),
+			@CacheEvict(cacheNames = "client_coupon_nums", key = "#clientId + '-Used'", condition = "#clientId != null"),
+			@CacheEvict(cacheNames = "client_coupon_nums", key = "#clientId + '-Out'", condition = "#clientId != null")})
 	public void clearClientCoupons(Long clientId) {
 	}
 
