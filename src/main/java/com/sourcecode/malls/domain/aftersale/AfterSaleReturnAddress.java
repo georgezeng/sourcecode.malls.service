@@ -14,9 +14,9 @@ import org.springframework.beans.BeanUtils;
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.dto.client.ClientAddressDTO;
 
-@Table(name = "aftersale_address")
+@Table(name = "aftersale_return_address")
 @Entity
-public class AfterSaleAddress extends LongKeyEntity {
+public class AfterSaleReturnAddress extends LongKeyEntity {
 
 	/**
 	 * 
@@ -29,17 +29,8 @@ public class AfterSaleAddress extends LongKeyEntity {
 	@NotBlank(message = "联系电话不能为空")
 	@Size(max = 50, message = "联系电话长度不能大于50")
 	private String phone;
-	@NotBlank(message = "省份不能为空")
-	@Size(max = 50, message = "省份长度不能大于50")
-	private String province;
-	@NotBlank(message = "城市不能为空")
-	@Size(max = 50, message = "城市长度不能大于50")
-	private String city;
-	@NotBlank(message = "城区不能为空")
-	@Size(max = 50, message = "城市长度不能大于50")
-	private String district;
-	@NotBlank(message = "详细地址不能为空")
-	@Size(max = 255, message = "详细地址长度不能大于255")
+	@NotBlank(message = "回寄地址不能为空")
+	@Size(max = 255, message = "回寄地址长度不能大于255")
 	private String location;
 
 	@OneToOne(fetch = FetchType.LAZY)
@@ -63,29 +54,6 @@ public class AfterSaleAddress extends LongKeyEntity {
 		this.phone = phone;
 	}
 
-	public String getProvince() {
-		return province;
-	}
-
-	public void setProvince(String province) {
-		this.province = province;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getDistrict() {
-		return district;
-	}
-
-	public void setDistrict(String district) {
-		this.district = district;
-	}
 
 	public String getLocation() {
 		return location;
@@ -105,7 +73,7 @@ public class AfterSaleAddress extends LongKeyEntity {
 
 	public ClientAddressDTO asDTO() {
 		ClientAddressDTO dto = new ClientAddressDTO();
-		BeanUtils.copyProperties(this, dto, "application");
+		BeanUtils.copyProperties(this, dto);
 		return dto;
 	}
 

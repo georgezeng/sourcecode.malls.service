@@ -33,6 +33,8 @@ public class AfterSaleApplicationDTO extends SimpleQueryDTO {
 	private List<String> photos;
 
 	private ClientAddressDTO address;
+	
+	private ClientAddressDTO returnAddress;
 
 	private String specificationValues;
 
@@ -86,6 +88,14 @@ public class AfterSaleApplicationDTO extends SimpleQueryDTO {
 	private String merchantExpressCompany;
 
 	private String merchantExpressNumber;
+
+	public ClientAddressDTO getReturnAddress() {
+		return returnAddress;
+	}
+
+	public void setReturnAddress(ClientAddressDTO returnAddress) {
+		this.returnAddress = returnAddress;
+	}
 
 	public String getBuyer() {
 		return buyer;

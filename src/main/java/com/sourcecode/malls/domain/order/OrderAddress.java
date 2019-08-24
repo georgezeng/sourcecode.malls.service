@@ -23,8 +23,8 @@ public class OrderAddress extends LongKeyEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@NotBlank(message = "收货人不能为空")
-	@Size(max = 50, message = "收货人长度不能大于50")
+	@NotBlank(message = "收件人不能为空")
+	@Size(max = 50, message = "收件人长度不能大于50")
 	private String name;
 	@NotBlank(message = "联系电话不能为空")
 	@Size(max = 50, message = "联系电话长度不能大于50")
@@ -39,7 +39,7 @@ public class OrderAddress extends LongKeyEntity {
 	@Size(max = 50, message = "城市长度不能大于50")
 	private String district;
 	@NotBlank(message = "详细地址不能为空")
-	@Size(max = 255, message = "详细地址长度不能大于50")
+	@Size(max = 255, message = "详细地址长度不能大于255")
 	private String location;
 
 	@OneToOne(fetch = FetchType.LAZY)

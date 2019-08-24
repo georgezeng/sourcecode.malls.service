@@ -123,6 +123,17 @@ public class AfterSaleApplication extends LongKeyEntity {
 	@Size(max = 255, message = "备注长度不能超过255")
 	private String remark;
 
+	@OneToOne(mappedBy = "application", fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE })
+	private AfterSaleReturnAddress returnAddress;
+
+	public AfterSaleReturnAddress getReturnAddress() {
+		return returnAddress;
+	}
+
+	public void setReturnAddress(AfterSaleReturnAddress returnAddress) {
+		this.returnAddress = returnAddress;
+	}
+
 	public String getRemark() {
 		return remark;
 	}
@@ -349,8 +360,11 @@ public class AfterSaleApplication extends LongKeyEntity {
 
 	public AfterSaleApplicationDTO asDTO() {
 		AfterSaleApplicationDTO dto = new AfterSaleApplicationDTO();
-		BeanUtils.copyProperties(this, dto, "client", "merchant", "order", "subOrder", "photos");
+		BeanUtils.copyProperties(this, dto, "client", "merchant", "order", "subOrder", "photos", "returnAddress");
 		dto.setBuyer(client.getUsername());
+		if (returnAddress != null) {
+			dto.setReturnAddress(returnAddress.asDTO());
+		}
 		if (subOrder != null) {
 			dto.setSubOrder(subOrder.asDTO());
 		}
