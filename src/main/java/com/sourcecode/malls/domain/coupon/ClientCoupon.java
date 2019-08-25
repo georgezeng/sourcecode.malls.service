@@ -55,6 +55,8 @@ public class ClientCoupon extends LongKeyEntity {
 	private Date receivedTime;
 
 	private Date usedTime;
+	
+	private Date outTime;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "order_id")
@@ -67,6 +69,14 @@ public class ClientCoupon extends LongKeyEntity {
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "状态不能为空")
 	private ClientCouponStatus status;
+
+	public Date getOutTime() {
+		return outTime;
+	}
+
+	public void setOutTime(Date outTime) {
+		this.outTime = outTime;
+	}
 
 	public Order getFromOrder() {
 		return fromOrder;
