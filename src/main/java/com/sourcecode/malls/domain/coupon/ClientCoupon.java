@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -69,6 +70,18 @@ public class ClientCoupon extends LongKeyEntity {
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "状态不能为空")
 	private ClientCouponStatus status;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "invitee_id")
+	private Client invitee;
+
+	public Client getInvitee() {
+		return invitee;
+	}
+
+	public void setInvitee(Client invitee) {
+		this.invitee = invitee;
+	}
 
 	public Date getOutTime() {
 		return outTime;
