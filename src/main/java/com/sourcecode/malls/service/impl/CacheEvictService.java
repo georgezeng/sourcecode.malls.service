@@ -23,7 +23,13 @@ public class CacheEvictService {
 
 	@Caching(evict = { @CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-UnPay'"),
 			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-Paid'"),
-			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-Shipped'") })
+			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-Shipped'"),
+			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-Canceled'"),
+			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-CanceledForRefund'"),
+			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-RefundApplied'"),
+			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-Refunded'"),
+			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-Closed'"),
+			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-Finished'") })
 	public void clearClientOrders(Long clientId) {
 	}
 
