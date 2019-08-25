@@ -3,6 +3,15 @@ package com.sourcecode.malls.dto.coupon;
 public class CouponHxDTO extends CouponConsumeEventSettingDTO {
 	private Long id;
 	private int limitedNums;
+	private String title;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public int getLimitedNums() {
 		return limitedNums;
