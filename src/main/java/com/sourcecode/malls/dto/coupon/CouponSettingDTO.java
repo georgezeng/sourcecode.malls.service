@@ -8,7 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.dto.goods.GoodsItemDTO;
-import com.sourcecode.malls.enums.CashCouponEventType;
+import com.sourcecode.malls.enums.CouponEventType;
 import com.sourcecode.malls.enums.CouponRelationType;
 import com.sourcecode.malls.enums.CouponSettingStatus;
 import com.sourcecode.malls.enums.CouponType;
@@ -30,7 +30,7 @@ public class CouponSettingDTO extends SimpleQueryDTO {
 	private long usedNums;
 	private CouponSettingStatus status;
 	private String description;
-	private CashCouponEventType eventType;
+	private CouponEventType eventType;
 	private CouponConsumeEventSettingDTO consumeSetting;
 	private CouponInviteEventSettingDTO inviteSetting;
 	private CouponRelationType hxType;
@@ -190,11 +190,11 @@ public class CouponSettingDTO extends SimpleQueryDTO {
 		this.description = description;
 	}
 
-	public CashCouponEventType getEventType() {
+	public CouponEventType getEventType() {
 		return eventType;
 	}
 
-	public void setEventType(CashCouponEventType eventType) {
+	public void setEventType(CouponEventType eventType) {
 		this.eventType = eventType;
 	}
 

@@ -59,6 +59,16 @@ public class Client extends BaseUser implements UserDetails {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
 	private List<Client> subList;
 
+	private boolean loggedIn;
+
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+
 	public Client() {
 
 	}

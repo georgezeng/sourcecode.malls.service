@@ -28,7 +28,7 @@ import com.sourcecode.malls.domain.goods.GoodsCategory;
 import com.sourcecode.malls.domain.goods.GoodsItem;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.dto.coupon.CouponSettingDTO;
-import com.sourcecode.malls.enums.CashCouponEventType;
+import com.sourcecode.malls.enums.CouponEventType;
 import com.sourcecode.malls.enums.CouponRelationType;
 import com.sourcecode.malls.enums.CouponSettingStatus;
 import com.sourcecode.malls.enums.CouponType;
@@ -78,7 +78,7 @@ public class CouponSetting extends LongKeyEntity {
 
 	@Enumerated(EnumType.STRING)
 //	@NotNull(message = "用户行为不能为空")
-	private CashCouponEventType eventType;
+	private CouponEventType eventType;
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "setting")
 	private CouponConsumeEventSetting consumeSetting;
@@ -191,11 +191,11 @@ public class CouponSetting extends LongKeyEntity {
 		this.inviteSetting = inviteSetting;
 	}
 
-	public CashCouponEventType getEventType() {
+	public CouponEventType getEventType() {
 		return eventType;
 	}
 
-	public void setEventType(CashCouponEventType eventType) {
+	public void setEventType(CouponEventType eventType) {
 		this.eventType = eventType;
 	}
 
