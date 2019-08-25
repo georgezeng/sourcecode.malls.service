@@ -21,9 +21,9 @@ public class CacheEvictService {
 	public void clearClientInvitePoster(Long clientId) {
 	}
 
-	@Caching(evict = { @CacheEvict(cacheNames = "client_order_nums", key = "#clientId + '-UnPay'"),
-			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId + '-Paid'"),
-			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId + '-Shipped'") })
+	@Caching(evict = { @CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-UnPay'"),
+			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-Paid'"),
+			@CacheEvict(cacheNames = "client_order_nums", key = "#clientId.toString() + '-Shipped'") })
 	public void clearClientOrders(Long clientId) {
 	}
 
