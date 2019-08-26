@@ -35,6 +35,15 @@ public class OrderDTO extends SimpleQueryDTO {
 	private BigDecimal realPrice;
 	private BigDecimal couponAmount;
 	private List<OrderCouponDTO> coupons;
+	private boolean comment;
+
+	public boolean isComment() {
+		return comment;
+	}
+
+	public void setComment(boolean comment) {
+		this.comment = comment;
+	}
 
 	public List<OrderCouponDTO> getCoupons() {
 		return coupons;
