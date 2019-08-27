@@ -164,10 +164,10 @@ public class Client extends BaseUser implements UserDetails {
 		return Arrays.asList(new SimpleGrantedAuthority(auth));
 	}
 
-	public ClientDTO asDTO() {
+	public ClientDTO asDTO(boolean withParent) {
 		ClientDTO dto = new ClientDTO();
 		BeanUtils.copyProperties(this, dto);
-		if (parent != null) {
+		if (withParent && parent != null) {
 			dto.setInvitor(parent.getUsername());
 		}
 		return dto;
