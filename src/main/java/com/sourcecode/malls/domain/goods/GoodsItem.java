@@ -83,6 +83,17 @@ public class GoodsItem extends LongKeyEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
 	private List<GoodsItemProperty> properties;
 
+	@Size(max = 255, message = "视频地址长度不能大于255")
+	private String vedioPath;
+	
+	public String getVedioPath() {
+		return vedioPath;
+	}
+
+	public void setVedioPath(String vedioPath) {
+		this.vedioPath = vedioPath;
+	}
+
 	public String getNumber() {
 		return number;
 	}

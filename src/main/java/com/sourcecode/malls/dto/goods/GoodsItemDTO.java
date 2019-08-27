@@ -9,6 +9,7 @@ public class GoodsItemDTO {
 	private String number;
 	private String code;
 	private String thumbnail;
+	private String vedioPath;
 	private BigDecimal marketPrice;
 	private BigDecimal minPrice;
 	private BigDecimal maxPrice;
@@ -27,6 +28,14 @@ public class GoodsItemDTO {
 	private long orderNums;
 	private long totalEvaluations;
 	private GoodsItemEvaluationDTO topEvaluation;
+
+	public String getVedioPath() {
+		return vedioPath;
+	}
+
+	public void setVedioPath(String vedioPath) {
+		this.vedioPath = vedioPath;
+	}
 
 	public String getNumber() {
 		return number;
