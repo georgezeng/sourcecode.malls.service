@@ -167,6 +167,9 @@ public class Client extends BaseUser implements UserDetails {
 	public ClientDTO asDTO() {
 		ClientDTO dto = new ClientDTO();
 		BeanUtils.copyProperties(this, dto);
+		if (parent != null) {
+			dto.setInvitor(parent.getUsername());
+		}
 		return dto;
 	}
 

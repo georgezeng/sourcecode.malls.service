@@ -17,8 +17,17 @@ public class ClientDTO extends SimpleQueryDTO {
 	private String avatar;
 	private Long merchantId;
 	private boolean enabled;
+	private String invitor;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date createTime;
+
+	public String getInvitor() {
+		return invitor;
+	}
+
+	public void setInvitor(String invitor) {
+		this.invitor = invitor;
+	}
 
 	public String getShopName() {
 		return shopName;
