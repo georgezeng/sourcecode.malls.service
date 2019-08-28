@@ -14,7 +14,6 @@ import org.springframework.security.authentication.RememberMeAuthenticationToken
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.sourcecode.malls.context.UserContext;
@@ -23,11 +22,9 @@ import com.sourcecode.malls.exception.BusinessException;
 import com.sourcecode.malls.properties.SessionAttributesProperties;
 import com.sourcecode.malls.service.impl.UserService;
 
-@Component
+
 public class UserSessionFilter extends OncePerRequestFilter {
 	
-	public static ThreadLocal<Long> V = new ThreadLocal<>();
-
 	@Autowired
 	private UserService userService;
 

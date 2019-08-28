@@ -3,10 +3,27 @@ package com.sourcecode.malls.dto.client;
 import java.math.BigDecimal;
 
 public class ClientPointsDTO {
+	private Long id;
+	private String clientName;
 	private BigDecimal currentAmount;
-	private BigDecimal accumulatedAmount;
 	private BigDecimal accOutAmount = BigDecimal.ZERO;
 	private BigDecimal accInAmount = BigDecimal.ZERO;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getClientName() {
+		return clientName;
+	}
+
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
 
 	public BigDecimal getAccOutAmount() {
 		return accOutAmount;
@@ -32,11 +49,4 @@ public class ClientPointsDTO {
 		this.currentAmount = currentAmount;
 	}
 
-	public BigDecimal getAccumulatedAmount() {
-		return accumulatedAmount;
-	}
-
-	public void setAccumulatedAmount(BigDecimal accumulatedAmount) {
-		this.accumulatedAmount = accumulatedAmount;
-	}
 }

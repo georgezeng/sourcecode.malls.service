@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -44,11 +43,9 @@ public class ClientPointsJournal extends LongKeyEntity {
 	@NotNull(message = "收支类型不能为空")
 	private BalanceType balanceType;
 
-	@NotBlank(message = "订单编号不能为空")
 	@Size(max = 255, message = "订单编号长度不能超过255")
 	private String orderId;
 
-	@NotNull(message = "消费金额不能为空")
 	private BigDecimal amount;
 
 	@Size(max = 255, message = "备注长度不能超过255")

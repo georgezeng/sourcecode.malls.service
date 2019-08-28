@@ -27,10 +27,8 @@ public class ClientPoints extends LongKeyEntity {
 	@NotNull(message = "用户不能为空")
 	private Client client;
 
-	private BigDecimal accumulatedAmount = BigDecimal.ZERO;
-	
 	private BigDecimal accOutAmount = BigDecimal.ZERO;
-	
+
 	private BigDecimal accInAmount = BigDecimal.ZERO;
 
 	private BigDecimal currentAmount = BigDecimal.ZERO;
@@ -59,14 +57,6 @@ public class ClientPoints extends LongKeyEntity {
 		this.client = client;
 	}
 
-	public BigDecimal getAccumulatedAmount() {
-		return accumulatedAmount;
-	}
-
-	public void setAccumulatedAmount(BigDecimal accumulatedAmount) {
-		this.accumulatedAmount = accumulatedAmount;
-	}
-
 	public BigDecimal getCurrentAmount() {
 		return currentAmount;
 	}
@@ -78,6 +68,10 @@ public class ClientPoints extends LongKeyEntity {
 	public ClientPointsDTO asDTO() {
 		ClientPointsDTO dto = new ClientPointsDTO();
 		BeanUtils.copyProperties(this, dto);
+		if (client != null) {
+			dto.setId(client.getId());
+			dto.setClientName(client.getUsername());
+		}
 		return dto;
 	}
 

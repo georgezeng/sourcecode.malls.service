@@ -22,7 +22,6 @@ import com.sourcecode.malls.properties.SuperAdminProperties;
 import com.sourcecode.malls.web.security.entrypoint.AppEntryPoint;
 import com.sourcecode.malls.web.security.filter.ErrorHandlerFilter;
 import com.sourcecode.malls.web.security.filter.LoggingFilter;
-import com.sourcecode.malls.web.security.filter.UserSessionFilter;
 import com.sourcecode.malls.web.security.handler.AppAuthenticationFailureHandler;
 import com.sourcecode.malls.web.security.handler.AppAuthenticationSuccessHandler;
 import com.sourcecode.malls.web.security.source.metadata.AuthorityFilterSecurityMetadataSource;
@@ -34,8 +33,6 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected SuperAdminProperties adminProperties;
 	@Autowired
 	private UserDetailsService userService;
-	@Autowired
-	private UserSessionFilter userSessionFilter;
 	@Autowired
 	private ErrorHandlerFilter errorHandlerFilter;
 	@Autowired
@@ -126,7 +123,6 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	protected void after(HttpSecurity http) throws Exception {
-		http.addFilterBefore(userSessionFilter, FilterSecurityInterceptor.class);
 	}
 
 }

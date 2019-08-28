@@ -8,6 +8,7 @@ import com.sourcecode.malls.enums.BalanceType;
 import com.sourcecode.malls.enums.ClientPointsType;
 
 public class ClientPointsJournalDTO {
+	private Long clientId;
 	private BigDecimal amount;
 	private BalanceType balanceType;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -15,6 +16,23 @@ public class ClientPointsJournalDTO {
 	private BigDecimal bonusAmount;
 	private String orderId;
 	private ClientPointsType type;
+	private String remark;
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Long getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Long clientId) {
+		this.clientId = clientId;
+	}
 
 	public ClientPointsType getType() {
 		return type;

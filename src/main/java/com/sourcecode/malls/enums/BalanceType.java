@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @JsonFormat(shape = Shape.OBJECT)
 public enum BalanceType {
-	In("获得"), Out("支出");
+	In("收入"), Out("支出");
 
 	private String text;
 

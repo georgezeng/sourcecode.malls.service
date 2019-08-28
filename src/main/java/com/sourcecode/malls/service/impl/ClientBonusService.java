@@ -119,7 +119,6 @@ public class ClientBonusService implements BaseService {
 		BigDecimal pointsAmount = order.getRealPrice().multiply(new BigDecimal(pointsRatio));
 		ClientPoints points = order.getClient().getPoints();
 		em.lock(points, LockModeType.PESSIMISTIC_WRITE);
-		points.setAccumulatedAmount(points.getAccumulatedAmount().add(pointsAmount));
 		points.setCurrentAmount(points.getCurrentAmount().add(pointsAmount));
 		points.setAccInAmount(points.getAccInAmount().add(pointsAmount));
 		pointsRepository.save(points);

@@ -3,6 +3,8 @@ package com.sourcecode.malls.dto.base;
 import java.util.Date;
 
 public class SimpleQueryDTO {
+	private Long id;
+
 	private Date startTime;
 
 	private Date endTime;
@@ -10,6 +12,14 @@ public class SimpleQueryDTO {
 	private String searchText;
 
 	private String statusText;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Date getStartTime() {
 		return startTime;
