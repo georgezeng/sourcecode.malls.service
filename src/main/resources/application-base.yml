@@ -47,4 +47,8 @@ aliyun:
 alipay:
   api:
     url:
-      gateway: 'https://openapi.alipay.com/gateway.do'  
+      gateway: 'https://openapi.alipay.com/gateway.do'
+      
+client:
+  points:
+    ratio: 10

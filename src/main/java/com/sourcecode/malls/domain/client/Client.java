@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
@@ -58,8 +59,19 @@ public class Client extends BaseUser implements UserDetails {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
 	private List<Client> subList;
+	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "client")
+	private ClientPoints points;
 
 	private boolean loggedIn;
+
+	public ClientPoints getPoints() {
+		return points;
+	}
+
+	public void setPoints(ClientPoints points) {
+		this.points = points;
+	}
 
 	public boolean isLoggedIn() {
 		return loggedIn;

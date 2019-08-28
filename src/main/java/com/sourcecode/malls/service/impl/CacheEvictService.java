@@ -36,6 +36,10 @@ public class CacheEvictService {
 	@CacheEvict(cacheNames = "client_uncomment_nums", key = "#clientId")
 	public void clearClientUnCommentNums(Long clientId) {
 	}
+	
+	@CacheEvict(cacheNames = "client_current_points", key = "#clientId")
+	public void clearClientCurrentPoints(Long clientId) {
+	}
 
 	@CacheEvict(cacheNames = "client_aftersale_unfinished_nums", key = "#clientId")
 	public void clearClientAfterSaleUnFinishedtNums(Long clientId) {
