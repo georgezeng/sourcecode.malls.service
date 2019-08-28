@@ -5,14 +5,32 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.enums.BalanceType;
+import com.sourcecode.malls.enums.ClientPointsType;
 
 public class ClientPointsJournalDTO {
 	private BigDecimal amount;
-	private BalanceType type;
+	private BalanceType balanceType;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date createTime;
 	private BigDecimal bonusAmount;
 	private String orderId;
+	private ClientPointsType type;
+
+	public ClientPointsType getType() {
+		return type;
+	}
+
+	public BalanceType getBalanceType() {
+		return balanceType;
+	}
+
+	public void setBalanceType(BalanceType balanceType) {
+		this.balanceType = balanceType;
+	}
+
+	public void setType(ClientPointsType type) {
+		this.type = type;
+	}
 
 	public BigDecimal getBonusAmount() {
 		return bonusAmount;
@@ -44,14 +62,6 @@ public class ClientPointsJournalDTO {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
-	}
-
-	public BalanceType getType() {
-		return type;
-	}
-
-	public void setType(BalanceType type) {
-		this.type = type;
 	}
 
 }

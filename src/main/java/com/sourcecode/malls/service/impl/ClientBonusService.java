@@ -27,6 +27,7 @@ import com.sourcecode.malls.domain.order.Order;
 import com.sourcecode.malls.domain.order.SubOrder;
 import com.sourcecode.malls.enums.BalanceType;
 import com.sourcecode.malls.enums.ClientCouponStatus;
+import com.sourcecode.malls.enums.ClientPointsType;
 import com.sourcecode.malls.enums.CouponEventType;
 import com.sourcecode.malls.enums.CouponSettingStatus;
 import com.sourcecode.malls.repository.jpa.impl.client.ClientRepository;
@@ -120,13 +121,15 @@ public class ClientBonusService implements BaseService {
 		em.lock(points, LockModeType.PESSIMISTIC_WRITE);
 		points.setAccumulatedAmount(points.getAccumulatedAmount().add(pointsAmount));
 		points.setCurrentAmount(points.getCurrentAmount().add(pointsAmount));
+		points.setAccInAmount(points.getAccInAmount().add(pointsAmount));
 		pointsRepository.save(points);
 		ClientPointsJournal journal = new ClientPointsJournal();
 		journal.setClient(order.getClient());
 		journal.setAmount(order.getRealPrice());
 		journal.setBonusAmount(pointsAmount);
 		journal.setOrderId(order.getOrderId());
-		journal.setType(BalanceType.In);
+		journal.setBalanceType(BalanceType.In);
+		journal.setType(ClientPointsType.ConsumeAdded);
 		pointsJournalRepository.save(journal);
 		cacheEvictService.clearClientCurrentPoints(order.getClient().getId());
 	}
@@ -203,13 +206,15 @@ public class ClientBonusService implements BaseService {
 		em.lock(points, LockModeType.PESSIMISTIC_WRITE);
 		BigDecimal pointsAmount = order.getRealPrice().multiply(new BigDecimal(pointsRatio));
 		points.setCurrentAmount(points.getCurrentAmount().subtract(pointsAmount));
+		points.setAccOutAmount(points.getAccOutAmount().add(pointsAmount));
 		pointsRepository.save(points);
 		ClientPointsJournal journal = new ClientPointsJournal();
 		journal.setClient(order.getClient());
 		journal.setBonusAmount(pointsAmount);
 		journal.setAmount(order.getRealPrice());
 		journal.setOrderId(order.getOrderId());
-		journal.setType(BalanceType.Out);
+		journal.setBalanceType(BalanceType.Out);
+		journal.setType(ClientPointsType.RefundDeduction);
 		pointsJournalRepository.save(journal);
 		cacheEvictService.clearClientCurrentPoints(order.getClient().getId());
 	}

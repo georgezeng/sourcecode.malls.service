@@ -28,8 +28,28 @@ public class ClientPoints extends LongKeyEntity {
 	private Client client;
 
 	private BigDecimal accumulatedAmount = BigDecimal.ZERO;
+	
+	private BigDecimal accOutAmount = BigDecimal.ZERO;
+	
+	private BigDecimal accInAmount = BigDecimal.ZERO;
 
 	private BigDecimal currentAmount = BigDecimal.ZERO;
+
+	public BigDecimal getAccOutAmount() {
+		return accOutAmount;
+	}
+
+	public void setAccOutAmount(BigDecimal accOutAmount) {
+		this.accOutAmount = accOutAmount;
+	}
+
+	public BigDecimal getAccInAmount() {
+		return accInAmount;
+	}
+
+	public void setAccInAmount(BigDecimal accInAmount) {
+		this.accInAmount = accInAmount;
+	}
 
 	public Client getClient() {
 		return client;
