@@ -27,7 +27,7 @@ public class BaseGoodsItemService {
 	protected GoodsItemValueRepository valueRepository;
 
 	@Transactional(readOnly = true)
-	@Cacheable(value = "goods_item_load_one", key = "#merchantId.toString() '-' + #id.toString()")
+	@Cacheable(value = "goods_item_load_one", key = "#id")
 	public GoodsItemDTO load(Long merchantId, @PathVariable Long id) {
 		Optional<GoodsItem> dataOp = itemRepository.findById(id);
 		AssertUtil.assertTrue(dataOp.isPresent() && dataOp.get().isEnabled(), ExceptionMessageConstant.NO_SUCH_RECORD);
