@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ public class BaseGoodsItemService {
 	protected GoodsItemValueRepository valueRepository;
 
 	@Transactional(readOnly = true)
+	@Cacheable(value = "goods_item_load_one", key = "#merchantId.toString() '-' + #id.toString()")
 	public GoodsItemDTO load(Long merchantId, @PathVariable Long id) {
 		Optional<GoodsItem> dataOp = itemRepository.findById(id);
 		AssertUtil.assertTrue(dataOp.isPresent() && dataOp.get().isEnabled(), ExceptionMessageConstant.NO_SUCH_RECORD);
