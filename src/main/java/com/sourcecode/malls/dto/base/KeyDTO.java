@@ -13,4 +13,5 @@ public class KeyDTO<K extends Serializable> {
 	public void setIds(List<K> ids) {
 		this.ids = ids;
 	}
+	
 }

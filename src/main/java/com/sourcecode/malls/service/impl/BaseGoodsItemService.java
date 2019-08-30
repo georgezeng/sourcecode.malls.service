@@ -28,7 +28,7 @@ public class BaseGoodsItemService {
 	@Transactional(readOnly = true)
 	public GoodsItemDTO load(Long merchantId, @PathVariable Long id) {
 		Optional<GoodsItem> dataOp = itemRepository.findById(id);
-		AssertUtil.assertTrue(dataOp.isPresent(), ExceptionMessageConstant.NO_SUCH_RECORD);
+		AssertUtil.assertTrue(dataOp.isPresent() && dataOp.get().isEnabled(), ExceptionMessageConstant.NO_SUCH_RECORD);
 		AssertUtil.assertTrue(dataOp.get().getMerchant().getId().equals(merchantId),
 				ExceptionMessageConstant.NO_SUCH_RECORD);
 		GoodsItemDTO dto = dataOp.get().asDTO(true, true, true);
@@ -40,5 +40,5 @@ public class BaseGoodsItemService {
 		}
 		return dto;
 	}
-	
+
 }

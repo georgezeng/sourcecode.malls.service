@@ -44,4 +44,12 @@ public class CacheEvictService {
 	@CacheEvict(cacheNames = "client_aftersale_unfinished_nums", key = "#clientId")
 	public void clearClientAfterSaleUnFinishedtNums(Long clientId) {
 	}
+	
+	@CacheEvict(cacheNames = "goods_item_load_one", key = "#itemId")
+	public void clearGoodsItemLoadOne(Long itemId) {
+	}
+	
+	@CacheEvict(cacheNames = "goods_item_load_definitions", key = "#itemId")
+	public void clearGoodsItemLoadDefinitions(Long itemId) {
+	}
 }
