@@ -1,5 +1,6 @@
 package com.sourcecode.malls.dto.goods;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -8,7 +9,11 @@ import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.domain.goods.GoodsItemProperty;
 
-public class GoodsItemPropertyDTO {
+public class GoodsItemPropertyDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private List<GoodsAttributeDTO> values;
 	private String uid;

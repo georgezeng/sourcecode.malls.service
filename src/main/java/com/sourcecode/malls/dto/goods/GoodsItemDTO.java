@@ -1,9 +1,14 @@
 package com.sourcecode.malls.dto.goods;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class GoodsItemDTO {
+public class GoodsItemDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
 	private String number;

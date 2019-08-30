@@ -11,6 +11,10 @@ import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.enums.GoodsItemEvaluationValue;
 
 public class GoodsItemEvaluationDTO extends SimpleQueryDTO {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long itemId;
 	private String itemThumbnail;

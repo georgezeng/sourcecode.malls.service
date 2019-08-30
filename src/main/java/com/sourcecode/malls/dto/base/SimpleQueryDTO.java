@@ -1,8 +1,14 @@
 package com.sourcecode.malls.dto.base;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SimpleQueryDTO {
+public class SimpleQueryDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
 
 	private Date startTime;
