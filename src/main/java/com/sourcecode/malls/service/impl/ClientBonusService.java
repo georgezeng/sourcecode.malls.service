@@ -223,11 +223,11 @@ public class ClientBonusService implements BaseService {
 			em.lock(points, LockModeType.PESSIMISTIC_WRITE);
 		}
 		BigDecimal pointsAmount = order.getRealPrice().multiply(new BigDecimal(pointsRatio));
-		points.setCurrentAmount(points.getCurrentAmount()
-				.add(pointsAmount.multiply(new BigDecimal(BalanceType.In.equals(type.getType()) ? 1 : -1))));
 		if (BalanceType.In.equals(type.getType())) {
+			points.setCurrentAmount(points.getCurrentAmount().add(pointsAmount));
 			points.setAccInAmount(points.getAccInAmount().add(pointsAmount));
 		} else {
+			points.setCurrentAmount(points.getCurrentAmount().subtract(pointsAmount));
 			points.setAccOutAmount(points.getAccOutAmount().add(pointsAmount));
 		}
 		pointsRepository.save(points);
