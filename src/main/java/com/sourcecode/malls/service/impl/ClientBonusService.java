@@ -225,7 +225,11 @@ public class ClientBonusService implements BaseService {
 		BigDecimal pointsAmount = order.getRealPrice().multiply(new BigDecimal(pointsRatio));
 		points.setCurrentAmount(points.getCurrentAmount()
 				.add(pointsAmount.multiply(new BigDecimal(BalanceType.In.equals(type.getType()) ? 1 : -1))));
-		points.setAccOutAmount(points.getAccOutAmount().add(pointsAmount));
+		if (BalanceType.In.equals(type.getType())) {
+			points.setAccInAmount(points.getAccInAmount().add(pointsAmount));
+		} else {
+			points.setAccOutAmount(points.getAccOutAmount().add(pointsAmount));
+		}
 		pointsRepository.save(points);
 		ClientPointsJournal journal = new ClientPointsJournal();
 		journal.setClient(order.getClient());
