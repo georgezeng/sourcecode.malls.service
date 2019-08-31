@@ -5,7 +5,6 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.sourcecode.malls.constants.CacheNameConstant;
-import com.sourcecode.malls.domain.goods.GoodsItem;
 
 @Service
 public class CacheEvictService {
@@ -53,25 +52,13 @@ public class CacheEvictService {
 	public void clearClientActivityEventTime(Long merchantId) {
 	}
 
-	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_LOAD_ONE, key = "#item.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_LOAD_DEFINITIONS, key = "#item.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 0 + '-' + #item.client.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 1 + '-' + #item.client.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 2 + '-' + #item.client.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 3 + '-' + #item.client.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 4 + '-' + #item.client.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 5 + '-' + #item.client.id"), })
-	public void clearGoodsItemLoadOne(GoodsItem item) {
+	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_LOAD_ONE, key = "#itemId"),
+			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_LOAD_DEFINITIONS, key = "#itemId") })
+	public void clearGoodsItemLoadOne(Long itemId) {
 	}
 
-	@Caching(evict = {
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 0 + '-' + #item.client.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 1 + '-' + #item.client.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 2 + '-' + #item.client.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 3 + '-' + #item.client.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 4 + '-' + #item.client.id"),
-			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 5 + '-' + #item.client.id"), })
-	public void clearGoodsItemSharePosters(GoodsItem item) {
+	@CacheEvict(allEntries = true, cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER)
+	public void clearGoodsItemSharePosters() {
 	}
 
 }
