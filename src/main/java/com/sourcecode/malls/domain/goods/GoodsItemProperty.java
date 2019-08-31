@@ -1,18 +1,23 @@
 package com.sourcecode.malls.domain.goods;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.domain.base.LongKeyEntity;
+import com.sourcecode.malls.dto.goods.GoodsAttributeDTO;
 import com.sourcecode.malls.dto.goods.GoodsItemPropertyDTO;
 
 @Entity
@@ -24,8 +29,6 @@ public class GoodsItemProperty extends LongKeyEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@NotBlank(message = "uid不能为空")
-	private String uid;
 	@NotNull(message = "价格不能为空")
 	private BigDecimal price;
 	private int inventory;
@@ -35,12 +38,17 @@ public class GoodsItemProperty extends LongKeyEntity {
 	@NotNull(message = "商品不能为空")
 	private GoodsItem item;
 
-	public String getUid() {
-		return uid;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE })
+	@JoinTable(name = "goods_item_property_value", joinColumns = {
+			@JoinColumn(name = "property_id") }, inverseJoinColumns = { @JoinColumn(name = "value_id") })
+	private List<GoodsSpecificationValue> values;
+
+	public List<GoodsSpecificationValue> getValues() {
+		return values;
 	}
 
-	public void setUid(String uid) {
-		this.uid = uid;
+	public void setValues(List<GoodsSpecificationValue> values) {
+		this.values = values;
 	}
 
 	public BigDecimal getPrice() {
@@ -69,7 +77,14 @@ public class GoodsItemProperty extends LongKeyEntity {
 
 	public GoodsItemPropertyDTO asDTO() {
 		GoodsItemPropertyDTO dto = new GoodsItemPropertyDTO();
-		BeanUtils.copyProperties(this, dto, "item");
+		BeanUtils.copyProperties(this, dto, "item", "values");
+		if (values != null) {
+			List<GoodsAttributeDTO> list = new ArrayList<>();
+			for (GoodsSpecificationValue value : values) {
+				list.add(value.asDTO());
+			}
+			dto.setValues(list);
+		}
 		return dto;
 	}
 

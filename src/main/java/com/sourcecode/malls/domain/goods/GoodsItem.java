@@ -80,7 +80,7 @@ public class GoodsItem extends LongKeyEntity {
 	@OrderBy("order ASC")
 	private List<GoodsItemPhoto> photos;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = { CascadeType.REMOVE })
 	private List<GoodsItemProperty> properties;
 
 	@Size(max = 255, message = "视频地址长度不能大于255")

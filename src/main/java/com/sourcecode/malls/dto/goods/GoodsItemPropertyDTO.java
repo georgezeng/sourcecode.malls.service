@@ -3,7 +3,6 @@ package com.sourcecode.malls.dto.goods;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 
@@ -63,7 +62,6 @@ public class GoodsItemPropertyDTO implements Serializable {
 	public GoodsItemProperty asEntity() {
 		GoodsItemProperty entity = new GoodsItemProperty();
 		BeanUtils.copyProperties(this, entity, "values");
-		entity.setUid(UUID.randomUUID().toString());
 		return entity;
 	}
 }
