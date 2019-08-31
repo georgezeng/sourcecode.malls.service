@@ -70,7 +70,7 @@ public class Client extends BaseUser implements UserDetails {
 	@NotNull(message = "累积消费不能为空")
 	private BigDecimal consumeTotalAmount = BigDecimal.ZERO;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="level_id")
 	@NotNull(message="会员等级不能为空")
 	private ClientLevelSetting level;
