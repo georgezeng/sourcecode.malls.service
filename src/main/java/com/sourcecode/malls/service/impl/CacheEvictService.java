@@ -48,12 +48,13 @@ public class CacheEvictService {
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_AFTERSALE_UNFINISHED_NUMS, key = "#clientId")
 	public void clearClientAfterSaleUnFinishedtNums(Long clientId) {
 	}
-	
+
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ACTIVITY_EVENT_TIME, key = "#merchantId")
 	public void clearClientActivityEventTime(Long merchantId) {
 	}
 
 	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_LOAD_ONE, key = "#item.id"),
+			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_LOAD_DEFINITIONS, key = "#item.id"),
 			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 0 + '-' + #item.client.id"),
 			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 1 + '-' + #item.client.id"),
 			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 2 + '-' + #item.client.id"),
@@ -63,8 +64,14 @@ public class CacheEvictService {
 	public void clearGoodsItemLoadOne(GoodsItem item) {
 	}
 
-	@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_LOAD_DEFINITIONS, key = "#itemId")
-	public void clearGoodsItemLoadDefinitions(Long itemId) {
+	@Caching(evict = {
+			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 0 + '-' + #item.client.id"),
+			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 1 + '-' + #item.client.id"),
+			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 2 + '-' + #item.client.id"),
+			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 3 + '-' + #item.client.id"),
+			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 4 + '-' + #item.client.id"),
+			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#item.id + '-' + 5 + '-' + #item.client.id"), })
+	public void clearGoodsItemSharePosters(GoodsItem item) {
 	}
 
 }

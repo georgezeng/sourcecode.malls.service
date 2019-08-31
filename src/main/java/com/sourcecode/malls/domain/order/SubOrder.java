@@ -237,7 +237,11 @@ public class SubOrder extends LongKeyEntity {
 	public SubOrderDTO asDTO() {
 		SubOrderDTO dto = new SubOrderDTO();
 		BeanUtils.copyProperties(this, dto);
-		dto.setInventory(property.getInventory());
+		try {
+			dto.setInventory(property.getInventory());
+		} catch (Exception e) {
+			
+		}
 		if (item != null) {
 			dto.setItemId(item.getId());
 		}

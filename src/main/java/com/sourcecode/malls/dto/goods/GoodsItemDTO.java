@@ -2,7 +2,10 @@ package com.sourcecode.malls.dto.goods;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class GoodsItemDTO implements Serializable {
 	/**
@@ -33,6 +36,16 @@ public class GoodsItemDTO implements Serializable {
 	private long orderNums;
 	private long totalEvaluations;
 	private GoodsItemEvaluationDTO topEvaluation;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Date putTime;
+
+	public Date getPutTime() {
+		return putTime;
+	}
+
+	public void setPutTime(Date putTime) {
+		this.putTime = putTime;
+	}
 
 	public String getVedioPath() {
 		return vedioPath;
