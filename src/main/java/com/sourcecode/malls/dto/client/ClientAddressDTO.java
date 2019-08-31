@@ -8,6 +8,10 @@ import com.sourcecode.malls.domain.order.OrderAddress;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 
 public class ClientAddressDTO extends SimpleQueryDTO {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
 	private String phone;

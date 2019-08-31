@@ -1,5 +1,6 @@
 package com.sourcecode.malls.domain.client;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.BeanUtils;
@@ -59,11 +61,35 @@ public class Client extends BaseUser implements UserDetails {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
 	private List<Client> subList;
-	
+
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "client")
 	private ClientPoints points;
 
 	private boolean loggedIn;
+
+	@NotNull(message = "累积消费不能为空")
+	private BigDecimal consumeTotalAmount = BigDecimal.ZERO;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="level_id")
+	@NotNull(message="会员等级不能为空")
+	private ClientLevelSetting level;
+
+	public ClientLevelSetting getLevel() {
+		return level;
+	}
+
+	public void setLevel(ClientLevelSetting level) {
+		this.level = level;
+	}
+
+	public BigDecimal getConsumeTotalAmount() {
+		return consumeTotalAmount;
+	}
+
+	public void setConsumeTotalAmount(BigDecimal consumeTotalAmount) {
+		this.consumeTotalAmount = consumeTotalAmount;
+	}
 
 	public ClientPoints getPoints() {
 		return points;

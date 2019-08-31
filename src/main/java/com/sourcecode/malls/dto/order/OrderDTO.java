@@ -12,6 +12,11 @@ import com.sourcecode.malls.enums.OrderStatus;
 import com.sourcecode.malls.enums.Payment;
 
 public class OrderDTO extends SimpleQueryDTO {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Long merchantId;
 
 	private String buyer;

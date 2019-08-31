@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.sourcecode.malls.constants.CacheNameConstant;
 import com.sourcecode.malls.constants.ExceptionMessageConstant;
 import com.sourcecode.malls.domain.goods.GoodsItem;
 import com.sourcecode.malls.domain.goods.GoodsItemValue;
@@ -27,7 +28,7 @@ public class BaseGoodsItemService {
 	protected GoodsItemValueRepository valueRepository;
 
 	@Transactional(readOnly = true)
-	@Cacheable(value = "goods_item_load_one", key = "#id")
+	@Cacheable(value = CacheNameConstant.GOODS_ITEM_LOAD_ONE, key = "#id")
 	public GoodsItemDTO load(Long merchantId, @PathVariable Long id) {
 		Optional<GoodsItem> dataOp = itemRepository.findById(id);
 		AssertUtil.assertTrue(dataOp.isPresent() && dataOp.get().isEnabled(), ExceptionMessageConstant.NO_SUCH_RECORD);

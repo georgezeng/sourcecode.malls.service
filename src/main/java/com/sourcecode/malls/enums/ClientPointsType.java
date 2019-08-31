@@ -5,12 +5,20 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @JsonFormat(shape = Shape.OBJECT)
 public enum ClientPointsType {
-	ConsumeAdded("购物赠送"), RefundDeduction("退款扣除"), ManuallyAdded("手动增加"), ManuallyReduce("手动减少");
+	ConsumeAdded("购物赠送", BalanceType.In), RefundDeduction("退款扣除", BalanceType.Out),
+	ManuallyAdded("手动增加", BalanceType.In), ManuallyReduce("手动减少", BalanceType.Out);
 
 	private String text;
 
-	private ClientPointsType(String text) {
+	private BalanceType type;
+
+	private ClientPointsType(String text, BalanceType type) {
 		this.text = text;
+		this.type = type;
+	}
+
+	public BalanceType getType() {
+		return type;
 	}
 
 	public String getText() {

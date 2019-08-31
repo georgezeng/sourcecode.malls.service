@@ -14,6 +14,11 @@ import com.sourcecode.malls.enums.AfterSaleStatus;
 import com.sourcecode.malls.enums.AfterSaleType;
 
 public class AfterSaleApplicationDTO extends SimpleQueryDTO {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
 
 	private int nums;

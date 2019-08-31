@@ -14,6 +14,10 @@ import com.sourcecode.malls.enums.CouponSettingStatus;
 import com.sourcecode.malls.enums.CouponType;
 
 public class CouponSettingDTO extends SimpleQueryDTO {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
 	private String title;

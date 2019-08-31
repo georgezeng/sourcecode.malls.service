@@ -12,17 +12,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
+import com.sourcecode.malls.constants.CacheNameConstant;
 import com.sourcecode.malls.domain.client.Client;
+import com.sourcecode.malls.domain.client.ClientLevelSetting;
 import com.sourcecode.malls.domain.client.ClientPoints;
 import com.sourcecode.malls.domain.client.ClientPointsJournal;
 import com.sourcecode.malls.domain.coupon.ClientCoupon;
 import com.sourcecode.malls.domain.coupon.CouponSetting;
 import com.sourcecode.malls.domain.goods.GoodsCategory;
 import com.sourcecode.malls.domain.goods.GoodsItem;
+import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.domain.order.Order;
 import com.sourcecode.malls.domain.order.SubOrder;
 import com.sourcecode.malls.enums.BalanceType;
@@ -30,6 +36,8 @@ import com.sourcecode.malls.enums.ClientCouponStatus;
 import com.sourcecode.malls.enums.ClientPointsType;
 import com.sourcecode.malls.enums.CouponEventType;
 import com.sourcecode.malls.enums.CouponSettingStatus;
+import com.sourcecode.malls.repository.jpa.impl.client.ClientActivityEventRepository;
+import com.sourcecode.malls.repository.jpa.impl.client.ClientLevelSettingRepository;
 import com.sourcecode.malls.repository.jpa.impl.client.ClientRepository;
 import com.sourcecode.malls.repository.jpa.impl.coupon.ClientCouponRepository;
 import com.sourcecode.malls.repository.jpa.impl.coupon.ClientPointsJournalRepository;
@@ -67,7 +75,38 @@ public class ClientBonusService implements BaseService {
 	@Autowired
 	private ClientPointsJournalRepository pointsJournalRepository;
 
+	@Autowired
+	private ClientLevelSettingRepository levelSettingRepository;
+
+	@Autowired
+	private ClientActivityEventRepository activityRepository;
+
+	private void resetLevel(Order order, int signum) {
+		em.lock(order.getClient(), LockModeType.PESSIMISTIC_WRITE);
+		order.getClient().setConsumeTotalAmount(
+				order.getClient().getConsumeTotalAmount().add(order.getRealPrice().multiply(new BigDecimal(signum))));
+		clientRepository.save(order.getClient());
+		setCurrentLevel(order.getClient());
+	}
+
+	public void setCurrentLevel(Client client) {
+		if (client.getLevel() == null || StringUtils.isEmpty(client.getLevel().getName())) {
+			List<ClientLevelSetting> levelSettings = levelSettingRepository
+					.findAllByMerchantAndNameNotNullOrderByLevelDesc(client.getMerchant());
+			AssertUtil.assertTrue(!CollectionUtils.isEmpty(levelSettings), "商家未配置会员等级");
+			for (ClientLevelSetting setting : levelSettings) {
+				if (client.getConsumeTotalAmount().compareTo(setting.getUpToAmount()) >= 0) {
+					client.setLevel(setting);
+					clientRepository.save(client);
+					return;
+				}
+			}
+		}
+	}
+
 	public void addConsumeBonus(Order order) {
+		resetLevel(order, 1);
+		setPoints(order, ClientPointsType.ConsumeAdded);
 		if (CollectionUtils.isEmpty(order.getSubList())) {
 			return;
 		}
@@ -116,21 +155,6 @@ public class ClientBonusService implements BaseService {
 				}
 			}
 		}
-		BigDecimal pointsAmount = order.getRealPrice().multiply(new BigDecimal(pointsRatio));
-		ClientPoints points = order.getClient().getPoints();
-		em.lock(points, LockModeType.PESSIMISTIC_WRITE);
-		points.setCurrentAmount(points.getCurrentAmount().add(pointsAmount));
-		points.setAccInAmount(points.getAccInAmount().add(pointsAmount));
-		pointsRepository.save(points);
-		ClientPointsJournal journal = new ClientPointsJournal();
-		journal.setClient(order.getClient());
-		journal.setAmount(order.getRealPrice());
-		journal.setBonusAmount(pointsAmount);
-		journal.setOrderId(order.getOrderId());
-		journal.setBalanceType(BalanceType.In);
-		journal.setType(ClientPointsType.ConsumeAdded);
-		pointsJournalRepository.save(journal);
-		cacheEvictService.clearClientCurrentPoints(order.getClient().getId());
 	}
 
 	private void createCoupon(Order order, Client invitee, Client client, CouponSetting setting, boolean require) {
@@ -190,7 +214,33 @@ public class ClientBonusService implements BaseService {
 		}
 	}
 
+	private void setPoints(Order order, ClientPointsType type) {
+		ClientPoints points = order.getClient().getPoints();
+		if (points == null) {
+			points = new ClientPoints();
+			points.setClient(order.getClient());
+		} else {
+			em.lock(points, LockModeType.PESSIMISTIC_WRITE);
+		}
+		BigDecimal pointsAmount = order.getRealPrice().multiply(new BigDecimal(pointsRatio));
+		points.setCurrentAmount(points.getCurrentAmount()
+				.add(pointsAmount.multiply(new BigDecimal(BalanceType.In.equals(type.getType()) ? 1 : -1))));
+		points.setAccOutAmount(points.getAccOutAmount().add(pointsAmount));
+		pointsRepository.save(points);
+		ClientPointsJournal journal = new ClientPointsJournal();
+		journal.setClient(order.getClient());
+		journal.setBonusAmount(pointsAmount);
+		journal.setAmount(order.getRealPrice());
+		journal.setOrderId(order.getOrderId());
+		journal.setBalanceType(type.getType());
+		journal.setType(type);
+		pointsJournalRepository.save(journal);
+		cacheEvictService.clearClientCurrentPoints(order.getClient().getId());
+	}
+
 	public void removeConsumeBonus(Order order) {
+		resetLevel(order, -1);
+		setPoints(order, ClientPointsType.RefundDeduction);
 		List<ClientCoupon> coupons = order.getGeneratedCoupons();
 		if (!CollectionUtils.isEmpty(coupons)) {
 			Date outTime = new Date();
@@ -201,21 +251,18 @@ public class ClientBonusService implements BaseService {
 			clientCouponRepository.saveAll(coupons);
 			cacheEvictService.clearClientCoupons(order.getClient().getId());
 		}
-		ClientPoints points = order.getClient().getPoints();
-		em.lock(points, LockModeType.PESSIMISTIC_WRITE);
-		BigDecimal pointsAmount = order.getRealPrice().multiply(new BigDecimal(pointsRatio));
-		points.setCurrentAmount(points.getCurrentAmount().subtract(pointsAmount));
-		points.setAccOutAmount(points.getAccOutAmount().add(pointsAmount));
-		pointsRepository.save(points);
-		ClientPointsJournal journal = new ClientPointsJournal();
-		journal.setClient(order.getClient());
-		journal.setBonusAmount(pointsAmount);
-		journal.setAmount(order.getRealPrice());
-		journal.setOrderId(order.getOrderId());
-		journal.setBalanceType(BalanceType.Out);
-		journal.setType(ClientPointsType.RefundDeduction);
-		pointsJournalRepository.save(journal);
-		cacheEvictService.clearClientCurrentPoints(order.getClient().getId());
+	}
+
+	@CachePut(value = CacheNameConstant.CLIENT_ACTIVITY_EVENT_TIME, key = "#merchant.id")
+	public boolean setIsActivityEventTime(Merchant merchant) {
+		Date now = new Date();
+		return activityRepository.countByMerchantAndPausedAndDeletedAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+				merchant, false, false, now, now) > 0;
+	}
+
+	@Cacheable(value = CacheNameConstant.CLIENT_ACTIVITY_EVENT_TIME, key = "#merchantId")
+	public boolean isActivityEventTime(Long merchantId) {
+		return false;
 	}
 
 }
