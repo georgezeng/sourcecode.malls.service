@@ -15,7 +15,7 @@ public class PageInfo {
 		if (StringUtils.isEmpty(property)) {
 			return PageRequest.of(num - 1, size);
 		}
-		if (!"normal".equals(order.toLowerCase())) {
+		if (order != null && !"normal".equals(order.toLowerCase())) {
 			return pageable(Direction.valueOf(order), property);
 		}
 		return PageRequest.of(num - 1, size);
