@@ -1,5 +1,6 @@
 package com.sourcecode.malls.dto.client;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,6 +25,24 @@ public class ClientDTO extends SimpleQueryDTO {
 	private String invitor;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date createTime;
+	private BigDecimal consumeTotalAmount;
+	private String levelName;
+
+	public BigDecimal getConsumeTotalAmount() {
+		return consumeTotalAmount;
+	}
+
+	public void setConsumeTotalAmount(BigDecimal consumeTotalAmount) {
+		this.consumeTotalAmount = consumeTotalAmount;
+	}
+
+	public String getLevelName() {
+		return levelName;
+	}
+
+	public void setLevelName(String levelName) {
+		this.levelName = levelName;
+	}
 
 	public String getInvitor() {
 		return invitor;

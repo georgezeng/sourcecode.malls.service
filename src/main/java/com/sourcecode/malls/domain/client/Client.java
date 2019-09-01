@@ -69,10 +69,10 @@ public class Client extends BaseUser implements UserDetails {
 
 	@NotNull(message = "累积消费不能为空")
 	private BigDecimal consumeTotalAmount = BigDecimal.ZERO;
-	
+
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="level_id")
-	@NotNull(message="会员等级不能为空")
+	@JoinColumn(name = "level_id")
+	@NotNull(message = "会员等级不能为空")
 	private ClientLevelSetting level;
 
 	public ClientLevelSetting getLevel() {
@@ -207,6 +207,9 @@ public class Client extends BaseUser implements UserDetails {
 		BeanUtils.copyProperties(this, dto);
 		if (withParent && parent != null) {
 			dto.setInvitor(parent.getUsername());
+		}
+		if (level != null) {
+			dto.setLevelName(level.getName());
 		}
 		return dto;
 	}
