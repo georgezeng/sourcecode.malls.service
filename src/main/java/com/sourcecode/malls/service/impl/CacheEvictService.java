@@ -67,6 +67,13 @@ public class CacheEvictService {
 	@CacheEvict(cacheNames = CacheNameConstant.MERCHANT_SHOP_NAME, key = "#merchantId")
 	public void clearMerchantShopName(Long merchantId) {
 	}
-
+	
+	@CacheEvict(cacheNames = CacheNameConstant.GOODS_CATEGORY_LIST_LEVEL1, key = "#merchantId")
+	public void clearGoodsCategoryLevel1(Long merchantId) {
+	}
+	
+	@CacheEvict(cacheNames = CacheNameConstant.GOODS_CATEGORY_LIST_LEVEL2, key = "#parentId")
+	public void clearGoodsCategoryLevel2(Long parentId) {
+	}
 
 }
