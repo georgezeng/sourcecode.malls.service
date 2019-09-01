@@ -209,7 +209,11 @@ public class Client extends BaseUser implements UserDetails {
 			dto.setInvitor(parent.getUsername());
 		}
 		if (level != null) {
-			dto.setLevelName(level.getName());
+			try {
+				dto.setLevelName(level.getName());
+			} catch (Exception e) {
+
+			}
 		}
 		return dto;
 	}

@@ -14,4 +14,5 @@ public interface CacheNameConstant {
 	String GOODS_ITEM_LOAD_ONE = "goods_item_load_one";
 	String CLIENT_ACTIVITY_EVENT_TIME = "client_activity_event_time";
 	String WEPAY_CONFIG = "wepay_config";
+	String GOODS_ITEM_LIST = "goods_item_list";
 }

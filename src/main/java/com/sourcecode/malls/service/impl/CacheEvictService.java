@@ -24,15 +24,15 @@ public class CacheEvictService {
 	}
 
 	@Caching(evict = {
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId.toString() + '-UnPay'"),
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId.toString() + '-Paid'"),
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId.toString() + '-Shipped'"),
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId.toString() + '-Canceled'"),
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId.toString() + '-CanceledForRefund'"),
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId.toString() + '-RefundApplied'"),
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId.toString() + '-Refunded'"),
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId.toString() + '-Closed'"),
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId.toString() + '-Finished'") })
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-UnPay'"),
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Paid'"),
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Shipped'"),
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Canceled'"),
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-CanceledForRefund'"),
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-RefundApplied'"),
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Refunded'"),
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Closed'"),
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Finished'") })
 	public void clearClientOrders(Long clientId) {
 	}
 
@@ -59,6 +59,10 @@ public class CacheEvictService {
 
 	@CacheEvict(allEntries = true, cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER)
 	public void clearGoodsItemSharePosters() {
+	}
+	
+	@CacheEvict(allEntries = true, cacheNames = CacheNameConstant.GOODS_ITEM_LIST)
+	public void clearAllGoodsItemList() {
 	}
 
 }
