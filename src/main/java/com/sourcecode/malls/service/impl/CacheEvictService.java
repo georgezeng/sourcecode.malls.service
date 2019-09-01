@@ -23,8 +23,7 @@ public class CacheEvictService {
 	public void clearClientInvitePoster(Long clientId) {
 	}
 
-	@Caching(evict = {
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-UnPay'"),
+	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-UnPay'"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Paid'"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Shipped'"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Canceled'"),
@@ -60,9 +59,14 @@ public class CacheEvictService {
 	@CacheEvict(allEntries = true, cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER)
 	public void clearGoodsItemSharePosters() {
 	}
-	
+
 	@CacheEvict(allEntries = true, cacheNames = CacheNameConstant.GOODS_ITEM_LIST)
 	public void clearAllGoodsItemList() {
 	}
+
+	@CacheEvict(cacheNames = CacheNameConstant.MERCHANT_SHOP_NAME, key = "#merchantId")
+	public void clearMerchantShopName(Long merchantId) {
+	}
+
 
 }
