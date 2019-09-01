@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -19,6 +21,7 @@ import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.client.Client;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.dto.order.ExpressDTO;
+import com.sourcecode.malls.enums.ExpressType;
 
 @Table(name = "express")
 @Entity
@@ -44,6 +47,10 @@ public class Express extends LongKeyEntity {
 	@NotNull(message = "商家不能为空")
 	private Merchant merchant;
 
+	@Enumerated(EnumType.STRING)
+	@NotNull(message = "取货方式不能为空")
+	private ExpressType type;
+
 	private String company;
 	private String number;
 	private Date expressTime;
@@ -52,6 +59,14 @@ public class Express extends LongKeyEntity {
 	@JoinTable(name = "express_sub_order", joinColumns = { @JoinColumn(name = "express_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "sub_order_id") })
 	private List<SubOrder> subList;
+
+	public ExpressType getType() {
+		return type;
+	}
+
+	public void setType(ExpressType type) {
+		this.type = type;
+	}
 
 	public Date getExpressTime() {
 		return expressTime;
