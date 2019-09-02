@@ -64,8 +64,8 @@ public class CacheEvictService {
 	public void clearAllGoodsItemList() {
 	}
 
-	@CacheEvict(cacheNames = CacheNameConstant.MERCHANT_SHOP_NAME, key = "#merchantId")
-	public void clearMerchantShopName(Long merchantId) {
+	@CacheEvict(cacheNames = CacheNameConstant.MERCHANT_SITE_INFO, key = "#merchantId")
+	public void clearMerchantSiteInfo(Long merchantId) {
 	}
 	
 	@CacheEvict(cacheNames = CacheNameConstant.GOODS_CATEGORY_LIST_LEVEL1, key = "#merchantId")

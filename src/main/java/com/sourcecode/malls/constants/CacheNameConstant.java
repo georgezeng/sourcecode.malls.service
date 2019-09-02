@@ -17,5 +17,5 @@ public interface CacheNameConstant {
 	String GOODS_ITEM_LIST = "goods_item_list";
 	String GOODS_CATEGORY_LIST_LEVEL1 = "goods_category_list_level1";
 	String GOODS_CATEGORY_LIST_LEVEL2 = "goods_category_list_level2";
-	String MERCHANT_SHOP_NAME = "merchant_shop_name";
+	String MERCHANT_SITE_INFO = "merchant_site_info";
 }

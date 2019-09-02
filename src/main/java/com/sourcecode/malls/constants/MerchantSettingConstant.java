@@ -9,4 +9,5 @@ public interface MerchantSettingConstant {
 	String ALIPAY_SECRET = "ALIPAY_SECRET";
 	String ALIPAY_PUBLIC_KEY = "ALIPAY_PUBLIC_KEY";
 	String COUPON_LIMITED_AMOUNT = "COUPON_LIMITED_AMOUNT";
+	String SITE_INFO = "SITE_INFO";
 }

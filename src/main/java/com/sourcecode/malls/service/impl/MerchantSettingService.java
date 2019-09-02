@@ -7,12 +7,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.druid.util.StringUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sourcecode.malls.constants.MerchantSettingConstant;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.domain.merchant.MerchantSetting;
+import com.sourcecode.malls.domain.merchant.MerchantShopApplication;
+import com.sourcecode.malls.dto.merchant.SiteInfo;
 import com.sourcecode.malls.dto.setting.DeveloperSettingDTO;
 import com.sourcecode.malls.repository.jpa.impl.merchant.MerchantRepository;
 import com.sourcecode.malls.repository.jpa.impl.merchant.MerchantSettingRepository;
+import com.sourcecode.malls.repository.jpa.impl.merchant.MerchantShopApplicationRepository;
 import com.sourcecode.malls.service.FileOnlineSystemService;
 import com.sourcecode.malls.util.AssertUtil;
 import com.sourcecode.malls.util.Base64Util;
@@ -28,6 +33,15 @@ public class MerchantSettingService {
 
 	@Autowired
 	private FileOnlineSystemService fileService;
+
+	@Autowired
+	private ObjectMapper mapper;
+
+	@Autowired
+	private CacheEvictService cacheEvictService;
+
+	@Autowired
+	private MerchantShopApplicationRepository applicationRepository;
 
 	private String certDir = "merchant/setting/wechat/pay/cert/%s/cert.p12";
 
@@ -136,5 +150,49 @@ public class MerchantSettingService {
 			setting.setMch(Base64Util.decode(mch.get().getValue()));
 		}
 		return Optional.of(setting);
+	}
+
+	public void saveSiteInfo(Long merchantId, SiteInfo info) throws Exception {
+		AssertUtil.assertNotEmpty(info.getTitle(), "页面标题不能为空");
+		AssertUtil.assertNotEmpty(info.getHeaderLogo(), "首页顶部logo不能为空");
+		AssertUtil.assertNotEmpty(info.getLoginLogo(), "登录页logo不能为空");
+		String value = mapper.writeValueAsString(info);
+		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
+		Optional<MerchantSetting> dataOp = settingRepository.findByMerchantAndCode(merchant.get(),
+				MerchantSettingConstant.SITE_INFO);
+		MerchantSetting data = null;
+		if (dataOp.isPresent()) {
+			data = dataOp.get();
+		} else {
+			data = new MerchantSetting();
+			data.setMerchant(merchant.get());
+			data.setCode(MerchantSettingConstant.SITE_INFO);
+		}
+		data.setValue(value);
+		settingRepository.save(data);
+		cacheEvictService.clearMerchantSiteInfo(merchantId);
+	}
+
+	public SiteInfo loadSiteInfo(Long merchantId) throws Exception {
+		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
+		Optional<MerchantSetting> dataOp = settingRepository.findByMerchantAndCode(merchant.get(),
+				MerchantSettingConstant.SITE_INFO);
+		SiteInfo info = null;
+		if (dataOp.isPresent()) {
+			info = mapper.readValue(dataOp.get().getValue(), SiteInfo.class);
+			if (StringUtils.isEmpty(info.getTitle())) {
+				Optional<MerchantShopApplication> shop = applicationRepository.findByMerchantId(merchantId);
+				AssertUtil.assertTrue(shop.isPresent(), "尚未创建商铺");
+				info.setTitle(shop.get().getName());
+				dataOp.get().setValue(mapper.writeValueAsString(info));
+				settingRepository.save(dataOp.get());
+			}
+		} else {
+			info = new SiteInfo();
+			Optional<MerchantShopApplication> shop = applicationRepository.findByMerchantId(merchantId);
+			AssertUtil.assertTrue(shop.isPresent(), "尚未创建商铺");
+			info.setTitle(shop.get().getName());
+		}
+		return info;
 	}
 }
