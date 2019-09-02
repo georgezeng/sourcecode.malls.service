@@ -170,7 +170,7 @@ public class MerchantSettingService {
 		}
 		data.setValue(value);
 		settingRepository.save(data);
-		cacheEvictService.clearMerchantSiteInfo(merchantId);
+		cacheEvictService.clearSiteInfo(merchantId);
 	}
 
 	public SiteInfo loadSiteInfo(Long merchantId) throws Exception {

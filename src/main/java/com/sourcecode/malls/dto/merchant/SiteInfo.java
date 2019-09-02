@@ -1,6 +1,12 @@
 package com.sourcecode.malls.dto.merchant;
 
-public class SiteInfo {
+import java.io.Serializable;
+
+public class SiteInfo implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String title;
 	private String wechatServiceAccount;
 	private String headerLogo;

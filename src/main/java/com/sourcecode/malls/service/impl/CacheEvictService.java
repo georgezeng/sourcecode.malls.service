@@ -65,13 +65,17 @@ public class CacheEvictService {
 	}
 
 	@CacheEvict(cacheNames = CacheNameConstant.MERCHANT_SITE_INFO, key = "#merchantId")
-	public void clearMerchantSiteInfo(Long merchantId) {
+	public void clearSiteInfo(Long merchantId) {
 	}
-	
+
+	@CacheEvict(cacheNames = CacheNameConstant.WEPAY_CONFIG, key = "#merchantId")
+	public void clearWePayConfig(Long merchantId) {
+	}
+
 	@CacheEvict(cacheNames = CacheNameConstant.GOODS_CATEGORY_LIST_LEVEL1, key = "#merchantId")
 	public void clearGoodsCategoryLevel1(Long merchantId) {
 	}
-	
+
 	@CacheEvict(cacheNames = CacheNameConstant.GOODS_CATEGORY_LIST_LEVEL2, key = "#parentId")
 	public void clearGoodsCategoryLevel2(Long parentId) {
 	}
