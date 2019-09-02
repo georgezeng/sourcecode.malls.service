@@ -18,4 +18,5 @@ public interface CacheNameConstant {
 	String GOODS_CATEGORY_LIST_LEVEL1 = "goods_category_list_level1";
 	String GOODS_CATEGORY_LIST_LEVEL2 = "goods_category_list_level2";
 	String MERCHANT_SITE_INFO = "merchant_site_info";
+	String ADVERTISEMENT_LIST = "advertisement_list";
 }

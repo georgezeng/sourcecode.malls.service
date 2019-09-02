@@ -80,4 +80,12 @@ public class CacheEvictService {
 	public void clearGoodsCategoryLevel2(Long parentId) {
 	}
 
+	@Caching(evict = {
+			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-HomeBanner'"),
+			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-HomeRecommend'"),
+			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-CategoryBanner'"),
+			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-CategoryBrand'") })
+	public void clearAdvertisementList(Long merchantId) {
+	}
+
 }
