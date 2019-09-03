@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import com.sourcecode.malls.properties.RedisSessionProperties;
 
 @Configuration
-//@EnableCaching
+@EnableCaching
 @EnableRedisHttpSession
 @EnableAsync
 @EnableAspectJAutoProxy
