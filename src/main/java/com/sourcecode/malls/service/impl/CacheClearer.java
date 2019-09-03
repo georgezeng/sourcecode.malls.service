@@ -21,6 +21,7 @@ import com.sourcecode.malls.repository.jpa.impl.coupon.ClientPointsJournalReposi
 import com.sourcecode.malls.repository.redis.impl.SearchCacheKeyStoreRepository;
 
 @Service
+@Transactional
 public class CacheClearer {
 
 	@Autowired
@@ -39,7 +40,7 @@ public class CacheClearer {
 	private ClientPointsJournalRepository clientPointsJournalRepository;
 
 	@Async
-	@Transactional(readOnly = true)
+	@Transactional
 	public void clearPosterRelated(GoodsItem item) {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setNum(1);
@@ -63,7 +64,7 @@ public class CacheClearer {
 	}
 
 	@Async
-	@Transactional(readOnly = true)
+	@Transactional
 	public void clearCouponRelated(GoodsItem item) {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setNum(1);
@@ -84,7 +85,7 @@ public class CacheClearer {
 	}
 
 	@Async
-	@Transactional(readOnly = true)
+	@Transactional
 	public void clearCategoryRelated(GoodsItem item) {
 		List<SearchCacheKeyStore> list = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(
 				SearchCacheKeyStore.SEARCH_GOODS_ITEM_BY_CATEGORY, "m_" + item.getMerchant().getId());
@@ -109,7 +110,7 @@ public class CacheClearer {
 	}
 
 	@Async
-	@Transactional(readOnly = true)
+	@Transactional
 	public void clearClientPoints(Client client) {
 		cacheEvictService.clearClientCurrentPoints(client.getId());
 		long total = clientPointsJournalRepository.countByClient(client) / 10 + 1;
@@ -119,7 +120,7 @@ public class CacheClearer {
 	}
 
 	@Async
-	@Transactional(readOnly = true)
+	@Transactional
 	public void clearClientCoupons(Client client) {
 		cacheEvictService.clearClientCouponNums(client.getId());
 		List<ClientCoupon> list = clientCouponRepository.findAllByClient(client);
@@ -134,7 +135,7 @@ public class CacheClearer {
 	}
 
 	@Async
-	@Transactional(readOnly = true)
+	@Transactional
 	public void clearClientOrders(Client client) {
 		cacheEvictService.clearClientOrderNums(client.getId());
 		List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository
