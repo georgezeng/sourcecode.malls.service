@@ -53,8 +53,9 @@ client:
   points:
     ratio: 10
     
-merchant.shop.application.passed.url.patterns:
+merchant.shop.application.passed.url.patterns: 
   - /merchant/shop/application/**
   - /merchant/register/**
   - /merchant/forgetPassword/**
   - /merchant/verification/**
+    

@@ -1,6 +1,7 @@
 package com.sourcecode.malls.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import com.sourcecode.malls.properties.RedisSessionProperties;
 
 @Configuration
 @EnableCaching
+@EnableConfigurationProperties
 @EnableRedisHttpSession
 @EnableAsync
 @EnableAspectJAutoProxy
