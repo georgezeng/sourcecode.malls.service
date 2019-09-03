@@ -21,4 +21,5 @@ public interface CacheNameConstant {
 	String ADVERTISEMENT_LIST = "advertisement_list";
 	String CLIENT_CART_ITEM_NUMS = "client_cart_item_nums";
 	String CLIENT_CART_ITEM_LIST = "client_cart_item_list";
+	String CLIENT_TOP_EVALUATION = "client_top_evaluation";
 }

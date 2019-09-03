@@ -60,7 +60,11 @@ public class CacheEvictService {
 			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_LOAD_DEFINITIONS, key = "#itemId") })
 	public void clearGoodsItemLoadOne(Long itemId) {
 	}
-
+	
+	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOP_EVALUATION, key = "#itemId") })
+	public void clearGoodsItemTopEvaluation(Long itemId) {
+	}
+	
 	@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#itemId + '-' + #index + '-' + #clientId")
 	public void clearGoodsItemSharePosters(Long itemId, int index, Long clientId) {
 	}

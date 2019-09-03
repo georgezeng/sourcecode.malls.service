@@ -11,6 +11,7 @@ import com.sourcecode.malls.domain.order.SubOrder;
 
 public interface GoodsItemEvaluationRepository
 		extends JpaRepository<GoodsItemEvaluation, Long>, JpaSpecificationExecutor<GoodsItemEvaluation> {
+	
 	Optional<GoodsItemEvaluation> findFirstByItemAndPassedAndAdditionalOrderByCreateTimeDesc(GoodsItem item, boolean passed, boolean additional);
 
 	Optional<GoodsItemEvaluation> findBySubOrder(SubOrder subOrder);
