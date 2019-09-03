@@ -64,12 +64,12 @@ public abstract class BaseController {
 		}
 	}
 
-	protected void checkIfApplicationPassed(String type) {
+	protected void checkIfApplicationPassed() {
 		Optional<MerchantShopApplication> applicationOp = applicationRepository
 				.findByMerchantId(getRelatedCurrentUser().getId());
 		AssertUtil.assertTrue(
 				applicationOp.isPresent() && VerificationStatus.Passed.equals(applicationOp.get().getStatus()),
-				"必须先通过店铺申请才能编辑商品" + type);
+				"必须先通过店铺申请才能操作");
 	}
 
 	protected User getRelatedCurrentUser() {
