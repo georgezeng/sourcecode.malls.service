@@ -47,6 +47,11 @@ public class CacheEvictService {
 	public void clearClientAfterSaleUnFinishedtNums(Long clientId) {
 	}
 
+	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_CART_ITEM_LIST, key = "#clientId"),
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_CART_ITEM_NUMS, key = "#clientId + '-0'") })
+	public void clearClientCartItems(Long clientId) {
+	}
+
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ACTIVITY_EVENT_TIME, key = "#merchantId")
 	public void clearClientActivityEventTime(Long merchantId) {
 	}

@@ -1,5 +1,6 @@
 package com.sourcecode.malls.dto.client;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.dto.goods.GoodsItemDTO;
 import com.sourcecode.malls.dto.goods.GoodsItemPropertyDTO;
 
-public class ClientCartItemDTO {
+public class ClientCartItemDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private GoodsItemDTO item;
 	private GoodsItemPropertyDTO property;

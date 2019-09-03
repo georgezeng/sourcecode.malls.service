@@ -13,6 +13,8 @@ import com.sourcecode.malls.domain.goods.GoodsItemProperty;
 
 public interface ClientCartRepository extends JpaRepository<ClientCartItem, Long>, JpaSpecificationExecutor<ClientCartItem> {
 	List<ClientCartItem> findByClient(Client client);
+	
+	long countByClient(Client client);
 
 	List<ClientCartItem> findByClientAndItem(Client client, GoodsItem item);
 	
