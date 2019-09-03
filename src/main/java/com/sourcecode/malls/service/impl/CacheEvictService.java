@@ -61,12 +61,12 @@ public class CacheEvictService {
 	public void clearGoodsItemLoadOne(Long itemId) {
 	}
 
-	@CacheEvict(allEntries = true, cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER)
-	public void clearGoodsItemSharePosters() {
+	@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#itemId + '-' + #index + '-' + #clientId")
+	public void clearGoodsItemSharePosters(Long itemId, int index, Long clientId) {
 	}
 
-	@CacheEvict(allEntries = true, cacheNames = CacheNameConstant.GOODS_ITEM_LIST)
-	public void clearAllGoodsItemList() {
+	@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_LIST, key = "#key")
+	public void clearGoodsItemList(String key) {
 	}
 
 	@CacheEvict(cacheNames = CacheNameConstant.MERCHANT_SITE_INFO, key = "#merchantId")

@@ -16,6 +16,8 @@ public interface ClientCouponRepository
 		extends JpaRepository<ClientCoupon, Long>, JpaSpecificationExecutor<ClientCoupon> {
 
 	List<ClientCoupon> findAllByClientAndSetting(Client client, CouponSetting setting);
+	
+	List<ClientCoupon> findAllByClient(Client client);
 
 	@Query(value = "update client_coupon set status=?1 where setting_id=?2 and status=?3", nativeQuery = true)
 	@Modifying
