@@ -5,8 +5,8 @@ aliyun:
     signName: 多呗商城
   oss:
     endpoint: oss-cn-zhangjiakou-internal.aliyuncs.com
-    privateBucket: mall-private-uat
-    publicBucket: mall-public-uat
+    privateBucket: mall-private-prod
+    publicBucket: mall-public-prod
     
     
 remote.server: 172.26.176.62
