@@ -13,4 +13,6 @@ public interface ClientPointsJournalRepository
 		extends JpaRepository<ClientPointsJournal, Long>, JpaSpecificationExecutor<ClientPointsJournal> {
 
 	List<ClientPointsJournal> findAllByClient(Client client, Pageable pageable);
+
+	long countByClient(Client client);
 }

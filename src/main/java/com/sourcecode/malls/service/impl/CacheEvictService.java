@@ -10,13 +10,18 @@ import com.sourcecode.malls.constants.CacheNameConstant;
 public class CacheEvictService {
 
 	@Caching(evict = {
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_COUPON_LIST, allEntries = true, condition = "#clientId == null"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_UNUSE_COUPON_NUMS, allEntries = true, condition = "#clientId == null"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_COUPON_NUMS, allEntries = true, condition = "#clientId == null"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_UNUSE_COUPON_NUMS, key = "#clientId", condition = "#clientId != null"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_COUPON_NUMS, key = "#clientId + '-UnUse'", condition = "#clientId != null"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_COUPON_NUMS, key = "#clientId + '-Used'", condition = "#clientId != null"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_COUPON_NUMS, key = "#clientId + '-Out'", condition = "#clientId != null") })
-	public void clearClientCoupons(Long clientId) {
+	public void clearClientCouponNums(Long clientId) {
+	}
+
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_COUPON_LIST, key = "#key")
+	public void clearClientCouponList(String key) {
 	}
 
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_INTIVE_POSTER, key = "#clientId")
@@ -32,7 +37,7 @@ public class CacheEvictService {
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Refunded'"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Closed'"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Finished'") })
-	public void clearClientOrders(Long clientId) {
+	public void clearClientOrderNums(Long clientId) {
 	}
 
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_UNCOMMENT_NUMS, key = "#clientId")
@@ -41,6 +46,10 @@ public class CacheEvictService {
 
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_CURRENT_POINTS, key = "#clientId")
 	public void clearClientCurrentPoints(Long clientId) {
+	}
+
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_POINTS_JOURNAL_LIST, key = "#clientId + '-' + #num")
+	public void clearClientPointsJournalList(Long clientId, int num) {
 	}
 
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_AFTERSALE_UNFINISHED_NUMS, key = "#clientId")
@@ -60,11 +69,11 @@ public class CacheEvictService {
 			@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_LOAD_DEFINITIONS, key = "#itemId") })
 	public void clearGoodsItemLoadOne(Long itemId) {
 	}
-	
+
 	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOP_EVALUATION, key = "#itemId") })
 	public void clearGoodsItemTopEvaluation(Long itemId) {
 	}
-	
+
 	@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#itemId + '-' + #index + '-' + #clientId")
 	public void clearGoodsItemSharePosters(Long itemId, int index, Long clientId) {
 	}

@@ -67,9 +67,6 @@ public class ClientBonusService implements BaseService {
 	private EntityManager em;
 
 	@Autowired
-	private CacheEvictService cacheEvictService;
-
-	@Autowired
 	private ClientPointsRepository pointsRepository;
 
 	@Autowired
@@ -80,6 +77,9 @@ public class ClientBonusService implements BaseService {
 
 	@Autowired
 	private ClientActivityEventRepository activityRepository;
+
+	@Autowired
+	private CacheClearer clearer;
 
 	private void resetLevel(Order order, int signum) {
 		em.lock(order.getClient(), LockModeType.PESSIMISTIC_WRITE);
@@ -180,7 +180,7 @@ public class ClientBonusService implements BaseService {
 					setting.setStatus(CouponSettingStatus.SentOut);
 				}
 				couponSettingRepository.save(setting);
-				cacheEvictService.clearClientCoupons(client.getId());
+				clearer.clearClientCoupons(client);
 			}
 		}
 	}
@@ -239,7 +239,7 @@ public class ClientBonusService implements BaseService {
 		journal.setBalanceType(type.getType());
 		journal.setType(type);
 		pointsJournalRepository.save(journal);
-		cacheEvictService.clearClientCurrentPoints(order.getClient().getId());
+		clearer.clearClientPoints(order.getClient());
 	}
 
 	public void removeConsumeBonus(Order order) {
@@ -253,7 +253,7 @@ public class ClientBonusService implements BaseService {
 				coupon.setOutTime(outTime);
 			}
 			clientCouponRepository.saveAll(coupons);
-			cacheEvictService.clearClientCoupons(order.getClient().getId());
+			clearer.clearClientCoupons(order.getClient());
 		}
 	}
 
