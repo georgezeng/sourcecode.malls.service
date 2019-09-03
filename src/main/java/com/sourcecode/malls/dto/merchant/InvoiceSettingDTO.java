@@ -1,6 +1,12 @@
 package com.sourcecode.malls.dto.merchant;
 
-public class InvoiceSettingDTO {
+import java.io.Serializable;
+
+public class InvoiceSettingDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String content;
 	private int orderNum;

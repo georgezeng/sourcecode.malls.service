@@ -1,5 +1,6 @@
 package com.sourcecode.malls.dto.client;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -7,7 +8,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.enums.BalanceType;
 import com.sourcecode.malls.enums.ClientPointsType;
 
-public class ClientPointsJournalDTO {
+public class ClientPointsJournalDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long clientId;
 	private BigDecimal amount;
 	private BalanceType balanceType;

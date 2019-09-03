@@ -1,8 +1,14 @@
 package com.sourcecode.malls.dto.merchant;
 
+import java.io.Serializable;
+
 import com.sourcecode.malls.enums.AfterSaleType;
 
-public class AfterSaleReasonSettingDTO {
+public class AfterSaleReasonSettingDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private AfterSaleType type;
 	private String content;

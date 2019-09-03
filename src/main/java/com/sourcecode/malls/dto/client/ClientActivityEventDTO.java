@@ -1,5 +1,6 @@
 package com.sourcecode.malls.dto.client;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.beans.BeanUtils;
@@ -7,7 +8,12 @@ import org.springframework.beans.BeanUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.domain.client.ClientActivityEvent;
 
-public class ClientActivityEventDTO {
+public class ClientActivityEventDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
 
 	private String name;

@@ -1,8 +1,13 @@
 package com.sourcecode.malls.dto.order;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SubOrderDTO {
+public class SubOrderDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long parentId;
 	private Long itemId;

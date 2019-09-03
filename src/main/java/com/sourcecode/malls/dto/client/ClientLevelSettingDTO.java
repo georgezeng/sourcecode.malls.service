@@ -1,8 +1,14 @@
 package com.sourcecode.malls.dto.client;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class ClientLevelSettingDTO {
+public class ClientLevelSettingDTO implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
 
 	private int level;

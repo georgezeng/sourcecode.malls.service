@@ -1,6 +1,13 @@
 package com.sourcecode.malls.dto.goods;
 
-public class GoodsBrandDTO {
+import java.io.Serializable;
+
+public class GoodsBrandDTO implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Long id;
 

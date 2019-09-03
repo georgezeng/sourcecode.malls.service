@@ -1,8 +1,13 @@
 package com.sourcecode.malls.dto.client;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class ClientPointsDTO {
+public class ClientPointsDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String clientName;
 	private BigDecimal currentAmount;

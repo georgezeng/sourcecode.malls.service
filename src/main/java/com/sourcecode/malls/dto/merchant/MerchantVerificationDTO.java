@@ -1,12 +1,17 @@
 package com.sourcecode.malls.dto.merchant;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.enums.MerchantVerificationType;
 import com.sourcecode.malls.enums.VerificationStatus;
 
-public class MerchantVerificationDTO {
+public class MerchantVerificationDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
 	private MerchantVerificationType type;

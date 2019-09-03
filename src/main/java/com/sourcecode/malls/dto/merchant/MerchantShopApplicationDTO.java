@@ -1,5 +1,6 @@
 package com.sourcecode.malls.dto.merchant;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +8,11 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.enums.VerificationStatus;
 
-public class MerchantShopApplicationDTO {
+public class MerchantShopApplicationDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private Long id;
 	private String name;

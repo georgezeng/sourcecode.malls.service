@@ -1,9 +1,14 @@
 package com.sourcecode.malls.dto.query;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PageResult<T> {
+public class PageResult<T extends Serializable> implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<T> list = new ArrayList<>();
 	private long total;
 
