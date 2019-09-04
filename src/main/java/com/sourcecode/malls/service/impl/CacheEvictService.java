@@ -40,6 +40,11 @@ public class CacheEvictService {
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Finished'") })
 	public void clearClientOrderNums(Long clientId) {
 	}
+	
+
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_LIST, key = "#key")
+	public void clearClientOrderList(String key) {
+	}
 
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_UNCOMMENT_NUMS, key = "#clientId")
 	public void clearClientUnCommentNums(Long clientId) {

@@ -141,7 +141,7 @@ public class CacheClearer {
 		List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository
 				.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_CLIENT_ORDER, client.getId().toString());
 		stores.stream().forEach(it -> {
-			cacheEvictService.clearClientCouponList(it.getSearchKey());
+			cacheEvictService.clearClientOrderList(it.getSearchKey());
 		});
 		searchCacheKeyStoreRepository.deleteAll(stores);
 	}
