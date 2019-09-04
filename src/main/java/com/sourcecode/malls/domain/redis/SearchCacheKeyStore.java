@@ -13,6 +13,7 @@ public class SearchCacheKeyStore {
 	
 	@Id
 	private String id;
+	@Indexed
 	private String type;
 	@Indexed
 	private String bizKey;
