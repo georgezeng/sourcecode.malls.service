@@ -92,10 +92,6 @@ public class CacheEvictService {
 	public void clearGoodsItemList(String key) {
 	}
 
-	@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_LIST, allEntries = true)
-	public void clearAllGoodsItemList() {
-	}
-
 	@CacheEvict(cacheNames = CacheNameConstant.MERCHANT_SITE_INFO, key = "#merchantId")
 	public void clearSiteInfo(Long merchantId) {
 	}
@@ -120,4 +116,13 @@ public class CacheEvictService {
 	public void clearAdvertisementList(Long merchantId) {
 	}
 
+
+	@CacheEvict(cacheNames = CacheNameConstant.ARTICLE_LOAD_ONE, key = "#id")
+	public void clearArticleOne(Long id) {
+	}
+	
+
+	@CacheEvict(cacheNames = CacheNameConstant.ARTICLE_LOAD_ONE, key = "#merchantId + '-' + #title")
+	public void clearArticleOne(Long merchantId, String title) {
+	}
 }

@@ -10,6 +10,7 @@ public class SearchCacheKeyStore {
 	public final static String SEARCH_GOODS_ITEM_BY_COUPON = "SEARCH_GOODS_ITEM_BY_COUPON";
 	public final static String SEARCH_CLIENT_COUPON = "SEARCH_CLIENT_COUPON";
 	public final static String SEARCH_CLIENT_ORDER = "SEARCH_CLIENT_ORDER";
+	public final static String SEARCH_ARTICLE = "SEARCH_ARTICLE";
 	
 	@Id
 	private String id;

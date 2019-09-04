@@ -25,4 +25,5 @@ public interface CacheNameConstant {
 	String CLIENT_POINTS_JOURNAL_LIST = "client_points_journal_list";
 	String CLIENT_COUPON_LIST = "client_coupon_list";
 	String CLIENT_ORDER_LIST = "client_order_list";
+	String ARTICLE_LOAD_ONE = "article_load_one";
 }

@@ -10,11 +10,14 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sourcecode.malls.domain.article.Article;
+import com.sourcecode.malls.domain.article.ArticleCategory;
 import com.sourcecode.malls.domain.client.Client;
 import com.sourcecode.malls.domain.coupon.ClientCoupon;
 import com.sourcecode.malls.domain.goods.GoodsItem;
 import com.sourcecode.malls.domain.redis.SearchCacheKeyStore;
 import com.sourcecode.malls.dto.query.PageInfo;
+import com.sourcecode.malls.repository.jpa.impl.article.ArticleRepository;
 import com.sourcecode.malls.repository.jpa.impl.client.ClientRepository;
 import com.sourcecode.malls.repository.jpa.impl.coupon.ClientCouponRepository;
 import com.sourcecode.malls.repository.jpa.impl.coupon.ClientPointsJournalRepository;
@@ -39,8 +42,10 @@ public class CacheClearer {
 	@Autowired
 	private ClientPointsJournalRepository clientPointsJournalRepository;
 
+	@Autowired
+	private ArticleRepository articleRepository;
+
 	@Async
-	@Transactional
 	public void clearPosterRelated(GoodsItem item) {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setNum(1);
@@ -64,7 +69,6 @@ public class CacheClearer {
 	}
 
 	@Async
-	@Transactional
 	public void clearCouponRelated(GoodsItem item) {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.setNum(1);
@@ -85,7 +89,6 @@ public class CacheClearer {
 	}
 
 	@Async
-	@Transactional
 	public void clearCategoryRelated(GoodsItem item) {
 		List<SearchCacheKeyStore> list = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(
 				SearchCacheKeyStore.SEARCH_GOODS_ITEM_BY_CATEGORY, "m_" + item.getMerchant().getId());
@@ -110,7 +113,6 @@ public class CacheClearer {
 	}
 
 	@Async
-	@Transactional
 	public void clearClientPoints(Client client) {
 		cacheEvictService.clearClientCurrentPoints(client.getId());
 		long total = clientPointsJournalRepository.countByClient(client) / 10 + 1;
@@ -120,7 +122,6 @@ public class CacheClearer {
 	}
 
 	@Async
-	@Transactional
 	public void clearClientCoupons(Client client) {
 		cacheEvictService.clearClientCouponNums(client.getId());
 		List<ClientCoupon> list = clientCouponRepository.findAllByClient(client);
@@ -135,7 +136,6 @@ public class CacheClearer {
 	}
 
 	@Async
-	@Transactional
 	public void clearClientOrders(Client client) {
 		cacheEvictService.clearClientOrderNums(client.getId());
 		List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository
@@ -144,6 +144,32 @@ public class CacheClearer {
 			cacheEvictService.clearClientOrderList(it.getSearchKey());
 		});
 		searchCacheKeyStoreRepository.deleteAll(stores);
+	}
+
+	@Async
+	public void clearArticle(ArticleCategory category) {
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.setNum(1);
+		pageInfo.setSize(1000);
+		pageInfo.setProperty("createTime");
+		pageInfo.setOrder(Direction.ASC.name());
+		Pageable pageable = pageInfo.pageable();
+		Page<Article> result = null;
+		do {
+			result = articleRepository.findAllByCategory(category, pageable);
+			if (result.hasContent()) {
+				for (Article data : result.getContent()) {
+					cacheEvictService.clearArticleOne(data.getId());
+				}
+				pageable = pageable.next();
+			}
+		} while (result.hasNext());
+	}
+
+	@Async
+	public void clearArticle(Article article) {
+		cacheEvictService.clearArticleOne(article.getId());
+		cacheEvictService.clearArticleOne(article.getMerchant().getId(), article.getTitle());
 	}
 
 }
