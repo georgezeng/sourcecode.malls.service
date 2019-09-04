@@ -9,4 +9,5 @@ import com.sourcecode.malls.domain.system.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificationExecutor<Role> {
 	Optional<Role> findByCode(String code);
+
 }

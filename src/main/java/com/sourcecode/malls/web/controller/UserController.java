@@ -90,7 +90,7 @@ public class UserController extends BaseController {
 		if (dto.getAvatar() != null && dto.getAvatar().startsWith("temp")) {
 			String newPath = userDir + "/" + data.getId() + "/avatar";
 			if (env.acceptsProfiles(Profiles.of(EnvConstant.LOCAL))) {
-				newPath += "_" + System.nanoTime();
+				newPath += "_" + System.currentTimeMillis();
 			}
 			newPath += ".png";
 			newPaths.add(newPath);

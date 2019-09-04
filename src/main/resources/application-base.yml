@@ -58,6 +58,7 @@ merchant.shop.application.passed.url.patterns:
   - /merchant/register/**
   - /merchant/forgetPassword/**
   - /merchant/verification/**
+  - /error/**
   - /actuator/**
   - /druid/**
   - /**/*.*

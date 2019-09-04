@@ -45,7 +45,7 @@ public abstract class BaseController {
 			throws IOException {
 		String extend = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 		String idDir = id != null ? id + "/" : "";
-		String filePath = dir + "/" + userId + "/" + idDir + System.nanoTime() + extend;
+		String filePath = dir + "/" + userId + "/" + idDir + System.currentTimeMillis() + extend;
 		if (!toPublic) {
 			filePath = "temp/" + filePath;
 		}
