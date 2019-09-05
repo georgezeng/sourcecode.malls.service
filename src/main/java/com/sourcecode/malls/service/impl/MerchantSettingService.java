@@ -1,6 +1,7 @@
 package com.sourcecode.malls.service.impl;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.sourcecode.malls.constants.MerchantSettingConstant;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.domain.merchant.MerchantSetting;
 import com.sourcecode.malls.domain.merchant.MerchantShopApplication;
+import com.sourcecode.malls.dto.client.ClientPointsBonus;
 import com.sourcecode.malls.dto.merchant.SiteInfo;
 import com.sourcecode.malls.dto.setting.DeveloperSettingDTO;
 import com.sourcecode.malls.repository.jpa.impl.merchant.MerchantRepository;
@@ -156,43 +158,68 @@ public class MerchantSettingService {
 		AssertUtil.assertNotEmpty(info.getTitle(), "页面标题不能为空");
 		AssertUtil.assertNotEmpty(info.getHeaderLogo(), "首页顶部logo不能为空");
 		AssertUtil.assertNotEmpty(info.getLoginLogo(), "登录页logo不能为空");
-		String value = mapper.writeValueAsString(info);
-		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
-		Optional<MerchantSetting> dataOp = settingRepository.findByMerchantAndCode(merchant.get(),
-				MerchantSettingConstant.SITE_INFO);
-		MerchantSetting data = null;
-		if (dataOp.isPresent()) {
-			data = dataOp.get();
-		} else {
-			data = new MerchantSetting();
-			data.setMerchant(merchant.get());
-			data.setCode(MerchantSettingConstant.SITE_INFO);
-		}
-		data.setValue(value);
-		settingRepository.save(data);
+		save(merchantId, info, MerchantSettingConstant.SITE_INFO);
 		cacheEvictService.clearSiteInfo(merchantId);
 	}
 
-	public SiteInfo loadSiteInfo(Long merchantId) throws Exception {
+	private <T> T loadSetting(Long merchantId, String code, Class<T> clazz, Function<T, Boolean> f) throws Exception {
 		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
-		Optional<MerchantSetting> dataOp = settingRepository.findByMerchantAndCode(merchant.get(),
-				MerchantSettingConstant.SITE_INFO);
-		SiteInfo info = null;
+		Optional<MerchantSetting> dataOp = settingRepository.findByMerchantAndCode(merchant.get(), code);
+		T obj = null;
+		boolean changed = false;
 		if (dataOp.isPresent()) {
-			info = mapper.readValue(dataOp.get().getValue(), SiteInfo.class);
+			obj = mapper.readValue(dataOp.get().getValue(), clazz);
+		} else {
+			obj = clazz.newInstance();
+		}
+		changed = f.apply(obj);
+		if (changed) {
+			dataOp.get().setValue(mapper.writeValueAsString(obj));
+			settingRepository.save(dataOp.get());
+		}
+		return obj;
+	}
+
+	public SiteInfo loadSiteInfo(Long merchantId) throws Exception {
+		return loadSetting(merchantId, MerchantSettingConstant.SITE_INFO, SiteInfo.class, info -> {
 			if (StringUtils.isEmpty(info.getTitle())) {
 				Optional<MerchantShopApplication> shop = applicationRepository.findByMerchantId(merchantId);
 				AssertUtil.assertTrue(shop.isPresent(), "尚未创建商铺");
 				info.setTitle(shop.get().getName());
-				dataOp.get().setValue(mapper.writeValueAsString(info));
-				settingRepository.save(dataOp.get());
+				return true;
 			}
+			return false;
+		});
+	}
+
+	public void saveClientPointsBonus(Long merchantId, ClientPointsBonus info) throws Exception {
+		AssertUtil.assertNotNull(info.getRookie(), "新人奖励不能为空");
+		AssertUtil.assertNotNull(info.getInvite(), "邀请奖励不能为空");
+		save(merchantId, info, MerchantSettingConstant.CLIENT_POINTS_BONUS_INFO);
+		cacheEvictService.clearClientPointsBonus(merchantId);
+	}
+
+	private void save(Long merchantId, Object data, String code) throws Exception {
+		String value = mapper.writeValueAsString(data);
+		Optional<Merchant> merchant = merchantRepository.findById(merchantId);
+		AssertUtil.assertTrue(merchant.isPresent(), "商家不存在");
+		Optional<MerchantSetting> dataOp = settingRepository.findByMerchantAndCode(merchant.get(), code);
+		MerchantSetting setting = null;
+		if (dataOp.isPresent()) {
+			setting = dataOp.get();
 		} else {
-			info = new SiteInfo();
-			Optional<MerchantShopApplication> shop = applicationRepository.findByMerchantId(merchantId);
-			AssertUtil.assertTrue(shop.isPresent(), "尚未创建商铺");
-			info.setTitle(shop.get().getName());
+			setting = new MerchantSetting();
+			setting.setMerchant(merchant.get());
+			setting.setCode(code);
 		}
-		return info;
+		setting.setValue(value);
+		settingRepository.save(setting);
+	}
+
+	public ClientPointsBonus loadClientPointsBonus(Long merchantId) throws Exception {
+		return loadSetting(merchantId, MerchantSettingConstant.CLIENT_POINTS_BONUS_INFO, ClientPointsBonus.class,
+				info -> {
+					return false;
+				});
 	}
 }

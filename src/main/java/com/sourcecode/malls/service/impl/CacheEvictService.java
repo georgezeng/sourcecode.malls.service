@@ -41,6 +41,14 @@ public class CacheEvictService {
 	public void clearClientOrderNums(Long clientId) {
 	}
 	
+	
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_POINTS_BONUS, key = "#merchantId")
+	public void clearClientPointsBonus(Long merchantId) {
+	}
+	
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_LOAD_ONE, key = "#id")
+	public void clearClientOrder(Long id) {
+	}
 
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_LIST, key = "#key")
 	public void clearClientOrderList(String key) {

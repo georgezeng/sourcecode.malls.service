@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 @JsonFormat(shape = Shape.OBJECT)
 public enum ClientPointsType {
 	ConsumeAdded("购物赠送", BalanceType.In), RefundDeduction("退款扣除", BalanceType.Out),
+	Rookie("新人奖励", BalanceType.In), Invite("邀请奖励", BalanceType.In),
 	ManuallyAdded("手动增加", BalanceType.In), ManuallyReduce("手动减少", BalanceType.Out);
 
 	private String text;

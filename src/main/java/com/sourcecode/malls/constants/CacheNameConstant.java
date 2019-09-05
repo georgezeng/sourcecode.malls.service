@@ -18,6 +18,7 @@ public interface CacheNameConstant {
 	String GOODS_CATEGORY_LIST_LEVEL1 = "goods_category_list_level1";
 	String GOODS_CATEGORY_LIST_LEVEL2 = "goods_category_list_level2";
 	String MERCHANT_SITE_INFO = "merchant_site_info";
+	String CLIENT_POINTS_BONUS = "client_points_bonus";
 	String ADVERTISEMENT_LIST = "advertisement_list";
 	String CLIENT_CART_ITEM_NUMS = "client_cart_item_nums";
 	String CLIENT_CART_ITEM_LIST = "client_cart_item_list";
@@ -25,5 +26,6 @@ public interface CacheNameConstant {
 	String CLIENT_POINTS_JOURNAL_LIST = "client_points_journal_list";
 	String CLIENT_COUPON_LIST = "client_coupon_list";
 	String CLIENT_ORDER_LIST = "client_order_list";
+	String CLIENT_ORDER_LOAD_ONE = "client_order_load_one";
 	String ARTICLE_LOAD_ONE = "article_load_one";
 }

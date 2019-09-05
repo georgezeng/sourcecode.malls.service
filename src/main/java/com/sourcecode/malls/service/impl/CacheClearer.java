@@ -15,6 +15,7 @@ import com.sourcecode.malls.domain.article.ArticleCategory;
 import com.sourcecode.malls.domain.client.Client;
 import com.sourcecode.malls.domain.coupon.ClientCoupon;
 import com.sourcecode.malls.domain.goods.GoodsItem;
+import com.sourcecode.malls.domain.order.Order;
 import com.sourcecode.malls.domain.redis.SearchCacheKeyStore;
 import com.sourcecode.malls.dto.query.PageInfo;
 import com.sourcecode.malls.repository.jpa.impl.article.ArticleRepository;
@@ -136,10 +137,11 @@ public class CacheClearer {
 	}
 
 	@Async
-	public void clearClientOrders(Client client) {
-		cacheEvictService.clearClientOrderNums(client.getId());
+	public void clearClientOrders(Order order) {
+		cacheEvictService.clearClientOrder(order.getId());
+		cacheEvictService.clearClientOrderNums(order.getClient().getId());
 		List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository
-				.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_CLIENT_ORDER, client.getId().toString());
+				.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_CLIENT_ORDER, order.getClient().getId().toString());
 		stores.stream().forEach(it -> {
 			cacheEvictService.clearClientOrderList(it.getSearchKey());
 		});
