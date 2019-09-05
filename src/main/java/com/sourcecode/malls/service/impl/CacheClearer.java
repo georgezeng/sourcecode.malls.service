@@ -18,6 +18,7 @@ import com.sourcecode.malls.domain.goods.GoodsItem;
 import com.sourcecode.malls.domain.order.Order;
 import com.sourcecode.malls.domain.redis.SearchCacheKeyStore;
 import com.sourcecode.malls.dto.query.PageInfo;
+import com.sourcecode.malls.enums.ClientPointsType;
 import com.sourcecode.malls.repository.jpa.impl.article.ArticleRepository;
 import com.sourcecode.malls.repository.jpa.impl.client.ClientRepository;
 import com.sourcecode.malls.repository.jpa.impl.coupon.ClientCouponRepository;
@@ -45,6 +46,8 @@ public class CacheClearer {
 
 	@Autowired
 	private ArticleRepository articleRepository;
+
+	private int pageSize = 10;
 
 	@Async
 	public void clearPosterRelated(GoodsItem item) {
@@ -116,7 +119,7 @@ public class CacheClearer {
 	@Async
 	public void clearClientPoints(Client client) {
 		cacheEvictService.clearClientCurrentPoints(client.getId());
-		long total = clientPointsJournalRepository.countByClient(client) / 10 + 1;
+		long total = clientPointsJournalRepository.countByClient(client) / pageSize + 1;
 		for (int i = 1; i <= total; i++) {
 			cacheEvictService.clearClientPointsJournalList(client.getId(), i);
 		}
@@ -172,6 +175,15 @@ public class CacheClearer {
 	public void clearArticle(Article article) {
 		cacheEvictService.clearArticleOne(article.getId());
 		cacheEvictService.clearArticleOne(article.getMerchant().getId(), article.getTitle());
+	}
+
+	@Async
+	public void clearClientSubList(Client parent) {
+		cacheEvictService.clearClientTotalInvitePoints(parent.getId());
+		long total = clientPointsJournalRepository.countByTypeAndClient(ClientPointsType.Invite, parent) / pageSize + 1;
+		for (int i = 1; i <= total; i++) {
+			cacheEvictService.clearClientSubList(parent.getId(), i);
+		}
 	}
 
 }

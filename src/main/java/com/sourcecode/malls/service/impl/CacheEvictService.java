@@ -28,6 +28,14 @@ public class CacheEvictService {
 	public void clearClientInvitePoster(Long clientId) {
 	}
 
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_SUB_LIST, key = "#clientId + '-' + #num")
+	public void clearClientSubList(Long clientId, int num) {
+	}
+	
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOTAL_INVITE_POINTS, key = "#clientId")
+	public void clearClientTotalInvitePoints(Long clientId) {
+	}
+
 	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-UnPay'"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-All'"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Paid'"),
@@ -40,12 +48,11 @@ public class CacheEvictService {
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-Finished'") })
 	public void clearClientOrderNums(Long clientId) {
 	}
-	
-	
+
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_POINTS_BONUS, key = "#merchantId")
 	public void clearClientPointsBonus(Long merchantId) {
 	}
-	
+
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_LOAD_ONE, key = "#id")
 	public void clearClientOrder(Long id) {
 	}
@@ -124,11 +131,9 @@ public class CacheEvictService {
 	public void clearAdvertisementList(Long merchantId) {
 	}
 
-
 	@CacheEvict(cacheNames = CacheNameConstant.ARTICLE_LOAD_ONE, key = "#id")
 	public void clearArticleOne(Long id) {
 	}
-	
 
 	@CacheEvict(cacheNames = CacheNameConstant.ARTICLE_LOAD_ONE, key = "#merchantId + '-' + #title")
 	public void clearArticleOne(Long merchantId, String title) {

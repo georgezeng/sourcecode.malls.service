@@ -27,6 +27,15 @@ public class ClientDTO extends SimpleQueryDTO {
 	private Date createTime;
 	private BigDecimal consumeTotalAmount;
 	private String levelName;
+	private BigDecimal invitePoints;
+
+	public BigDecimal getInvitePoints() {
+		return invitePoints;
+	}
+
+	public void setInvitePoints(BigDecimal invitePoints) {
+		this.invitePoints = invitePoints;
+	}
 
 	public BigDecimal getConsumeTotalAmount() {
 		return consumeTotalAmount;

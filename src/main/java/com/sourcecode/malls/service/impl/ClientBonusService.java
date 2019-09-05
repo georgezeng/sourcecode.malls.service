@@ -206,9 +206,11 @@ public class ClientBonusService implements BaseService {
 		}
 		ClientPointsBonus pointsBonus = settingService.loadClientPointsBonus(parent.getMerchant().getId());
 		Order order = new Order();
+		order.setOrderId(invitee.getId().toString());
 		order.setClient(parent);
 		order.setRealPrice(pointsBonus.getInvite());
 		setPoints(order, ClientPointsType.Invite);
+		clearer.clearClientSubList(parent);
 	}
 
 	public void addRegistrationBonus(Long userId) throws Exception {
@@ -225,10 +227,13 @@ public class ClientBonusService implements BaseService {
 		Order order = new Order();
 		order.setClient(user.get());
 		order.setRealPrice(pointsBonus.getRookie());
-		setPoints(order, ClientPointsType.Rookie);
+		setPoints(order, ClientPointsType.Registration);
 	}
 
 	private void setPoints(Order order, ClientPointsType type) {
+		if (order.getRealPrice() == null || BigDecimal.ZERO.compareTo(order.getRealPrice()) >= 0) {
+			return;
+		}
 		ClientPoints points = order.getClient().getPoints();
 		if (points == null) {
 			points = new ClientPoints();
@@ -253,6 +258,8 @@ public class ClientBonusService implements BaseService {
 		journal.setBonusAmount(pointsAmount);
 		if (ClientPointsType.ConsumeAdded.equals(type)) {
 			journal.setAmount(order.getRealPrice());
+			journal.setOrderId(order.getOrderId());
+		} else if(ClientPointsType.Invite.equals(type)) {
 			journal.setOrderId(order.getOrderId());
 		}
 		journal.setBalanceType(type.getType());
