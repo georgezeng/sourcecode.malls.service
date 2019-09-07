@@ -94,10 +94,10 @@ public class CacheClearer {
 
 	@Async
 	public void clearCategoryRelated(GoodsItem item) {
-		List<SearchCacheKeyStore> list = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(
-				SearchCacheKeyStore.SEARCH_GOODS_ITEM_BY_CATEGORY, "m_" + item.getMerchant().getId());
-		list.addAll(searchCacheKeyStoreRepository.findAllByTypeAndBizKey(
-				SearchCacheKeyStore.SEARCH_GOODS_ITEM_BY_CATEGORY, item.getCategory().getId().toString()));
+		List<SearchCacheKeyStore> list = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_GOODS_ITEM_BY_CATEGORY,
+				"m_" + item.getMerchant().getId());
+		list.addAll(searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_GOODS_ITEM_BY_CATEGORY,
+				item.getCategory().getId().toString()));
 		list.stream().forEach(it -> {
 			cacheEvictService.clearGoodsItemList(it.getSearchKey());
 		});
@@ -107,8 +107,8 @@ public class CacheClearer {
 	private void clearGoodsItemForCoupon(Client client) {
 		List<ClientCoupon> list = clientCouponRepository.findAllByClient(client);
 		list.stream().forEach(it -> {
-			List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository
-					.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_GOODS_ITEM_BY_COUPON, it.getId().toString());
+			List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_GOODS_ITEM_BY_COUPON,
+					it.getId().toString());
 			stores.stream().forEach(store -> {
 				cacheEvictService.clearGoodsItemList(store.getSearchKey());
 			});
@@ -130,8 +130,8 @@ public class CacheClearer {
 		cacheEvictService.clearClientCouponNums(client.getId());
 		List<ClientCoupon> list = clientCouponRepository.findAllByClient(client);
 		list.stream().forEach(it -> {
-			List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository
-					.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_CLIENT_COUPON, it.getId().toString());
+			List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_CLIENT_COUPON,
+					it.getId().toString());
 			stores.stream().forEach(store -> {
 				cacheEvictService.clearClientCouponList(store.getSearchKey());
 			});
@@ -143,8 +143,8 @@ public class CacheClearer {
 	public void clearClientOrders(Order order) {
 		cacheEvictService.clearClientOrder(order.getId());
 		cacheEvictService.clearClientOrderNums(order.getClient().getId());
-		List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository
-				.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_CLIENT_ORDER, order.getClient().getId().toString());
+		List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_CLIENT_ORDER,
+				order.getClient().getId().toString());
 		stores.stream().forEach(it -> {
 			cacheEvictService.clearClientOrderList(it.getSearchKey());
 		});
@@ -169,6 +169,11 @@ public class CacheClearer {
 				pageable = pageable.next();
 			}
 		} while (result.hasNext());
+	}
+
+	@Async
+	public void clearArticleCategory(ArticleCategory category) {
+		articleRepository.findAllByCategory(category).stream().forEach(it -> clearArticle(it));
 	}
 
 	@Async

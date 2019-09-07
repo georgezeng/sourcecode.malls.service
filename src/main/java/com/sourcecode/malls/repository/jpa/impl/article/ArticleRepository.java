@@ -1,5 +1,6 @@
 package com.sourcecode.malls.repository.jpa.impl.article;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -15,6 +16,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long>, JpaSpec
 	long countByCategory(ArticleCategory category);
 
 	Page<Article> findAllByCategory(ArticleCategory category, Pageable pageable);
+	
+	List<Article> findAllByCategory(ArticleCategory category);
 	
 	Optional<Article> findFirstByMerchantAndTitleOrderByUpdateTimeDesc(Merchant merchant, String title);
 
