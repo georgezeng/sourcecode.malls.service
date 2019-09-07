@@ -1,5 +1,6 @@
 package com.sourcecode.malls.dto.order;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.domain.order.Express;
 import com.sourcecode.malls.enums.ExpressType;
 
-public class ExpressDTO {
+public class ExpressDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long orderId;
 	private String company;
