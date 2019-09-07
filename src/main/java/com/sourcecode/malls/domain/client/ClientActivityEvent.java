@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.dto.client.ClientActivityEventDTO;
+import com.sourcecode.malls.enums.ClientActivityEventStatus;
 
 @Table(name = "client_activity_event")
 @Entity
@@ -89,10 +90,22 @@ public class ClientActivityEvent extends LongKeyEntity {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-	
+
 	public ClientActivityEventDTO asDTO() {
 		ClientActivityEventDTO dto = new ClientActivityEventDTO();
 		BeanUtils.copyProperties(this, dto);
+		if (!deleted) {
+			Date now = new Date();
+			if (paused) {
+				dto.setStatus(ClientActivityEventStatus.Paused);
+			} else if (now.before(startTime)) {
+				dto.setStatus(ClientActivityEventStatus.UnStarted);
+			} else if (now.after(endTime)) {
+				dto.setStatus(ClientActivityEventStatus.Stopped);
+			} else {
+				dto.setStatus(ClientActivityEventStatus.In);
+			}
+		}
 		return dto;
 	}
 }

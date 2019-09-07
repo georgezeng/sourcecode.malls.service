@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sourcecode.malls.domain.client.ClientActivityEvent;
+import com.sourcecode.malls.enums.ClientActivityEventStatus;
 
 public class ClientActivityEventDTO implements Serializable {
 	/**
@@ -28,6 +29,16 @@ public class ClientActivityEventDTO implements Serializable {
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date createTime;
+	
+	private ClientActivityEventStatus status;
+
+	public ClientActivityEventStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ClientActivityEventStatus status) {
+		this.status = status;
+	}
 
 	public boolean isStarted() {
 		return !startTime.after(new Date());
