@@ -22,6 +22,16 @@ public class ClientLevelSettingDTO implements Serializable{
 	private BigDecimal discountInActivity;
 	
 	private boolean top;
+	
+	private String imgPath;
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
 
 	public boolean isTop() {
 		return top;
