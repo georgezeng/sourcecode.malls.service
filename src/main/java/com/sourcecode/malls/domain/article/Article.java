@@ -47,6 +47,16 @@ public class Article extends LongKeyEntity {
 
 	@Size(max = 255, message = "视频路径长度不能超过255")
 	private String imgPath;
+	
+	private boolean hidden;
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
 
 	public ArticleCategory getCategory() {
 		return category;

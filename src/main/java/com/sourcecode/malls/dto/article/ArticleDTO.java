@@ -32,6 +32,16 @@ public class ArticleDTO implements Serializable {
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date createTime;
+	
+	private boolean hidden;
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
 
 	public Long getCategoryId() {
 		return categoryId;
