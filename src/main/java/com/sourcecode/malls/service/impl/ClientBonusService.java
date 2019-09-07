@@ -286,7 +286,7 @@ public class ClientBonusService implements BaseService {
 	@CachePut(value = CacheNameConstant.CLIENT_ACTIVITY_EVENT_TIME, key = "#merchant.id")
 	public boolean setIsActivityEventTime(Merchant merchant) {
 		Date now = new Date();
-		return activityRepository.countByMerchantAndPausedAndDeletedAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
+		return activityRepository.countByMerchantAndPausedAndDeletedAndStartTimeLessThanEqualAndEndTimeGreaterThan(
 				merchant, false, false, now, now) > 0;
 	}
 

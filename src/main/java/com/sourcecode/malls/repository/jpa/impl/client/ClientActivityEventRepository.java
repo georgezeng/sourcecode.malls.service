@@ -10,6 +10,6 @@ import com.sourcecode.malls.domain.merchant.Merchant;
 
 public interface ClientActivityEventRepository
 		extends JpaRepository<ClientActivityEvent, Long>, JpaSpecificationExecutor<ClientActivityEvent> {
-	long countByMerchantAndPausedAndDeletedAndStartTimeGreaterThanEqualAndEndTimeLessThanEqual(Merchant merchant,
+	long countByMerchantAndPausedAndDeletedAndStartTimeLessThanEqualAndEndTimeGreaterThan(Merchant merchant,
 			boolean paused, boolean deleted, Date startTime, Date endTime);
 }
