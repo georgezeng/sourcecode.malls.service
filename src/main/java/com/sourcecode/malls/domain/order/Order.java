@@ -97,9 +97,20 @@ public class Order extends LongKeyEntity {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
 	private List<ClientCoupon> coupons;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fromOrder")
 	private List<ClientCoupon> generatedCoupons;
+
+	@NotNull(message = "折扣不能为空")
+	private BigDecimal discount = new BigDecimal("100");
+
+	public BigDecimal getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(BigDecimal discount) {
+		this.discount = discount;
+	}
 
 	public List<ClientCoupon> getGeneratedCoupons() {
 		return generatedCoupons;
