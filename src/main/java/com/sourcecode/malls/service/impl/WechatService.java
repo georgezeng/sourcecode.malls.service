@@ -43,7 +43,8 @@ public class WechatService {
 		String refundFee = refundAmount.multiply(new BigDecimal("100")).intValue() + "";
 		if (!env.acceptsProfiles(Profiles.of(EnvConstant.PROD))) {
 			if (totalFee.equals(refundFee)) {
-				refundFee = subOrderNums + "";
+				totalFee = subOrderNums + "";
+				refundFee = totalFee;
 			} else {
 				refundFee = "1";
 			}

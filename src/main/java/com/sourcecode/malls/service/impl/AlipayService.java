@@ -42,7 +42,8 @@ public class AlipayService {
 		String refundFee = refundAmount + "";
 		if (!env.acceptsProfiles(Profiles.of(EnvConstant.PROD))) {
 			if (totalFee.equals(refundFee)) {
-				refundFee = subOrderNums + "";
+				totalFee = subOrderNums + "";
+				refundFee = totalFee;
 			} else {
 				refundFee = "0.01";
 			}
