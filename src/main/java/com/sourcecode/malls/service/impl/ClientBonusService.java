@@ -190,6 +190,7 @@ public class ClientBonusService implements BaseService {
 	}
 
 	public void addInviteBonus(Client invitee, Client parent) throws Exception {
+		parent = clientRepository.getOne(parent.getId());
 		List<CouponSetting> list = couponSettingRepository.findAllByMerchantAndEventTypeAndStatusAndEnabled(
 				parent.getMerchant(), CouponEventType.Invite, CouponSettingStatus.PutAway, true);
 		if (!CollectionUtils.isEmpty(list)) {
@@ -207,7 +208,7 @@ public class ClientBonusService implements BaseService {
 		ClientPointsBonus pointsBonus = settingService.loadClientPointsBonus(parent.getMerchant().getId());
 		Order order = new Order();
 		order.setOrderId(invitee.getId().toString());
-		order.setClient(clientRepository.getOne(parent.getId()));
+		order.setClient(parent);
 		order.setRealPrice(pointsBonus.getInvite());
 		setPoints(order, ClientPointsType.Invite);
 		clearer.clearClientSubList(parent);
