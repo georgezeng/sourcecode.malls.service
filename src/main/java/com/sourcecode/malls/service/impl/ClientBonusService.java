@@ -207,7 +207,7 @@ public class ClientBonusService implements BaseService {
 		ClientPointsBonus pointsBonus = settingService.loadClientPointsBonus(parent.getMerchant().getId());
 		Order order = new Order();
 		order.setOrderId(invitee.getId().toString());
-		order.setClient(parent);
+		order.setClient(clientRepository.getOne(parent.getId()));
 		order.setRealPrice(pointsBonus.getInvite());
 		setPoints(order, ClientPointsType.Invite);
 		clearer.clearClientSubList(parent);
