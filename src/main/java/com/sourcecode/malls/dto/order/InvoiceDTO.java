@@ -1,11 +1,17 @@
 package com.sourcecode.malls.dto.order;
 
+import java.io.Serializable;
+
 import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.domain.order.Invoice;
 import com.sourcecode.malls.enums.InvoiceType;
 
-public class InvoiceDTO {
+public class InvoiceDTO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private InvoiceType type;
 	private String title;
