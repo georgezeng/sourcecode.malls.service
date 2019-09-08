@@ -20,6 +20,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import com.sourcecode.malls.constants.CacheNameConstant;
+import com.sourcecode.malls.domain.aftersale.AfterSaleApplication;
 import com.sourcecode.malls.domain.client.Client;
 import com.sourcecode.malls.domain.client.ClientLevelSetting;
 import com.sourcecode.malls.domain.client.ClientPoints;
@@ -87,16 +88,14 @@ public class ClientBonusService implements BaseService {
 
 	private void resetLevel(Order order, int signum) {
 		em.lock(order.getClient(), LockModeType.PESSIMISTIC_WRITE);
-		order.getClient().setConsumeTotalAmount(
-				order.getClient().getConsumeTotalAmount().add(order.getRealPrice().multiply(new BigDecimal(signum))));
+		order.getClient().setConsumeTotalAmount(order.getClient().getConsumeTotalAmount().add(order.getRealPrice().multiply(new BigDecimal(signum))));
 		clientRepository.save(order.getClient());
 		setCurrentLevel(order.getClient(), true);
 	}
 
 	public void setCurrentLevel(Client client, boolean force) {
 		if (force || client.getLevel() == null || StringUtils.isEmpty(client.getLevel().getName())) {
-			List<ClientLevelSetting> levelSettings = levelSettingRepository
-					.findAllByMerchantAndNameNotNullOrderByLevelDesc(client.getMerchant());
+			List<ClientLevelSetting> levelSettings = levelSettingRepository.findAllByMerchantAndNameNotNullOrderByLevelDesc(client.getMerchant());
 			AssertUtil.assertTrue(!CollectionUtils.isEmpty(levelSettings), "商家未配置会员等级");
 			for (ClientLevelSetting setting : levelSettings) {
 				if (client.getConsumeTotalAmount().compareTo(setting.getUpToAmount()) >= 0) {
@@ -114,8 +113,8 @@ public class ClientBonusService implements BaseService {
 		if (CollectionUtils.isEmpty(order.getSubList())) {
 			return;
 		}
-		List<CouponSetting> list = couponSettingRepository.findAllByMerchantAndEventTypeAndStatusAndEnabled(
-				order.getMerchant(), CouponEventType.Consume, CouponSettingStatus.PutAway, true);
+		List<CouponSetting> list = couponSettingRepository.findAllByMerchantAndEventTypeAndStatusAndEnabled(order.getMerchant(), CouponEventType.Consume,
+				CouponSettingStatus.PutAway, true);
 		if (!CollectionUtils.isEmpty(list)) {
 			for (CouponSetting setting : list) {
 				if (setting.getConsumeSetting() != null) {
@@ -191,8 +190,8 @@ public class ClientBonusService implements BaseService {
 
 	public void addInviteBonus(Client invitee, Client parent) throws Exception {
 		parent = clientRepository.getOne(parent.getId());
-		List<CouponSetting> list = couponSettingRepository.findAllByMerchantAndEventTypeAndStatusAndEnabled(
-				parent.getMerchant(), CouponEventType.Invite, CouponSettingStatus.PutAway, true);
+		List<CouponSetting> list = couponSettingRepository.findAllByMerchantAndEventTypeAndStatusAndEnabled(parent.getMerchant(), CouponEventType.Invite,
+				CouponSettingStatus.PutAway, true);
 		if (!CollectionUtils.isEmpty(list)) {
 			for (CouponSetting setting : list) {
 				if (setting.getInviteSetting() != null && !CollectionUtils.isEmpty(parent.getSubList())) {
@@ -217,8 +216,8 @@ public class ClientBonusService implements BaseService {
 	public void addRegistrationBonus(Long userId) throws Exception {
 		Optional<Client> user = clientRepository.findById(userId);
 		AssertUtil.assertTrue(user.isPresent(), "用户不存在");
-		List<CouponSetting> list = couponSettingRepository.findAllByMerchantAndEventTypeAndStatusAndEnabled(
-				user.get().getMerchant(), CouponEventType.Registration, CouponSettingStatus.PutAway, true);
+		List<CouponSetting> list = couponSettingRepository.findAllByMerchantAndEventTypeAndStatusAndEnabled(user.get().getMerchant(),
+				CouponEventType.Registration, CouponSettingStatus.PutAway, true);
 		if (!CollectionUtils.isEmpty(list)) {
 			for (CouponSetting setting : list) {
 				createCoupon(null, null, user.get(), setting, false);
@@ -243,7 +242,7 @@ public class ClientBonusService implements BaseService {
 			em.lock(points, LockModeType.PESSIMISTIC_WRITE);
 		}
 		BigDecimal pointsAmount = order.getRealPrice();
-		if (ClientPointsType.ConsumeAdded.equals(type)) {
+		if (ClientPointsType.ConsumeAdded.equals(type) || ClientPointsType.RefundDeduction.equals(type)) {
 			pointsAmount = pointsAmount.multiply(new BigDecimal(pointsRatio));
 		}
 		if (BalanceType.In.equals(type.getType())) {
@@ -260,7 +259,7 @@ public class ClientBonusService implements BaseService {
 		if (ClientPointsType.ConsumeAdded.equals(type)) {
 			journal.setAmount(order.getRealPrice());
 			journal.setOrderId(order.getOrderId());
-		} else if(ClientPointsType.Invite.equals(type)) {
+		} else if (ClientPointsType.Invite.equals(type)) {
 			journal.setOrderId(order.getOrderId());
 		}
 		journal.setBalanceType(type.getType());
@@ -269,8 +268,12 @@ public class ClientBonusService implements BaseService {
 		clearer.clearClientPoints(order.getClient());
 	}
 
-	public void removeConsumeBonus(Order order) {
-		resetLevel(order, -1);
+	public void removeConsumeBonus(AfterSaleApplication application) {
+		resetLevel(application.getOrder(), -1);
+		Order order = new Order();
+		order.setClient(application.getClient());
+		order.setRealPrice(application.getAmount());
+		order.setOrderId(application.getServiceId());
 		setPoints(order, ClientPointsType.RefundDeduction);
 		List<ClientCoupon> coupons = order.getGeneratedCoupons();
 		if (!CollectionUtils.isEmpty(coupons)) {
@@ -287,8 +290,7 @@ public class ClientBonusService implements BaseService {
 	@CachePut(value = CacheNameConstant.CLIENT_ACTIVITY_EVENT_TIME, key = "#merchant.id")
 	public boolean setIsActivityEventTime(Merchant merchant) {
 		Date now = new Date();
-		return activityRepository.countByMerchantAndPausedAndDeletedAndStartTimeLessThanEqualAndEndTimeGreaterThan(
-				merchant, false, false, now, now) > 0;
+		return activityRepository.countByMerchantAndPausedAndDeletedAndStartTimeLessThanEqualAndEndTimeGreaterThan(merchant, false, false, now, now) > 0;
 	}
 
 	@Cacheable(value = CacheNameConstant.CLIENT_ACTIVITY_EVENT_TIME, key = "#merchantId")
