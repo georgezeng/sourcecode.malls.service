@@ -19,10 +19,10 @@ public class AdvertisementSettingDTO implements Serializable {
 	private String name;
 	private int orderNum;
 	private String link;
-	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-	private Date startDate;
-	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-	private Date endDate;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Date startTime;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Date endTime;
 	private String path;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date updateTime;
@@ -75,20 +75,20 @@ public class AdvertisementSettingDTO implements Serializable {
 		this.link = link;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public Date getStartTime() {
+		return startTime;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public Date getEndTime() {
+		return endTime;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	public String getPath() {

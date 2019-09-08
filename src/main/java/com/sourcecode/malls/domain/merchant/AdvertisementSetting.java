@@ -46,14 +46,24 @@ public class AdvertisementSetting extends LongKeyEntity {
 	private String link;
 
 	@NotNull(message = "类型不能为空")
-	private Date startDate;
+	private Date startTime;
 
 	@NotNull(message = "类型不能为空")
-	private Date endDate;
+	private Date endTime;
+	
+	private boolean enabled;
 
 	@NotBlank(message = "图片路径不能为空")
 	@Size(max = 255, message = "图片路径长度不能超过255")
 	private String path;
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	public int getOrderNum() {
 		return orderNum;
@@ -95,20 +105,21 @@ public class AdvertisementSetting extends LongKeyEntity {
 		this.link = link;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+
+	public Date getStartTime() {
+		return startTime;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public Date getEndTime() {
+		return endTime;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	public String getPath() {

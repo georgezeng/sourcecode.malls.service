@@ -118,7 +118,7 @@ public class CacheClearer {
 
 	@Async
 	public void clearClientPoints(Client client) {
-		cacheEvictService.clearClientCurrentPoints(client.getId());
+		cacheEvictService.clearClientPoints(client.getId());
 		long total = clientPointsJournalRepository.countByClient(client) / pageSize + 1;
 		for (int i = 1; i <= total; i++) {
 			cacheEvictService.clearClientPointsJournalList(client.getId(), i);

@@ -64,8 +64,9 @@ public class CacheEvictService {
 	public void clearClientUnCommentNums(Long clientId) {
 	}
 
-	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_CURRENT_POINTS, key = "#clientId")
-	public void clearClientCurrentPoints(Long clientId) {
+	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_CURRENT_POINTS, key = "#clientId"),
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_POINTS_ACC_IN_AMOUNT, key = "#clientId") })
+	public void clearClientPoints(Long clientId) {
 	}
 
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_POINTS_JOURNAL_LIST, key = "#clientId + '-' + #num")
@@ -122,7 +123,8 @@ public class CacheEvictService {
 	public void clearGoodsCategoryLevel2(Long parentId) {
 	}
 
-	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-HomeBanner'"),
+	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_ALL, key = "#merchantId"),
+			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-HomeBanner'"),
 			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-HomeRecommend'"),
 			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-CategoryBanner'"),
 			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-CategoryBrand'") })

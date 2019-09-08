@@ -3,6 +3,7 @@ package com.sourcecode.malls.constants;
 public interface CacheNameConstant {
 	String CLIENT_AFTERSALE_UNFINISHED_NUMS = "client_aftersale_unfinished_nums";
 	String CLIENT_CURRENT_POINTS = "client_current_points";
+	String CLIENT_POINTS_ACC_IN_AMOUNT = "client_current_points_acc_in_amount";
 	String CLIENT_UNUSE_COUPON_NUMS = "client_unuse_coupon_nums";
 	String CLIENT_INTIVE_POSTER = "client_intive_poster";
 	String CLIENT_COUPON_NUMS = "client_coupon_nums";
@@ -20,6 +21,7 @@ public interface CacheNameConstant {
 	String MERCHANT_SITE_INFO = "merchant_site_info";
 	String CLIENT_POINTS_BONUS = "client_points_bonus";
 	String ADVERTISEMENT_LIST = "advertisement_list";
+	String ADVERTISEMENT_ALL = "advertisement_all";
 	String CLIENT_CART_ITEM_NUMS = "client_cart_item_nums";
 	String CLIENT_CART_ITEM_LIST = "client_cart_item_list";
 	String CLIENT_TOP_EVALUATION = "client_top_evaluation";
