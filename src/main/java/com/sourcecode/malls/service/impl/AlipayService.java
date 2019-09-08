@@ -29,13 +29,12 @@ public class AlipayService {
 	@Autowired
 	private Environment env;
 
-	public void refund(Long merchantId, String transactionId, String refundNum, BigDecimal totalAmount,
-			BigDecimal refundAmount, int subOrderNums) throws Exception {
+	public void refund(Long merchantId, String transactionId, String refundNum, BigDecimal totalAmount, BigDecimal refundAmount, int subOrderNums)
+			throws Exception {
 		Optional<DeveloperSettingDTO> setting = service.loadAlipay(merchantId);
 		AssertUtil.assertTrue(setting.isPresent(), "未找到商户的支付宝信息");
-		AlipayClient alipayClient = new DefaultAlipayClient(config.getGateway(), setting.get().getAccount(),
-				setting.get().getSecret(), config.getDataType(), config.getCharset(), setting.get().getMch(),
-				config.getEncryptType());
+		AlipayClient alipayClient = new DefaultAlipayClient(config.getGateway(), setting.get().getAccount(), setting.get().getSecret(),
+				config.getDataType(), config.getCharset(), setting.get().getMch(), config.getEncryptType());
 		AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
 		AlipayTradeRefundModel model = new AlipayTradeRefundModel();
 		model.setTradeNo(transactionId);
@@ -46,7 +45,7 @@ public class AlipayService {
 			if (totalFee.equals(refundFee)) {
 				refundFee = totalFee;
 			} else {
-				refundFee = "0.01";
+				refundFee = new BigDecimal("0.01").multiply(new BigDecimal(subOrderNums)).toString();
 			}
 		}
 		model.setRefundAmount(refundFee);

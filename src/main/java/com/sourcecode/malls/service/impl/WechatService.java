@@ -42,11 +42,10 @@ public class WechatService {
 		String totalFee = totalAmount.multiply(new BigDecimal("100")).intValue() + "";
 		String refundFee = refundAmount.multiply(new BigDecimal("100")).intValue() + "";
 		if (!env.acceptsProfiles(Profiles.of(EnvConstant.PROD))) {
-			totalFee = subOrderNums + "";
 			if (totalFee.equals(refundFee)) {
 				refundFee = totalFee;
 			} else {
-				refundFee = "1";
+				refundFee = subOrderNums + "";
 			}
 		}
 		data.put("total_fee", totalFee);
