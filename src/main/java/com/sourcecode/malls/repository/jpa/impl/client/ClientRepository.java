@@ -17,6 +17,8 @@ public interface ClientRepository extends JpaRepository<Client, Long>, JpaSpecif
 	Optional<Client> findByMerchantAndUnionId(Merchant merchant, String unionId);
 
 	List<Client> findAllByParent(Client parent, Pageable page);
-	
+
+	long countByParent(Client parent);
+
 	Page<Client> findAllByMerchant(Merchant merchant, Pageable page);
 }

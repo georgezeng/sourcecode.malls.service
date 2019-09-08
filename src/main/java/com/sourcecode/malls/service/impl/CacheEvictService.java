@@ -9,8 +9,7 @@ import com.sourcecode.malls.constants.CacheNameConstant;
 @Service
 public class CacheEvictService {
 
-	@Caching(evict = {
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_COUPON_LIST, allEntries = true, condition = "#clientId == null"),
+	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_COUPON_LIST, allEntries = true, condition = "#clientId == null"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_UNUSE_COUPON_NUMS, allEntries = true, condition = "#clientId == null"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_COUPON_NUMS, allEntries = true, condition = "#clientId == null"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_UNUSE_COUPON_NUMS, key = "#clientId", condition = "#clientId != null"),
@@ -31,9 +30,9 @@ public class CacheEvictService {
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_SUB_LIST, key = "#clientId + '-' + #num")
 	public void clearClientSubList(Long clientId, int num) {
 	}
-	
-	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOTAL_INVITE_POINTS, key = "#clientId")
-	public void clearClientTotalInvitePoints(Long clientId) {
+
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOTAL_INVITE_INFO, key = "#clientId")
+	public void clearClientTotalInviteInfo(Long clientId) {
 	}
 
 	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-UnPay'"),
@@ -123,8 +122,7 @@ public class CacheEvictService {
 	public void clearGoodsCategoryLevel2(Long parentId) {
 	}
 
-	@Caching(evict = {
-			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-HomeBanner'"),
+	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-HomeBanner'"),
 			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-HomeRecommend'"),
 			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-CategoryBanner'"),
 			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-CategoryBrand'") })

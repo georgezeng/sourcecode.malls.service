@@ -29,5 +29,5 @@ public interface CacheNameConstant {
 	String CLIENT_ORDER_LOAD_ONE = "client_order_load_one";
 	String ARTICLE_LOAD_ONE = "article_load_one";
 	String CLIENT_SUB_LIST = "client_sub_list";
-	String CLIENT_TOTAL_INVITE_POINTS = "client_total_invite_points";
+	String CLIENT_TOTAL_INVITE_INFO = "client_total_invite_info";
 }

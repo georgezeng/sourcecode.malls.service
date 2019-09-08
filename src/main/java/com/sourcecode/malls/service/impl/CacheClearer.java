@@ -184,7 +184,7 @@ public class CacheClearer {
 
 	@Async
 	public void clearClientSubList(Client parent) {
-		cacheEvictService.clearClientTotalInvitePoints(parent.getId());
+		cacheEvictService.clearClientTotalInviteInfo(parent.getId());
 		long total = clientPointsJournalRepository.countByTypeAndClient(ClientPointsType.Invite, parent) / pageSize + 1;
 		for (int i = 1; i <= total; i++) {
 			cacheEvictService.clearClientSubList(parent.getId(), i);
