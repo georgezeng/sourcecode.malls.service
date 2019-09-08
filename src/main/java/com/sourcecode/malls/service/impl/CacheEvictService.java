@@ -95,7 +95,8 @@ public class CacheEvictService {
 	public void clearGoodsItemLoadOne(Long itemId) {
 	}
 
-	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOP_EVALUATION, key = "#itemId") })
+	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOP_EVALUATION, key = "#itemId"),
+			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOTAL_EVALUATIONS, key = "#itemId") })
 	public void clearGoodsItemTopEvaluation(Long itemId) {
 	}
 

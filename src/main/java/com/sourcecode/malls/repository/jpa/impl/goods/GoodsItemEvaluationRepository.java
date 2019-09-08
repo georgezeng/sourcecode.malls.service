@@ -15,4 +15,6 @@ public interface GoodsItemEvaluationRepository
 	Optional<GoodsItemEvaluation> findFirstByItemAndPassedAndAdditionalOrderByCreateTimeDesc(GoodsItem item, boolean passed, boolean additional);
 
 	Optional<GoodsItemEvaluation> findBySubOrder(SubOrder subOrder);
+	
+	long countByItemAndPassedAndAdditional(GoodsItem item, boolean passed, boolean additional);
 }

@@ -25,7 +25,7 @@ public class WechatService {
 
 	@Autowired
 	private Environment env;
-	
+
 	@Cacheable(cacheNames = CacheNameConstant.WEPAY_CONFIG, key = "#merchantId")
 	public WePayConfig createWePayConfig(Long merchantId) throws Exception {
 		Optional<DeveloperSettingDTO> info = service.loadWechatGzh(merchantId);
@@ -33,8 +33,8 @@ public class WechatService {
 		return new WePayConfig(info.get(), service.loadWepayCert(merchantId));
 	}
 
-	public void refund(WePayConfig config, String transactionId, String refundNum, BigDecimal totalAmount,
-			BigDecimal refundAmount, int subOrderNums) throws Exception {
+	public void refund(WePayConfig config, String transactionId, String refundNum, BigDecimal totalAmount, BigDecimal refundAmount, int subOrderNums)
+			throws Exception {
 		WXPay wxpay = new WXPay(config);
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("transaction_id", transactionId);
@@ -43,9 +43,9 @@ public class WechatService {
 		String refundFee = refundAmount.multiply(new BigDecimal("100")).intValue() + "";
 		if (!env.acceptsProfiles(Profiles.of(EnvConstant.PROD))) {
 			if (totalFee.equals(refundFee)) {
-				refundFee = totalFee;
-			} else {
 				refundFee = subOrderNums + "";
+			} else {
+				refundFee = "1";
 			}
 		}
 		data.put("total_fee", totalFee);
