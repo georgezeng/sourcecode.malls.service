@@ -256,7 +256,7 @@ public class ClientBonusService implements BaseService {
 		ClientPointsJournal journal = new ClientPointsJournal();
 		journal.setClient(order.getClient());
 		journal.setBonusAmount(pointsAmount);
-		if (ClientPointsType.ConsumeAdded.equals(type)) {
+		if (ClientPointsType.ConsumeAdded.equals(type) || ClientPointsType.RefundDeduction.equals(type)) {
 			journal.setAmount(order.getRealPrice());
 			journal.setOrderId(order.getOrderId());
 		} else if (ClientPointsType.Invite.equals(type)) {
