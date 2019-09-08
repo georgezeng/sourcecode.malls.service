@@ -26,6 +26,15 @@ public class AdvertisementSettingDTO implements Serializable {
 	private String path;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date updateTime;
+	private boolean enabled;
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	public Date getUpdateTime() {
 		return updateTime;
