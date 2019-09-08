@@ -90,11 +90,11 @@ public class ClientBonusService implements BaseService {
 		order.getClient().setConsumeTotalAmount(
 				order.getClient().getConsumeTotalAmount().add(order.getRealPrice().multiply(new BigDecimal(signum))));
 		clientRepository.save(order.getClient());
-		setCurrentLevel(order.getClient());
+		setCurrentLevel(order.getClient(), true);
 	}
 
-	public void setCurrentLevel(Client client) {
-		if (client.getLevel() == null || StringUtils.isEmpty(client.getLevel().getName())) {
+	public void setCurrentLevel(Client client, boolean force) {
+		if (force || client.getLevel() == null || StringUtils.isEmpty(client.getLevel().getName())) {
 			List<ClientLevelSetting> levelSettings = levelSettingRepository
 					.findAllByMerchantAndNameNotNullOrderByLevelDesc(client.getMerchant());
 			AssertUtil.assertTrue(!CollectionUtils.isEmpty(levelSettings), "商家未配置会员等级");
