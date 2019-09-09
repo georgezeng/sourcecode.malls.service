@@ -42,6 +42,15 @@ public class OrderDTO extends SimpleQueryDTO {
 	private List<OrderCouponDTO> coupons;
 	private boolean comment;
 	private BigDecimal discount;
+	private Date refundTime;
+
+	public Date getRefundTime() {
+		return refundTime;
+	}
+
+	public void setRefundTime(Date refundTime) {
+		this.refundTime = refundTime;
+	}
 
 	public BigDecimal getDiscount() {
 		return discount;
