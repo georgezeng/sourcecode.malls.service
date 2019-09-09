@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.sourcecode.malls.constants.CacheNameConstant;
+import com.sourcecode.malls.enums.AfterSaleType;
 
 @Service
 public class CacheEvictService {
@@ -138,5 +139,17 @@ public class CacheEvictService {
 
 	@CacheEvict(cacheNames = CacheNameConstant.ARTICLE_LOAD_ONE, key = "#merchantId + '-' + #title")
 	public void clearArticleOne(Long merchantId, String title) {
+	}
+
+	@CacheEvict(cacheNames = CacheNameConstant.AFTER_SALE_REASON_LIST, key = "#merchantId + '-' + #type.name()")
+	public void clearAfterSaleReasonList(Long merchantId, AfterSaleType type) {
+	}
+
+	@CacheEvict(cacheNames = CacheNameConstant.AFTER_SALE_LIST, key = "#key")
+	public void clearAfterSaleList(String key) {
+	}
+
+	@CacheEvict(cacheNames = CacheNameConstant.AFTER_SALE_LOAD_ONE, key = "#id")
+	public void clearAfterSale(Long id) {
 	}
 }

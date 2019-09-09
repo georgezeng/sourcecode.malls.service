@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sourcecode.malls.domain.aftersale.AfterSaleApplication;
 import com.sourcecode.malls.domain.article.Article;
 import com.sourcecode.malls.domain.article.ArticleCategory;
 import com.sourcecode.malls.domain.client.Client;
@@ -147,6 +148,22 @@ public class CacheClearer {
 				order.getClient().getId().toString());
 		stores.stream().forEach(it -> {
 			cacheEvictService.clearClientOrderList(it.getSearchKey());
+		});
+		searchCacheKeyStoreRepository.deleteAll(stores);
+	}
+
+	@Async
+	public void clearAfterSales(AfterSaleApplication data) {
+		cacheEvictService.clearAfterSale(data.getId());
+		List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_AFTER_SALE,
+				data.getClient().getId() + "-" + data.getOrder().getId());
+		stores.stream().forEach(it -> {
+			cacheEvictService.clearAfterSaleList(it.getSearchKey());
+		});
+		searchCacheKeyStoreRepository.deleteAll(stores);
+		stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_AFTER_SALE, data.getClient().getId() + "-0");
+		stores.stream().forEach(it -> {
+			cacheEvictService.clearAfterSaleList(it.getSearchKey());
 		});
 		searchCacheKeyStoreRepository.deleteAll(stores);
 	}

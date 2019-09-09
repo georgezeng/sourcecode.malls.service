@@ -11,6 +11,7 @@ public class SearchCacheKeyStore {
 	public final static String SEARCH_CLIENT_COUPON = "SEARCH_CLIENT_COUPON";
 	public final static String SEARCH_CLIENT_ORDER = "SEARCH_CLIENT_ORDER";
 	public final static String SEARCH_ARTICLE = "SEARCH_ARTICLE";
+	public final static String SEARCH_AFTER_SALE = "SEARCH_AFTER_SALE";
 	
 	@Id
 	private String id;
