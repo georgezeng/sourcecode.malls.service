@@ -89,6 +89,8 @@ public class Order extends LongKeyEntity {
 
 	private Date refundTime;
 
+	private Date pickupTime;
+
 	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
 	private List<Express> expressList;
 
@@ -103,6 +105,14 @@ public class Order extends LongKeyEntity {
 
 	@NotNull(message = "折扣不能为空")
 	private BigDecimal discount = new BigDecimal("100");
+
+	public Date getPickupTime() {
+		return pickupTime;
+	}
+
+	public void setPickupTime(Date pickupTime) {
+		this.pickupTime = pickupTime;
+	}
 
 	public BigDecimal getDiscount() {
 		return discount;

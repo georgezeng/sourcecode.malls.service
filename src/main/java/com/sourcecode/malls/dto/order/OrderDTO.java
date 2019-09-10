@@ -44,6 +44,16 @@ public class OrderDTO extends SimpleQueryDTO {
 	private BigDecimal discount;
 	private Date refundTime;
 	private String clientLevelName;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private Date pickupTime;
+
+	public Date getPickupTime() {
+		return pickupTime;
+	}
+
+	public void setPickupTime(Date pickupTime) {
+		this.pickupTime = pickupTime;
+	}
 
 	public String getClientLevelName() {
 		return clientLevelName;
