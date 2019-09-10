@@ -43,6 +43,15 @@ public class OrderDTO extends SimpleQueryDTO {
 	private boolean comment;
 	private BigDecimal discount;
 	private Date refundTime;
+	private String clientLevelName;
+
+	public String getClientLevelName() {
+		return clientLevelName;
+	}
+
+	public void setClientLevelName(String clientLevelName) {
+		this.clientLevelName = clientLevelName;
+	}
 
 	public Date getRefundTime() {
 		return refundTime;

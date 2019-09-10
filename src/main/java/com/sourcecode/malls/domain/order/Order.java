@@ -276,6 +276,7 @@ public class Order extends LongKeyEntity {
 		OrderDTO dto = new OrderDTO();
 		BeanUtils.copyProperties(this, dto, "subList", "address", "expressList", "invoice", "coupons");
 		dto.setBuyer(client.getUsername());
+		dto.setClientLevelName(client.getLevel().getName());
 		if (withSub) {
 			if (!CollectionUtils.isEmpty(subList)) {
 				List<SubOrderDTO> dtos = new ArrayList<>();
