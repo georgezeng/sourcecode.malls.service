@@ -172,6 +172,7 @@ public class CacheClearer {
 	@Async
 	public void clearEvaluation(GoodsItemEvaluation data) {
 		cacheEvictService.clearClientUnCommentNums(data.getClient().getId());
+		cacheEvictService.clearGoodsItemTotalCommentNums(data.getItem().getId());
 		List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_UNCOMMENT,
 				data.getClient().getId() + "-" + data.getOrder().getId());
 		stores.stream().forEach(it -> {
@@ -193,6 +194,10 @@ public class CacheClearer {
 			cacheEvictService.clearClientUnCommentList(it.getSearchKey());
 		});
 		searchCacheKeyStoreRepository.deleteAll(stores);
+		stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_ITEM_COMMENT, data.getItem().getId().toString());
+		stores.stream().forEach(it -> {
+			cacheEvictService.clearGoodsItemCommentList(it.getSearchKey());
+		});
 	}
 
 	@Async

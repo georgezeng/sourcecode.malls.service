@@ -64,7 +64,7 @@ public class CacheEvictService {
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_UNCOMMENT_NUMS, key = "#clientId")
 	public void clearClientUnCommentNums(Long clientId) {
 	}
-	
+
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_UNCOMMENT_LIST, key = "#key")
 	public void clearClientUnCommentList(String key) {
 	}
@@ -100,9 +100,16 @@ public class CacheEvictService {
 	public void clearGoodsItemLoadOne(Long itemId) {
 	}
 
-	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOP_EVALUATION, key = "#itemId"),
-			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOTAL_EVALUATIONS, key = "#itemId") })
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOP_COMMENT, key = "#itemId")
 	public void clearGoodsItemTopEvaluation(Long itemId) {
+	}
+
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ITEM_TOTAL_COMMENT, key = "#itemId")
+	public void clearGoodsItemTotalCommentNums(Long itemId) {
+	}
+
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ITEM_COMMENT_LIST, key = "#key")
+	public void clearGoodsItemCommentList(String key) {
 	}
 
 	@CacheEvict(cacheNames = CacheNameConstant.GOODS_ITEM_SHARE_POSTER, key = "#itemId + '-' + #index + '-' + #clientId")
