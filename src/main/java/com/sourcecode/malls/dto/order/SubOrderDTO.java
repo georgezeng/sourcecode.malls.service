@@ -3,6 +3,8 @@ package com.sourcecode.malls.dto.order;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.sourcecode.malls.dto.aftersale.AfterSaleApplicationDTO;
+
 public class SubOrderDTO implements Serializable {
 	/**
 	 * 
@@ -21,6 +23,15 @@ public class SubOrderDTO implements Serializable {
 	private boolean comment;
 	private boolean additionalComment;
 	private int inventory;
+	private AfterSaleApplicationDTO aftersale;
+
+	public AfterSaleApplicationDTO getAftersale() {
+		return aftersale;
+	}
+
+	public void setAftersale(AfterSaleApplicationDTO aftersale) {
+		this.aftersale = aftersale;
+	}
 
 	public Long getParentId() {
 		return parentId;

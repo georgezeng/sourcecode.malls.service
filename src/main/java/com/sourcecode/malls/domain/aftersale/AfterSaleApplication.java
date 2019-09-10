@@ -366,7 +366,7 @@ public class AfterSaleApplication extends LongKeyEntity {
 			dto.setReturnAddress(returnAddress.asDTO());
 		}
 		if (subOrder != null) {
-			dto.setSubOrder(subOrder.asDTO());
+			dto.setSubOrder(subOrder.asDTO(false));
 		}
 		if (photos != null) {
 			List<String> list = new ArrayList<>();

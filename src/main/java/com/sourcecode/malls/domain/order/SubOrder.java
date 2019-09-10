@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.beans.BeanUtils;
 
+import com.sourcecode.malls.domain.aftersale.AfterSaleApplication;
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.client.Client;
 import com.sourcecode.malls.domain.goods.GoodsItem;
@@ -89,6 +91,17 @@ public class SubOrder extends LongKeyEntity {
 	@JoinColumn(name = "client_id")
 	@NotNull(message = "用户不能为空")
 	private Client client;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "subOrder")
+	private AfterSaleApplication aftersale;
+
+	public AfterSaleApplication getAftersale() {
+		return aftersale;
+	}
+
+	public void setAftersale(AfterSaleApplication aftersale) {
+		this.aftersale = aftersale;
+	}
 
 	public String getItemNumber() {
 		return itemNumber;
@@ -233,14 +246,21 @@ public class SubOrder extends LongKeyEntity {
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
+	
 	public SubOrderDTO asDTO() {
+		return asDTO(false);
+	}
+
+	public SubOrderDTO asDTO(boolean withAftersale) {
 		SubOrderDTO dto = new SubOrderDTO();
 		BeanUtils.copyProperties(this, dto);
 		try {
 			dto.setInventory(property.getInventory());
 		} catch (Exception e) {
-			
+
+		}
+		if (withAftersale && aftersale != null) {
+			dto.setAftersale(aftersale.asDTO());
 		}
 		if (item != null) {
 			dto.setItemId(item.getId());

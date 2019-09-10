@@ -291,7 +291,7 @@ public class Order extends LongKeyEntity {
 			if (!CollectionUtils.isEmpty(subList)) {
 				List<SubOrderDTO> dtos = new ArrayList<>();
 				for (SubOrder sub : subList) {
-					dtos.add(sub.asDTO());
+					dtos.add(sub.asDTO(true));
 				}
 				dto.setSubList(dtos);
 			}

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sourcecode.malls.dto.aftersale.AfterSaleApplicationDTO;
 import com.sourcecode.malls.dto.base.SimpleQueryDTO;
 import com.sourcecode.malls.dto.client.ClientAddressDTO;
 import com.sourcecode.malls.dto.coupon.OrderCouponDTO;
@@ -46,6 +47,15 @@ public class OrderDTO extends SimpleQueryDTO {
 	private String clientLevelName;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date pickupTime;
+	private List<AfterSaleApplicationDTO> aftersaleList;
+
+	public List<AfterSaleApplicationDTO> getAftersaleList() {
+		return aftersaleList;
+	}
+
+	public void setAftersaleList(List<AfterSaleApplicationDTO> aftersaleList) {
+		this.aftersaleList = aftersaleList;
+	}
 
 	public Date getPickupTime() {
 		return pickupTime;
