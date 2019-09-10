@@ -16,6 +16,7 @@ import com.sourcecode.malls.domain.article.ArticleCategory;
 import com.sourcecode.malls.domain.client.Client;
 import com.sourcecode.malls.domain.coupon.ClientCoupon;
 import com.sourcecode.malls.domain.goods.GoodsItem;
+import com.sourcecode.malls.domain.goods.GoodsItemEvaluation;
 import com.sourcecode.malls.domain.order.Order;
 import com.sourcecode.malls.domain.redis.SearchCacheKeyStore;
 import com.sourcecode.malls.dto.query.PageInfo;
@@ -164,6 +165,32 @@ public class CacheClearer {
 		stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_AFTER_SALE, data.getClient().getId() + "-0");
 		stores.stream().forEach(it -> {
 			cacheEvictService.clearAfterSaleList(it.getSearchKey());
+		});
+		searchCacheKeyStoreRepository.deleteAll(stores);
+	}
+
+	@Async
+	public void clearEvaluation(GoodsItemEvaluation data) {
+		cacheEvictService.clearClientUnCommentNums(data.getClient().getId());
+		List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_UNCOMMENT,
+				data.getClient().getId() + "-" + data.getOrder().getId());
+		stores.stream().forEach(it -> {
+			cacheEvictService.clearClientUnCommentList(it.getSearchKey());
+		});
+		searchCacheKeyStoreRepository.deleteAll(stores);
+		stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_UNCOMMENT, data.getClient().getId() + "-0");
+		stores.stream().forEach(it -> {
+			cacheEvictService.clearClientUnCommentList(it.getSearchKey());
+		});
+		stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_COMMENT,
+				data.getClient().getId() + "-" + data.getOrder().getId());
+		stores.stream().forEach(it -> {
+			cacheEvictService.clearClientUnCommentList(it.getSearchKey());
+		});
+		searchCacheKeyStoreRepository.deleteAll(stores);
+		stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_COMMENT, data.getClient().getId() + "-0");
+		stores.stream().forEach(it -> {
+			cacheEvictService.clearClientUnCommentList(it.getSearchKey());
 		});
 		searchCacheKeyStoreRepository.deleteAll(stores);
 	}
