@@ -187,7 +187,8 @@ public class CacheClearer {
 	@Async
 	public void clearEvaluation(GoodsItemEvaluation data) {
 		cacheEvictService.clearClientUnCommentNums(data.getClient().getId());
-		cacheEvictService.clearGoodsItemTotalCommentNums(data.getItem().getId(), data.getValue());
+		cacheEvictService.clearGoodsItemTotalCommentNums(data.getItem().getId(), data.getValue().name());
+		cacheEvictService.clearGoodsItemTotalCommentNums(data.getItem().getId(), "All");
 		List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_UNCOMMENT,
 				data.getClient().getId() + "-" + data.getItem().getId());
 		stores.stream().forEach(it -> {
