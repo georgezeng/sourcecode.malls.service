@@ -46,6 +46,7 @@ public class WechatService {
 				totalFee = subOrderNums + "";
 				refundFee = totalFee;
 			} else {
+				totalFee = "1";
 				refundFee = "1";
 			}
 		}

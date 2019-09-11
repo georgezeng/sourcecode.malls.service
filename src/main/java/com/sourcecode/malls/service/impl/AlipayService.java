@@ -45,6 +45,7 @@ public class AlipayService {
 				totalFee = subOrderNums + "";
 				refundFee = totalFee;
 			} else {
+				totalFee = "0.01";
 				refundFee = "0.01";
 			}
 		}
