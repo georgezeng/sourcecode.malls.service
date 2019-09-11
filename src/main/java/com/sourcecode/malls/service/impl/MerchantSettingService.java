@@ -196,8 +196,7 @@ public class MerchantSettingService {
 		AssertUtil.assertNotNull(info.getRookie(), "新人奖励不能为空");
 		AssertUtil.assertNotNull(info.getInvite(), "邀请奖励不能为空");
 		save(merchantId, info, MerchantSettingConstant.CLIENT_POINTS_BONUS_INFO);
-		cacheEvictService.clearClientPointsBonus(merchantId);
-		cacheEvictService.clearClientInviteBonusInfo(merchantId);
+		cacheEvictService.clearClientBonusInfo(merchantId);
 	}
 
 	private void save(Long merchantId, Object data, String code) throws Exception {
