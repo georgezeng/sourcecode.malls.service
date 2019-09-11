@@ -67,7 +67,6 @@ public class CacheClearer {
 					for (int i = 0; i < item.getPhotos().size(); i++) {
 						cacheEvictService.clearGoodsItemSharePosters(item.getId(), i, client.getId());
 					}
-					clearGoodsItemForCoupon(client);
 				}
 				pageable = pageable.next();
 			}
