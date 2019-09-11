@@ -257,6 +257,7 @@ public class GoodsItemEvaluation extends LongKeyEntity {
 		dto.setClientAvatar(client.getAvatar());
 		if (anonymous) {
 			dto.setClientNickname("匿名");
+			dto.setClientAvatar(null);
 		} else {
 			dto.setClientNickname(client.getNickname());
 		}
