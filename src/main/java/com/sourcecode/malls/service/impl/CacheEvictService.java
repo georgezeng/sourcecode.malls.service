@@ -35,6 +35,10 @@ public class CacheEvictService {
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOTAL_INVITE_INFO, key = "#clientId")
 	public void clearClientTotalInviteInfo(Long clientId) {
 	}
+	
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_INVITE_BONUS_INFO, key = "#merchantId")
+	public void clearClientInviteBonusInfo(Long merchantId) {
+	}
 
 	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-UnPay'"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ORDER_NUMS, key = "#clientId + '-All'"),

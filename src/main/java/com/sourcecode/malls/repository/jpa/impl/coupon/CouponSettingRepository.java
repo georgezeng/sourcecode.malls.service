@@ -16,6 +16,6 @@ public interface CouponSettingRepository
 	List<CouponSetting> findAllByMerchantAndEventTypeAndStatusAndEnabled(Merchant merchant, CouponEventType eventType,
 			CouponSettingStatus status, boolean enabled);
 
-	Optional<CouponSetting> findFirstByMerchantAndEventTypeAndStatusAndEnabled(Merchant merchant,
+	Optional<CouponSetting> findFirstByMerchantAndEventTypeAndStatusAndEnabledOrderByCreateTimeDesc(Merchant merchant,
 			CouponEventType eventType, CouponSettingStatus status, boolean enabled);
 }

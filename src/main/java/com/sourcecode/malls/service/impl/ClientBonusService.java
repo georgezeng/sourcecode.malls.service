@@ -190,17 +190,16 @@ public class ClientBonusService implements BaseService {
 
 	public void addInviteBonus(Client invitee, Client parent) throws Exception {
 		parent = clientRepository.getOne(parent.getId());
-		List<CouponSetting> list = couponSettingRepository.findAllByMerchantAndEventTypeAndStatusAndEnabled(parent.getMerchant(), CouponEventType.Invite,
-				CouponSettingStatus.PutAway, true);
-		if (!CollectionUtils.isEmpty(list)) {
-			for (CouponSetting setting : list) {
-				if (setting.getInviteSetting() != null && !CollectionUtils.isEmpty(parent.getSubList())) {
-					int times = parent.getSubList().size() / setting.getInviteSetting().getMemberNums();
-					int nums = clientCouponRepository.findAllByClientAndSetting(parent, setting).size();
-					while (nums < times) {
-						createCoupon(null, invitee, parent, setting, true);
-						nums++;
-					}
+		Optional<CouponSetting> couponSetting = couponSettingRepository.findFirstByMerchantAndEventTypeAndStatusAndEnabledOrderByCreateTimeDesc(
+				parent.getMerchant(), CouponEventType.Invite, CouponSettingStatus.PutAway, true);
+		if (couponSetting.isPresent()) {
+			CouponSetting setting = couponSetting.get();
+			if (setting.getInviteSetting() != null && !CollectionUtils.isEmpty(parent.getSubList())) {
+				int times = parent.getSubList().size() / setting.getInviteSetting().getMemberNums();
+				int nums = clientCouponRepository.findAllByClientAndSetting(parent, setting).size();
+				while (nums < times) {
+					createCoupon(null, invitee, parent, setting, true);
+					nums++;
 				}
 			}
 		}
@@ -216,12 +215,10 @@ public class ClientBonusService implements BaseService {
 	public void addRegistrationBonus(Long userId) throws Exception {
 		Optional<Client> user = clientRepository.findById(userId);
 		AssertUtil.assertTrue(user.isPresent(), "用户不存在");
-		List<CouponSetting> list = couponSettingRepository.findAllByMerchantAndEventTypeAndStatusAndEnabled(user.get().getMerchant(),
-				CouponEventType.Registration, CouponSettingStatus.PutAway, true);
-		if (!CollectionUtils.isEmpty(list)) {
-			for (CouponSetting setting : list) {
-				createCoupon(null, null, user.get(), setting, false);
-			}
+		Optional<CouponSetting> couponSetting = couponSettingRepository.findFirstByMerchantAndEventTypeAndStatusAndEnabledOrderByCreateTimeDesc(
+				user.get().getMerchant(), CouponEventType.Registration, CouponSettingStatus.PutAway, true);
+		if (couponSetting.isPresent()) {
+			createCoupon(null, null, user.get(), couponSetting.get(), false);
 		}
 		ClientPointsBonus pointsBonus = settingService.loadClientPointsBonus(user.get().getMerchant().getId());
 		Order order = new Order();
