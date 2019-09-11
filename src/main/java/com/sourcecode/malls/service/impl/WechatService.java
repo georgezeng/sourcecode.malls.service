@@ -44,11 +44,10 @@ public class WechatService {
 		if (!env.acceptsProfiles(Profiles.of(EnvConstant.PROD))) {
 			if (totalFee.equals(refundFee)) {
 				totalFee = subOrderNums + "";
-				refundFee = totalFee;
 			} else {
 				totalFee = "1";
-				refundFee = "1";
 			}
+			refundFee = totalFee;
 		}
 		data.put("total_fee", totalFee);
 		data.put("refund_fee", refundFee);

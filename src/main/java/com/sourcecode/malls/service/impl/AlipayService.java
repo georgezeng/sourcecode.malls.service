@@ -43,11 +43,10 @@ public class AlipayService {
 		if (!env.acceptsProfiles(Profiles.of(EnvConstant.PROD))) {
 			if (totalFee.equals(refundFee)) {
 				totalFee = new BigDecimal(subOrderNums).multiply(new BigDecimal("0.01")).toString();
-				refundFee = totalFee;
 			} else {
 				totalFee = "0.01";
-				refundFee = "0.01";
 			}
+			refundFee = totalFee;
 		}
 		model.setRefundAmount(refundFee);
 		model.setRefundReason("用户请求退款");
