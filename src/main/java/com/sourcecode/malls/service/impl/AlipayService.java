@@ -42,7 +42,7 @@ public class AlipayService {
 		String refundFee = refundAmount + "";
 		if (!env.acceptsProfiles(Profiles.of(EnvConstant.PROD))) {
 			if (totalFee.equals(refundFee)) {
-				totalFee = subOrderNums + "";
+				totalFee = new BigDecimal(subOrderNums).multiply(new BigDecimal("0.01")).toString();
 				refundFee = totalFee;
 			} else {
 				totalFee = "0.01";
