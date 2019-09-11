@@ -174,7 +174,7 @@ public class CacheClearer {
 		cacheEvictService.clearClientUnCommentNums(data.getClient().getId());
 		cacheEvictService.clearGoodsItemTotalCommentNums(data.getItem().getId());
 		List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_UNCOMMENT,
-				data.getClient().getId() + "-" + data.getOrder().getId());
+				data.getClient().getId() + "-" + data.getItem().getId());
 		stores.stream().forEach(it -> {
 			cacheEvictService.clearClientUnCommentList(it.getSearchKey());
 		});
@@ -184,14 +184,14 @@ public class CacheClearer {
 			cacheEvictService.clearClientUnCommentList(it.getSearchKey());
 		});
 		stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_COMMENT,
-				data.getClient().getId() + "-" + data.getOrder().getId());
+				data.getClient().getId() + "-" + data.getItem().getId());
 		stores.stream().forEach(it -> {
-			cacheEvictService.clearClientUnCommentList(it.getSearchKey());
+			cacheEvictService.clearClientCommentList(it.getSearchKey());
 		});
 		searchCacheKeyStoreRepository.deleteAll(stores);
 		stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_COMMENT, data.getClient().getId() + "-0");
 		stores.stream().forEach(it -> {
-			cacheEvictService.clearClientUnCommentList(it.getSearchKey());
+			cacheEvictService.clearClientCommentList(it.getSearchKey());
 		});
 		searchCacheKeyStoreRepository.deleteAll(stores);
 		stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_ITEM_COMMENT, data.getItem().getId().toString());

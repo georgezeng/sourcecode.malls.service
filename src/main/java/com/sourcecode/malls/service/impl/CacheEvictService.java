@@ -68,6 +68,10 @@ public class CacheEvictService {
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_UNCOMMENT_LIST, key = "#key")
 	public void clearClientUnCommentList(String key) {
 	}
+	
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_COMMENT_LIST, key = "#key")
+	public void clearClientCommentList(String key) {
+	}
 
 	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.CLIENT_CURRENT_POINTS, key = "#clientId"),
 			@CacheEvict(cacheNames = CacheNameConstant.CLIENT_POINTS_ACC_IN_AMOUNT, key = "#clientId") })
