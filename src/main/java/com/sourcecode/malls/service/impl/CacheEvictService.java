@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.sourcecode.malls.constants.CacheNameConstant;
 import com.sourcecode.malls.enums.AfterSaleType;
+import com.sourcecode.malls.enums.GoodsItemEvaluationValue;
 
 @Service
 public class CacheEvictService {
@@ -35,7 +36,7 @@ public class CacheEvictService {
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_TOTAL_INVITE_INFO, key = "#clientId")
 	public void clearClientTotalInviteInfo(Long clientId) {
 	}
-	
+
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_BONUS_INFO, key = "#merchantId")
 	public void clearClientBonusInfo(Long merchantId) {
 	}
@@ -68,7 +69,7 @@ public class CacheEvictService {
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_UNCOMMENT_LIST, key = "#key")
 	public void clearClientUnCommentList(String key) {
 	}
-	
+
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_COMMENT_LIST, key = "#key")
 	public void clearClientCommentList(String key) {
 	}
@@ -108,8 +109,8 @@ public class CacheEvictService {
 	public void clearGoodsItemTopEvaluation(Long itemId) {
 	}
 
-	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ITEM_TOTAL_COMMENT, key = "#itemId")
-	public void clearGoodsItemTotalCommentNums(Long itemId) {
+	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ITEM_TOTAL_COMMENT, key = "#itemId + '-' + #value.name()")
+	public void clearGoodsItemTotalCommentNums(Long itemId, GoodsItemEvaluationValue value) {
 	}
 
 	@CacheEvict(cacheNames = CacheNameConstant.CLIENT_ITEM_COMMENT_LIST, key = "#key")

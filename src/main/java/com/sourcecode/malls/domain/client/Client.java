@@ -44,7 +44,7 @@ public class Client extends BaseUser implements UserDetails {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "merchant_id")
 	private Merchant merchant;
-	@Size(max = 255, message = "昵称长度不能大于255")
+	@Size(max = 50, message = "昵称长度不能大于50")
 	private String nickname;
 	@Column(name = "unionid")
 	private String unionId;
