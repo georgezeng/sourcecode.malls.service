@@ -231,7 +231,7 @@ public class CacheClearer {
 			cacheEvictService.clearClientCommentList(it.getSearchKey());
 		});
 		searchCacheKeyStoreRepository.deleteAll(stores);
-		stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_ITEM_COMMENT, data.getOrder().getId().toString());
+		stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_ITEM_COMMENT, data.getItem().getId().toString());
 		stores.stream().forEach(it -> {
 			cacheEvictService.clearGoodsItemCommentList(it.getSearchKey());
 		});
