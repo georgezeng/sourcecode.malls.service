@@ -15,6 +15,7 @@ import com.sourcecode.malls.domain.article.Article;
 import com.sourcecode.malls.domain.article.ArticleCategory;
 import com.sourcecode.malls.domain.client.Client;
 import com.sourcecode.malls.domain.coupon.ClientCoupon;
+import com.sourcecode.malls.domain.coupon.CouponSetting;
 import com.sourcecode.malls.domain.goods.GoodsItem;
 import com.sourcecode.malls.domain.goods.GoodsItemEvaluation;
 import com.sourcecode.malls.domain.order.Order;
@@ -124,6 +125,26 @@ public class CacheClearer {
 		for (int i = 1; i <= total; i++) {
 			cacheEvictService.clearClientPointsJournalList(client.getId(), i);
 		}
+	}
+
+	@Async
+	public void clearCouponRelated(CouponSetting setting) {
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.setNum(1);
+		pageInfo.setSize(1000);
+		pageInfo.setProperty("createTime");
+		pageInfo.setOrder(Direction.ASC.name());
+		Pageable pageable = pageInfo.pageable();
+		Page<Client> result = null;
+		do {
+			result = clientRepository.findAll(pageable);
+			if (result.hasContent()) {
+				for (Client client : result.getContent()) {
+					clearClientCoupons(client);
+				}
+				pageable = pageable.next();
+			}
+		} while (result.hasNext());
 	}
 
 	@Async
