@@ -38,6 +38,15 @@ public class GoodsItemDTO implements Serializable {
 	private GoodsItemEvaluationDTO topEvaluation;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date putTime;
+	private List<GoodsAttributeDTO> definitions;
+
+	public List<GoodsAttributeDTO> getDefinitions() {
+		return definitions;
+	}
+
+	public void setDefinitions(List<GoodsAttributeDTO> definitions) {
+		this.definitions = definitions;
+	}
 
 	public Date getPutTime() {
 		return putTime;
