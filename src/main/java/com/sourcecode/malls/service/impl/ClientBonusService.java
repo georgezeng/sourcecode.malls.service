@@ -82,6 +82,9 @@ public class ClientBonusService implements BaseService {
 
 	@Autowired
 	private CacheClearer clearer;
+	
+	@Autowired
+	private CacheEvictService cacheEvictService;
 
 	@Autowired
 	private MerchantSettingService settingService;
@@ -90,6 +93,7 @@ public class ClientBonusService implements BaseService {
 		em.lock(order.getClient(), LockModeType.PESSIMISTIC_WRITE);
 		order.getClient().setConsumeTotalAmount(order.getClient().getConsumeTotalAmount().add(order.getRealPrice().multiply(new BigDecimal(signum))));
 		clientRepository.save(order.getClient());
+		cacheEvictService.clearClientInfo(order.getClient().getId());
 		setCurrentLevel(order.getClient(), true);
 	}
 
