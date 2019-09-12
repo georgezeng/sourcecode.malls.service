@@ -39,4 +39,6 @@ public interface CacheNameConstant {
 	String AFTER_SALE_LIST = "after_sale_list";
 	String AFTER_SALE_LOAD_ONE = "after_sale_load_one";
 	String CLIENT_BONUS_INFO = "client_invite_bonus_info";
+	String CLIENT_INFO = "client_info";
+	String MERCHANT_LOAD_BY_DOMAIN = "merchant_load_by_domain";
 }
