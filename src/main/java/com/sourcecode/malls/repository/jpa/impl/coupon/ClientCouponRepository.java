@@ -11,7 +11,6 @@ import com.sourcecode.malls.domain.client.Client;
 import com.sourcecode.malls.domain.coupon.ClientCoupon;
 import com.sourcecode.malls.domain.coupon.CouponSetting;
 import com.sourcecode.malls.enums.ClientCouponStatus;
-import com.sourcecode.malls.enums.CouponEventType;
 
 public interface ClientCouponRepository extends JpaRepository<ClientCoupon, Long>, JpaSpecificationExecutor<ClientCoupon> {
 
@@ -19,8 +18,8 @@ public interface ClientCouponRepository extends JpaRepository<ClientCoupon, Long
 
 	List<ClientCoupon> findAllByClient(Client client);
 
-	@Query(value = "select count(*) from client_coupon cc inner join coupon_setting cs where cc.setting_id=cs.id and cc.client_id=?1 and cs.type=?2", nativeQuery = true)
-	long countTotalCoupons(long clientId, CouponEventType type);
+	@Query(value = "select count(*) from client_coupon cc inner join coupon_setting cs where cc.setting_id=cs.id and cc.client_id=?1 and cs.event_type=?2", nativeQuery = true)
+	long countTotalCoupons(long clientId, String type);
 
 	@Query(value = "update client_coupon set status=?1 where setting_id=?2 and status=?3", nativeQuery = true)
 	@Modifying
