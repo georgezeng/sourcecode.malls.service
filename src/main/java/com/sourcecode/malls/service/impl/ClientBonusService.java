@@ -82,7 +82,7 @@ public class ClientBonusService implements BaseService {
 
 	@Autowired
 	private CacheClearer clearer;
-	
+
 	@Autowired
 	private CacheEvictService cacheEvictService;
 
@@ -199,11 +199,9 @@ public class ClientBonusService implements BaseService {
 		if (couponSetting.isPresent()) {
 			CouponSetting setting = couponSetting.get();
 			if (setting.getInviteSetting() != null && !CollectionUtils.isEmpty(parent.getSubList())) {
-				int times = parent.getSubList().size() / setting.getInviteSetting().getMemberNums();
-				int nums = clientCouponRepository.findAllByClientAndSetting(parent, setting).size();
-				while (nums < times) {
+				int mod = parent.getSubList().size() % setting.getInviteSetting().getMemberNums();
+				if (mod == 0) {
 					createCoupon(null, invitee, parent, setting, true);
-					nums++;
 				}
 			}
 		}
