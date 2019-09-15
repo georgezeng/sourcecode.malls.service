@@ -153,7 +153,7 @@ public class CacheClearer {
 		List<ClientCoupon> list = clientCouponRepository.findAllByClient(client);
 		list.stream().forEach(it -> {
 			List<SearchCacheKeyStore> stores = searchCacheKeyStoreRepository.findAllByTypeAndBizKey(SearchCacheKeyStore.SEARCH_CLIENT_COUPON,
-					it.getId().toString());
+					it.getClient().getId().toString());
 			stores.stream().forEach(store -> {
 				cacheEvictService.clearClientCouponList(store.getSearchKey());
 			});
