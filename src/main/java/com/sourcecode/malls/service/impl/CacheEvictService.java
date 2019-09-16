@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.sourcecode.malls.constants.CacheNameConstant;
+import com.sourcecode.malls.enums.AdvertisementType;
 import com.sourcecode.malls.enums.AfterSaleType;
 
 @Service
@@ -148,12 +149,8 @@ public class CacheEvictService {
 	public void clearGoodsCategoryLevel2(Long parentId) {
 	}
 
-	@Caching(evict = { @CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_ALL, key = "#merchantId"),
-			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-HomeBanner'"),
-			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-HomeRecommend'"),
-			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-CategoryBanner'"),
-			@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-CategoryBrand'") })
-	public void clearAdvertisementList(Long merchantId) {
+	@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_ALL, key = "#merchantId + '-' + #type.name()")
+	public void clearAdvertisementList(Long merchantId, AdvertisementType type) {
 	}
 
 	@CacheEvict(cacheNames = CacheNameConstant.ARTICLE_LOAD_ONE, key = "#id")
