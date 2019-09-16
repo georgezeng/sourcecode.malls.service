@@ -149,7 +149,7 @@ public class CacheEvictService {
 	public void clearGoodsCategoryLevel2(Long parentId) {
 	}
 
-	@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_ALL, key = "#merchantId + '-' + #type.name()")
+	@CacheEvict(cacheNames = CacheNameConstant.ADVERTISEMENT_LIST, key = "#merchantId + '-' + #type.name()")
 	public void clearAdvertisementList(Long merchantId, AdvertisementType type) {
 	}
 
