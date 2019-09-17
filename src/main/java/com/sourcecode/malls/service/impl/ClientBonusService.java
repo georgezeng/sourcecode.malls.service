@@ -110,7 +110,8 @@ public class ClientBonusService implements BaseService {
 			List<ClientLevelSetting> levelSettings = levelSettingRepository.findAllByMerchantAndNameNotNullOrderByLevelDesc(client.getMerchant());
 			AssertUtil.assertTrue(!CollectionUtils.isEmpty(levelSettings), "商家未配置会员等级");
 			for (ClientLevelSetting setting : levelSettings) {
-				if (client.getConsumeTotalAmount().compareTo(setting.getUpToAmount()) >= 0 || setting.getUpToMembers() > 0 && client.getInviteMembers() >= setting.getUpToMembers()) {
+				if (setting.getUpToAmount().signum() > 0 && client.getConsumeTotalAmount().compareTo(setting.getUpToAmount()) >= 0
+						|| setting.getUpToMembers() > 0 && client.getInviteMembers() >= setting.getUpToMembers()) {
 					client.setLevel(setting);
 					clientRepository.save(client);
 					return;
