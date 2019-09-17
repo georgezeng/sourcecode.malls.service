@@ -93,8 +93,16 @@ public class ClientBonusService implements BaseService {
 		em.lock(order.getClient(), LockModeType.PESSIMISTIC_WRITE);
 		order.getClient().setConsumeTotalAmount(order.getClient().getConsumeTotalAmount().add(order.getRealPrice().multiply(new BigDecimal(signum))));
 		clientRepository.save(order.getClient());
-		cacheEvictService.clearClientInfo(order.getClient().getId());
 		setCurrentLevel(order.getClient(), true);
+		cacheEvictService.clearClientInfo(order.getClient().getId());
+	}
+
+	private void resetLevel(Client client) {
+		em.lock(client, LockModeType.PESSIMISTIC_WRITE);
+		client.setInviteMembers(client.getInviteMembers() + 1);
+		clientRepository.save(client);
+		setCurrentLevel(client, true);
+		cacheEvictService.clearClientInfo(client.getId());
 	}
 
 	public void setCurrentLevel(Client client, boolean force) {
@@ -102,7 +110,7 @@ public class ClientBonusService implements BaseService {
 			List<ClientLevelSetting> levelSettings = levelSettingRepository.findAllByMerchantAndNameNotNullOrderByLevelDesc(client.getMerchant());
 			AssertUtil.assertTrue(!CollectionUtils.isEmpty(levelSettings), "商家未配置会员等级");
 			for (ClientLevelSetting setting : levelSettings) {
-				if (client.getConsumeTotalAmount().compareTo(setting.getUpToAmount()) >= 0) {
+				if (client.getConsumeTotalAmount().compareTo(setting.getUpToAmount()) >= 0 || client.getInviteMembers() >= setting.getUpToMembers()) {
 					client.setLevel(setting);
 					clientRepository.save(client);
 					return;
@@ -199,12 +207,14 @@ public class ClientBonusService implements BaseService {
 		if (couponSetting.isPresent()) {
 			CouponSetting setting = couponSetting.get();
 			if (setting.getInviteSetting() != null && !CollectionUtils.isEmpty(parent.getSubList())) {
-				int mod = parent.getSubList().size() % setting.getInviteSetting().getMemberNums();
+				long count = clientRepository.countByParent(parent);
+				long mod = count % setting.getInviteSetting().getMemberNums();
 				if (mod == 0) {
 					createCoupon(null, invitee, parent, setting, true);
 				}
 			}
 		}
+		resetLevel(parent);
 		ClientPointsBonus pointsBonus = settingService.loadClientPointsBonus(parent.getMerchant().getId());
 		Order order = new Order();
 		order.setOrderId(invitee.getId().toString());

@@ -45,6 +45,16 @@ public class ClientLevelSetting extends LongKeyEntity {
 	@NotBlank(message="图标路径不能为空")
 	@Size(max=255, message="图标路径长度不能超过255")
 	private String imgPath;
+	
+	private int upToMembers;
+
+	public int getUpToMembers() {
+		return upToMembers;
+	}
+
+	public void setUpToMembers(int upToMembers) {
+		this.upToMembers = upToMembers;
+	}
 
 	public String getImgPath() {
 		return imgPath;

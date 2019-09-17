@@ -69,11 +69,22 @@ public class Client extends BaseUser implements UserDetails {
 
 	@NotNull(message = "累积消费不能为空")
 	private BigDecimal consumeTotalAmount = BigDecimal.ZERO;
+	
+	@NotNull(message = "累积邀请人数不能为空")
+	private int inviteMembers;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "level_id")
 	@NotNull(message = "会员等级不能为空")
 	private ClientLevelSetting level;
+
+	public int getInviteMembers() {
+		return inviteMembers;
+	}
+
+	public void setInviteMembers(int inviteMembers) {
+		this.inviteMembers = inviteMembers;
+	}
 
 	public ClientLevelSetting getLevel() {
 		return level;

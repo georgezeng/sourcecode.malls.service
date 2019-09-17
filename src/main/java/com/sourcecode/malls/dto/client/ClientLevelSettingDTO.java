@@ -24,6 +24,16 @@ public class ClientLevelSettingDTO implements Serializable{
 	private boolean top;
 	
 	private String imgPath;
+	
+	private int upToMembers;
+
+	public int getUpToMembers() {
+		return upToMembers;
+	}
+
+	public void setUpToMembers(int upToMembers) {
+		this.upToMembers = upToMembers;
+	}
 
 	public String getImgPath() {
 		return imgPath;
