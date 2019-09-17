@@ -260,6 +260,7 @@ public class ClientBonusService implements BaseService {
 			journal.setOrderId(order.getOrderId());
 		} else if (ClientPointsType.Invite.equals(type)) {
 			journal.setOrderId(order.getOrderId());
+			journal.setRemark("邀请 " + order.getClient().getUsername() + " 注册成功");
 		}
 		journal.setBalanceType(type.getType());
 		journal.setType(type);
