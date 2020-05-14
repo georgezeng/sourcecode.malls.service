@@ -48,4 +48,4 @@ alipay:
   api:
     url:
       pay:
-        notify: 'https://mall-server.bsxkj.com/client/alipay/notify/pay'
+        notify: 'https://mall-server.dbjiaju.cn/client/alipay/notify/pay'
