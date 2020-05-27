@@ -79,7 +79,7 @@ public class GoodsItem extends LongKeyEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<GoodsItemPhoto> photos;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = { CascadeType.ALL }, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = { CascadeType.ALL }, orphanRemoval = true)
 	private List<GoodsItemPhotoGroup> groups;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = { CascadeType.REMOVE })
@@ -256,7 +256,7 @@ public class GoodsItem extends LongKeyEntity {
 
 	public GoodsItemDTO asDTO(boolean withPhoto, boolean withProperties, boolean withContent) {
 		GoodsItemDTO dto = new GoodsItemDTO();
-		BeanUtils.copyProperties(this, dto, "merchant", "category", "brand", "photos", "properties");
+		BeanUtils.copyProperties(this, dto, "groups", "merchant", "category", "brand", "photos", "properties");
 		if (!withContent) {
 			dto.setContent(null);
 		}
