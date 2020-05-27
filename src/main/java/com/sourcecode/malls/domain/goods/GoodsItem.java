@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.CollectionUtils;
 
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.merchant.Merchant;
@@ -269,7 +270,7 @@ public class GoodsItem extends LongKeyEntity {
 		}
 		if (withPhoto) {
 			List<GoodsItemPhotoGroupDTO> groupList = new ArrayList<>();
-			if (photos != null) {
+			if (!CollectionUtils.isEmpty(photos)) {
 				GoodsItemPhotoGroupDTO group = new GoodsItemPhotoGroupDTO();
 				List<String> list = new ArrayList<>();
 				for (GoodsItemPhoto photo : photos) {
@@ -279,7 +280,7 @@ public class GoodsItem extends LongKeyEntity {
 				group.setPhotos(list);
 				groupList.add(group);
 			}
-			if (groups != null) {
+			if (!CollectionUtils.isEmpty(groups)) {
 				for (GoodsItemPhotoGroup group : groups) {
 					groupList.add(group.asDTO());
 				}
