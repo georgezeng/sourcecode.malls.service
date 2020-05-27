@@ -75,7 +75,7 @@ public class GoodsItemPhotoGroup extends LongKeyEntity {
 
 	public GoodsItemPhotoGroupDTO asDTO() {
 		GoodsItemPhotoGroupDTO dto = new GoodsItemPhotoGroupDTO();
-		BeanUtils.copyProperties(this, dto);
+		BeanUtils.copyProperties(this, dto, "photos");
 		if (photos != null) {
 			List<String> photoPaths = new ArrayList<>();
 			for (GoodsItemPhoto photo : photos) {
