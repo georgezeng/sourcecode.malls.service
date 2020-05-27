@@ -32,6 +32,7 @@ public class GoodsItemProperty extends LongKeyEntity {
 	@NotNull(message = "价格不能为空")
 	private BigDecimal price;
 	private int inventory;
+	private String path;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "item_id")
@@ -42,6 +43,14 @@ public class GoodsItemProperty extends LongKeyEntity {
 	@JoinTable(name = "goods_item_property_value", joinColumns = {
 			@JoinColumn(name = "property_id") }, inverseJoinColumns = { @JoinColumn(name = "value_id") })
 	private List<GoodsSpecificationValue> values;
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public List<GoodsSpecificationValue> getValues() {
 		return values;

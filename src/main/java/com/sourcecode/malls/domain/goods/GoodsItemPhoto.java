@@ -7,7 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.sourcecode.malls.domain.base.LongKeyEntity;
@@ -27,11 +26,22 @@ public class GoodsItemPhoto extends LongKeyEntity {
 
 	@Column(name = "order_num")
 	private int order;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "item_id")
-	@NotNull(message = "商品不能为空")
 	private GoodsItem item;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "group_id")
+	private GoodsItemPhotoGroup group;
+
+	public GoodsItem getItem() {
+		return item;
+	}
+
+	public void setItem(GoodsItem item) {
+		this.item = item;
+	}
 
 	public String getPath() {
 		return path;
@@ -49,11 +59,12 @@ public class GoodsItemPhoto extends LongKeyEntity {
 		this.order = order;
 	}
 
-	public GoodsItem getItem() {
-		return item;
+	public GoodsItemPhotoGroup getGroup() {
+		return group;
 	}
 
-	public void setItem(GoodsItem item) {
-		this.item = item;
+	public void setGroup(GoodsItemPhotoGroup group) {
+		this.group = group;
 	}
+
 }

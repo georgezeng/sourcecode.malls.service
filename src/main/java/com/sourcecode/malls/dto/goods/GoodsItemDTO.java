@@ -24,7 +24,7 @@ public class GoodsItemDTO implements Serializable {
 	private String sellingPoints;
 	private String content;
 	private boolean enabled;
-	private List<String> photos;
+	private List<GoodsItemPhotoGroupDTO> groups;
 	private Long categoryId;
 	private Long brandId;
 	private String brand;
@@ -39,6 +39,14 @@ public class GoodsItemDTO implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date putTime;
 	private List<GoodsAttributeDTO> definitions;
+
+	public List<GoodsItemPhotoGroupDTO> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<GoodsItemPhotoGroupDTO> groups) {
+		this.groups = groups;
+	}
 
 	public List<GoodsAttributeDTO> getDefinitions() {
 		return definitions;
@@ -182,14 +190,6 @@ public class GoodsItemDTO implements Serializable {
 
 	public void setBrandId(Long brandId) {
 		this.brandId = brandId;
-	}
-
-	public List<String> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(List<String> photos) {
-		this.photos = photos;
 	}
 
 	public Long getId() {

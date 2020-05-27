@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -25,6 +24,7 @@ import org.springframework.beans.BeanUtils;
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.merchant.Merchant;
 import com.sourcecode.malls.dto.goods.GoodsItemDTO;
+import com.sourcecode.malls.dto.goods.GoodsItemPhotoGroupDTO;
 
 @Entity
 @Table(name = "goods_item")
@@ -77,8 +77,10 @@ public class GoodsItem extends LongKeyEntity {
 	private GoodsBrand brand;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = { CascadeType.ALL }, orphanRemoval = true)
-	@OrderBy("order ASC")
 	private List<GoodsItemPhoto> photos;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = { CascadeType.ALL }, orphanRemoval = true)
+	private List<GoodsItemPhotoGroup> groups;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item", cascade = { CascadeType.REMOVE })
 	private List<GoodsItemProperty> properties;
@@ -148,6 +150,13 @@ public class GoodsItem extends LongKeyEntity {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	public void addGroup(GoodsItemPhotoGroup group) {
+		if (groups == null) {
+			groups = new ArrayList<>();
+		}
+		groups.add(group);
 	}
 
 	public void addPhoto(GoodsItemPhoto photo) {
@@ -237,6 +246,14 @@ public class GoodsItem extends LongKeyEntity {
 		this.merchant = merchant;
 	}
 
+	public List<GoodsItemPhotoGroup> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<GoodsItemPhotoGroup> photoGroups) {
+		this.groups = photoGroups;
+	}
+
 	public GoodsItemDTO asDTO(boolean withPhoto, boolean withProperties, boolean withContent) {
 		GoodsItemDTO dto = new GoodsItemDTO();
 		BeanUtils.copyProperties(this, dto, "merchant", "category", "brand", "photos", "properties");
@@ -250,22 +267,33 @@ public class GoodsItem extends LongKeyEntity {
 			dto.setBrandId(brand.getId());
 			dto.setBrand(brand.getName());
 		}
-		if (withPhoto && photos != null) {
-			List<String> list = new ArrayList<>();
-			for (GoodsItemPhoto photo : photos) {
-				list.add(photo.getPath());
+		if (withPhoto) {
+			List<GoodsItemPhotoGroupDTO> groupList = new ArrayList<>();
+			if (photos != null) {
+				GoodsItemPhotoGroupDTO group = new GoodsItemPhotoGroupDTO();
+				List<String> list = new ArrayList<>();
+				for (GoodsItemPhoto photo : photos) {
+					list.add(photo.getPath());
+				}
+				group.setName("默认");
+				group.setPhotos(list);
+				groupList.add(group);
 			}
-			dto.setPhotos(list);
+			if (groups != null) {
+				for (GoodsItemPhotoGroup group : groups) {
+					groupList.add(group.asDTO());
+				}
+			}
+			dto.setGroups(groupList);
 		}
 		if (withProperties && properties != null) {
 			dto.setProperties(properties.stream().map(it -> it.asDTO()).collect(Collectors.toList()));
 		}
 		if (rank != null) {
-			BigDecimal totalEvaluations = new BigDecimal(
-					rank.getGoodEvaluations() + rank.getBadEvaluations() + rank.getNeutralityEvaluations());
+			BigDecimal totalEvaluations = new BigDecimal(rank.getGoodEvaluations() + rank.getBadEvaluations() + rank.getNeutralityEvaluations());
 			if (totalEvaluations.compareTo(BigDecimal.ZERO) > 0) {
-				dto.setGoodEvaluationRate(new BigDecimal(rank.getGoodEvaluations())
-						.divide(totalEvaluations, 4, RoundingMode.HALF_UP).multiply(new BigDecimal("100")));
+				dto.setGoodEvaluationRate(
+						new BigDecimal(rank.getGoodEvaluations()).divide(totalEvaluations, 4, RoundingMode.HALF_UP).multiply(new BigDecimal("100")));
 			} else {
 				dto.setGoodEvaluationRate(BigDecimal.ZERO);
 			}

@@ -54,24 +54,24 @@ public class CacheClearer {
 
 	@Async
 	public void clearPosterRelated(GoodsItem item) {
-		PageInfo pageInfo = new PageInfo();
-		pageInfo.setNum(1);
-		pageInfo.setSize(1000);
-		pageInfo.setProperty("createTime");
-		pageInfo.setOrder(Direction.ASC.name());
-		Pageable pageable = pageInfo.pageable();
-		Page<Client> result = null;
-		do {
-			result = clientRepository.findAllByMerchant(item.getMerchant(), pageable);
-			if (result.hasContent()) {
-				for (Client client : result.getContent()) {
-					for (int i = 0; i < item.getPhotos().size(); i++) {
-						cacheEvictService.clearGoodsItemSharePosters(item.getId(), i, client.getId());
-					}
-				}
-				pageable = pageable.next();
-			}
-		} while (result.hasNext());
+//		PageInfo pageInfo = new PageInfo();
+//		pageInfo.setNum(1);
+//		pageInfo.setSize(1000);
+//		pageInfo.setProperty("createTime");
+//		pageInfo.setOrder(Direction.ASC.name());
+//		Pageable pageable = pageInfo.pageable();
+//		Page<Client> result = null;
+//		do {
+//			result = clientRepository.findAllByMerchant(item.getMerchant(), pageable);
+//			if (result.hasContent()) {
+//				for (Client client : result.getContent()) {
+//					for (int i = 0; i < item.getPhotos().size(); i++) {
+//						cacheEvictService.clearGoodsItemSharePosters(item.getId(), i, client.getId());
+//					}
+//				}
+//				pageable = pageable.next();
+//			}
+//		} while (result.hasNext());
 	}
 
 	@Async

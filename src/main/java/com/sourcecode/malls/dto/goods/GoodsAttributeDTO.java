@@ -37,7 +37,7 @@ public class GoodsAttributeDTO implements Serializable {
 	private String statusText;
 
 	private Long merchantId;
-
+	
 	public boolean isEnabled() {
 		return enabled;
 	}

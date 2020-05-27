@@ -18,6 +18,15 @@ public class GoodsItemPropertyDTO implements Serializable {
 	private String uid;
 	private BigDecimal price;
 	private int inventory;
+	private String path;
+	
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
 
 	public Long getId() {
 		return id;
