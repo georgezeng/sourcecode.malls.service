@@ -88,6 +88,26 @@ public class GoodsItem extends LongKeyEntity {
 
 	@Size(max = 255, message = "视频地址长度不能大于255")
 	private String vedioPath;
+	
+	private int indexRecommend;
+	
+	private int indexOrder;
+
+	public int isIndexRecommend() {
+		return indexRecommend;
+	}
+
+	public void setIndexRecommend(int indexRecommend) {
+		this.indexRecommend = indexRecommend;
+	}
+
+	public int getIndexOrder() {
+		return indexOrder;
+	}
+
+	public void setIndexOrder(int indexOrder) {
+		this.indexOrder = indexOrder;
+	}
 
 	public String getVedioPath() {
 		return vedioPath;

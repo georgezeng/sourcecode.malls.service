@@ -39,6 +39,24 @@ public class GoodsItemDTO implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date putTime;
 	private List<GoodsAttributeDTO> definitions;
+	private int indexRecommend;
+	private int indexOrder;
+
+	public int isIndexRecommend() {
+		return indexRecommend;
+	}
+
+	public void setIndexRecommend(int indexRecommend) {
+		this.indexRecommend = indexRecommend;
+	}
+
+	public int getIndexOrder() {
+		return indexOrder;
+	}
+
+	public void setIndexOrder(int indexOrder) {
+		this.indexOrder = indexOrder;
+	}
 
 	public List<GoodsItemPhotoGroupDTO> getGroups() {
 		return groups;
