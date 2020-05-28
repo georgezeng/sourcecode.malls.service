@@ -11,5 +11,5 @@ import com.sourcecode.malls.domain.merchant.Merchant;
 
 public interface GoodsRecommendCategoryRepository
 		extends JpaRepository<GoodsRecommendCategory, Long>, JpaSpecificationExecutor<GoodsRecommendCategory> {
-	List<GoodsRecommendCategory> findByMerchantAndCategory(Merchant merchant, GoodsCategory category);
+	List<GoodsRecommendCategory> findTop3ByMerchantAndCategory(Merchant merchant, GoodsCategory category);
 }
