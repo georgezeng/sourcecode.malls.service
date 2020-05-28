@@ -94,6 +94,16 @@ public class GoodsItem extends LongKeyEntity {
 	private int indexOrder;
 	
 	private boolean specialDiscount;
+	
+	private BigDecimal discount = BigDecimal.ONE;
+
+	public BigDecimal getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(BigDecimal discount) {
+		this.discount = discount;
+	}
 
 	public boolean isSpecialDiscount() {
 		return specialDiscount;

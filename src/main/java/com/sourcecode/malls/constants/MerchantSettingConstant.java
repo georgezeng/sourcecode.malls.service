@@ -11,4 +11,5 @@ public interface MerchantSettingConstant {
 	String COUPON_LIMITED_AMOUNT = "COUPON_LIMITED_AMOUNT";
 	String SITE_INFO = "SITE_INFO";
 	String CLIENT_POINTS_BONUS_INFO = "CLIENT_POINTS_BONUS_INFO";
+	String EXPRESS_FEE = "EXPRESS_FEE";
 }

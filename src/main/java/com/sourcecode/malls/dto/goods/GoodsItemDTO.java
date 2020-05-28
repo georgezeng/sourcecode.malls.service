@@ -42,6 +42,15 @@ public class GoodsItemDTO implements Serializable {
 	private int indexRecommend;
 	private int indexOrder;
 	private boolean specialDiscount;
+	private BigDecimal discount;
+
+	public BigDecimal getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(BigDecimal discount) {
+		this.discount = discount;
+	}
 
 	public boolean isSpecialDiscount() {
 		return specialDiscount;
