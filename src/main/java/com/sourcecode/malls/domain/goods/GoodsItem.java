@@ -92,8 +92,18 @@ public class GoodsItem extends LongKeyEntity {
 	private int indexRecommend;
 	
 	private int indexOrder;
+	
+	private boolean specialDiscount;
 
-	public int isIndexRecommend() {
+	public boolean isSpecialDiscount() {
+		return specialDiscount;
+	}
+
+	public void setSpecialDiscount(boolean specialDiscount) {
+		this.specialDiscount = specialDiscount;
+	}
+
+	public int getIndexRecommend() {
 		return indexRecommend;
 	}
 
