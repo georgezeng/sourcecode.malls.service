@@ -14,25 +14,31 @@ import org.springframework.beans.BeanUtils;
 
 import com.sourcecode.malls.domain.base.LongKeyEntity;
 import com.sourcecode.malls.domain.merchant.Merchant;
-import com.sourcecode.malls.dto.goods.GoodsBrandDTO;
+import com.sourcecode.malls.dto.goods.GoodsRecommendCategoryDTO;
 
 @Entity
-@Table(name = "goods_brand")
-public class GoodsBrand extends LongKeyEntity {
+@Table(name = "goods_recommend_category")
+public class GoodsRecommendCategory extends LongKeyEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@NotBlank(message = "品牌名称不能为空")
-	@Size(max = 50, message = "品牌名称长度不能大于50")
+	@NotBlank(message = "名称不能为空")
+	@Size(max = 50, message = "名称长度不能大于50")
 	private String name;
-	@NotBlank(message = "品牌logo不能为空")
-	@Size(max = 255, message = "品牌logo长度不能大于255")
+	
+	@NotBlank(message = "logo不能为空")
+	@Size(max = 255, message = "logo长度不能大于255")
 	private String logo;
+	
 	@Column(name = "order_num")
 	private int order;
+	
+	@NotBlank(message = "链接不能为空")
+	@Size(max = 255, message = "链接不能大于255")
+	private String link;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "merchant_id")
@@ -43,6 +49,14 @@ public class GoodsBrand extends LongKeyEntity {
 	@JoinColumn(name = "category_id")
 	@NotNull(message = "商品分类不能为空")
 	private GoodsCategory category;
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
 
 	public GoodsCategory getCategory() {
 		return category;
@@ -84,8 +98,8 @@ public class GoodsBrand extends LongKeyEntity {
 		this.merchant = merchant;
 	}
 
-	public GoodsBrandDTO asDTO() {
-		GoodsBrandDTO dto = new GoodsBrandDTO();
+	public GoodsRecommendCategoryDTO asDTO() {
+		GoodsRecommendCategoryDTO dto = new GoodsRecommendCategoryDTO();
 		BeanUtils.copyProperties(this, dto, "category");
 		if (category != null) {
 			dto.setCategoryId(category.getId());
