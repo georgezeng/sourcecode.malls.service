@@ -49,6 +49,15 @@ public class OrderDTO extends SimpleQueryDTO {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private Date pickupTime;
 	private List<AfterSaleApplicationDTO> aftersaleList;
+	private BigDecimal expressFee;
+
+	public BigDecimal getExpressFee() {
+		return expressFee;
+	}
+
+	public void setExpressFee(BigDecimal expressFee) {
+		this.expressFee = expressFee;
+	}
 
 	public List<AfterSaleApplicationDTO> getAftersaleList() {
 		return aftersaleList;
