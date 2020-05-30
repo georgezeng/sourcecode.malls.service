@@ -105,6 +105,16 @@ public class Order extends LongKeyEntity {
 
 	@NotNull(message = "折扣不能为空")
 	private BigDecimal discount = new BigDecimal("100");
+	
+	private BigDecimal expressFee;
+
+	public BigDecimal getExpressFee() {
+		return expressFee;
+	}
+
+	public void setExpressFee(BigDecimal expressFee) {
+		this.expressFee = expressFee;
+	}
 
 	public Date getPickupTime() {
 		return pickupTime;
