@@ -39,7 +39,7 @@ public class GoodsItemProperty extends LongKeyEntity {
 	@NotNull(message = "商品不能为空")
 	private GoodsItem item;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE })
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "goods_item_property_value", joinColumns = {
 			@JoinColumn(name = "property_id") }, inverseJoinColumns = { @JoinColumn(name = "value_id") })
 	private List<GoodsSpecificationValue> values;

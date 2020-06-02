@@ -1,11 +1,11 @@
 database:
-  host: localhost
+  host: 39.100.158.246
 
 spring:
   datasource:
     druid:
       username: root
-      password: 111111
+      password: "mall!@#"
        
 super-admin:
   username: admin
@@ -21,8 +21,8 @@ session:
 aliyun:
   oss:
     endpoint: oss-cn-zhangjiakou.aliyuncs.com
-    privateBucket: mall-private-local
-    publicBucket: mall-public-local
+    privateBucket: mall-private-uat
+    publicBucket: mall-public-uat
  
 alipay:
   api:
