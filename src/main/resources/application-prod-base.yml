@@ -1,6 +1,4 @@
 aliyun:
-  accesskey: LTAIolH6fF83Q5C2
-  secret: ny1CTPPqwfRCKKtTb3rrbgcf4Zr1HX
   sms: 
     signName: 多呗商城
   oss:
