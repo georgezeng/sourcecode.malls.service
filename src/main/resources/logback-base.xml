@@ -17,6 +17,8 @@
 	<springProfile name="server">
 		<springProperty scope="context" name="springAppName"
 			source="spring.application.name" />
+		<springProperty scope="context" name="log.server"
+			source="log.server" />
 		<appender name="KAFKA"
 			class="com.github.danielwegener.logback.kafka.KafkaAppender">
 			<encoder

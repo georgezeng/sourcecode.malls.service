@@ -4,9 +4,9 @@ aliyun:
     privateBucket: mall-template-private-uat
     publicBucket: mall-template-public-uat
     
-remote.server: 172.18.186.84
+remote.server: 172.18.132.151
 
-log.server: 172.18.132.151
+log.server: ${remote.server}
 
 database:
   host: rm-wz9nrd271w892r44t.mysql.rds.aliyuncs.com
@@ -25,7 +25,7 @@ super-admin:
         
 session:
   redis:
-    host: 172.18.132.151
+    host: ${remote.server}
     password: "123!@#"
     port: 6379
 
