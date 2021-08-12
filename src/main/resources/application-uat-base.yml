@@ -6,7 +6,7 @@ aliyun:
     
 remote.server: 172.18.186.84
 
-log.server: ${remote.server}
+log.server: 172.18.132.151
 
 database:
   host: rm-wz9nrd271w892r44t.mysql.rds.aliyuncs.com
