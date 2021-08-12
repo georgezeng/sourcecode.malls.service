@@ -1,5 +1,6 @@
 database:
   host: 39.100.158.246
+  name: mall_local
 
 spring:
   datasource:
