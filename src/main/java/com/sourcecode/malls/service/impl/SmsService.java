@@ -23,7 +23,7 @@ import com.sourcecode.malls.properties.SmsProperties;
 
 @Service
 public class SmsService {
-	private Logger logger = LoggerFactory.getLogger(getClass());
+//	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	private AliyunProperties aliyunConfig;
@@ -34,7 +34,7 @@ public class SmsService {
 
 	@PostConstruct
 	public void init() {
-		logger.info(aliyunConfig.getAccesskey());
+//		logger.info(aliyunConfig.getAccesskey());
 		DefaultProfile profile = DefaultProfile.getProfile(aliyunConfig.getRegionId(), aliyunConfig.getAccesskey(), aliyunConfig.getSecret());
 		client = new DefaultAcsClient(profile);
 	}

@@ -1,6 +1,6 @@
 aliyun:
   sms: 
-    signName: 多呗商城
+    signName: 五火消防
   oss:
     endpoint: oss-cn-zhangjiakou-internal.aliyuncs.com
     privateBucket: mall-private-prod
