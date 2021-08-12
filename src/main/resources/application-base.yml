@@ -13,7 +13,7 @@ spring:
       user_role: ${spring.datasource.table.prefix}user_role
 #    druid:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${database.host}:${database.port}/${database.prefix}${database.name}${database.suffix}?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://${database.host}:3306/${database.name}?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     tomcat:
       max-active: 20
       initial-size: 10
