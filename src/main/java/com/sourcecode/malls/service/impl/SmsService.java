@@ -4,6 +4,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,6 +23,8 @@ import com.sourcecode.malls.properties.SmsProperties;
 
 @Service
 public class SmsService {
+	private Logger logger = LoggerFactory.getLogger(getClass());
+
 	@Autowired
 	private AliyunProperties aliyunConfig;
 	@Autowired
@@ -30,6 +34,7 @@ public class SmsService {
 
 	@PostConstruct
 	public void init() {
+		logger.info(aliyunConfig.getAccesskey());
 		DefaultProfile profile = DefaultProfile.getProfile(aliyunConfig.getRegionId(), aliyunConfig.getAccesskey(), aliyunConfig.getSecret());
 		client = new DefaultAcsClient(profile);
 	}
