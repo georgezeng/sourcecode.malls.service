@@ -24,15 +24,15 @@ public class VerifyCodeService {
 	private CodeStoreRepository codeStoreRepository;
 
 	public void sendLoginCode(String mobile, String category, String keySuffix) {
-		sendCode(mobile, category, "SMS_172080579", keySuffix);
+		sendCode(mobile, category, "SMS_221970016", keySuffix);
 	}
 
 	public void sendRegisterCode(String mobile, String category, String keySuffix) {
-		sendCode(mobile, category, "SMS_172080577", keySuffix);
+		sendCode(mobile, category, "SMS_221960028", keySuffix);
 	}
 
 	public void sendForgetPasswordCode(String mobile, String category, String keySuffix) {
-		sendCode(mobile, category, "SMS_172080576", keySuffix);
+		sendCode(mobile, category, "SMS_222015003", keySuffix);
 	}
 
 	private void sendCode(String mobile, String category, String codeId, String keySuffix) {
