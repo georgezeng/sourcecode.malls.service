@@ -11,7 +11,10 @@ spring:
       role_authority: ${spring.datasource.table.prefix}role_authority
       user: ${spring.datasource.table.prefix}user
       user_role: ${spring.datasource.table.prefix}user_role
-    druid:
+#    druid:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${database.host}:${database.port}/${database.prefix}${database.name}${database.suffix}?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    tomcat:
       max-active: 20
       initial-size: 10
       max-wait: 60000
@@ -20,8 +23,7 @@ spring:
       min-evictable-idle-time-millis: 300000
       test-on-borrow: true
       test-while-idle: true
-      validation-query: SELECT 1
-      url: jdbc:mysql://${database.host}/${database.name}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      validation-query: select 1
   servlet:
     multipart:
       max-file-size: 20MB
