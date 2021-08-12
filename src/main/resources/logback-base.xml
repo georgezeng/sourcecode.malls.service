@@ -6,12 +6,12 @@
 	
 	<springProfile name="uat">
 		<property name="envTier" value="uat"/>
-		<property resource="application-uat-base.yml" />
+		<property resource="application-base-uat.yml" />
 	</springProfile>
 	
 	<springProfile name="prod">
 		<property name="envTier" value="prod"/>
-		<property resource="application-prod-base.yml" />
+		<property resource="application-base-prod.yml" />
 	</springProfile>
 	
 	<springProfile name="server">
