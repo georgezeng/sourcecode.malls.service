@@ -13,6 +13,9 @@ database:
   name: mall_uat
 
 spring:
+  redis:
+    host: ${remote.server}
+    port: 6379
   datasource:
     druid:
       username: mall_uat
